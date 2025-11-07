@@ -1260,7 +1260,7 @@
   <script>
 
     // web版本打印
-    console.log('RadioMasterWeb_V1.6.0');
+    console.log('RadioMasterWeb_V1.6.1');
     
     // 添加初始化完成标记
     window._appInitialized = false;
@@ -2893,22 +2893,27 @@
           // document.getElementById('calib-bar-lh')?.children[0].style.width  = ((recvChannel[1]-988)/(2012-988)*100) + '%';
           // document.getElementById('calib-bar-rv')?.children[0].style.width  = ((recvChannel[2]-988)/(2012-988)*100) + '%';
           // document.getElementById('calib-bar-rh')?.children[0].style.width  = ((recvChannel[3]-988)/(2012-988)*100) + '%';
+          let tmpChannel = [];
+          tmpChannel[0] = recvChannel[2];
+          tmpChannel[1] = recvChannel[3];
+          tmpChannel[2] = recvChannel[1];
+          tmpChannel[3] = recvChannel[0];
           for (let i = 0; i < calibElements.length; i++) {
             const { barId, valId, dir } = calibElements[i];
             
             // 更新数值显示
-            const valElement = document.getElementById(valId);
-            if (valElement) {
-              let tmpData = (recvChannel[i]-1500)/5;
-              if(tmpData>100) tmpData=100;
-              else if(tmpData<-100) tmpData=-100;
-              valElement.textContent = Math.round(tmpData); // 假设processedCalib是校准数据数组
-            }
+            // const valElement = document.getElementById(valId);
+            // if (valElement) {
+            //   let tmpData = (tmpChannel[i]-1500)/5;
+            //   if(tmpData>100) tmpData=100;
+            //   else if(tmpData<-100) tmpData=-100;
+            //   valElement.textContent = Math.round(tmpData); // 假设processedCalib是校准数据数组
+            // }
             
             // 更新实际数值显示（-100到100范围）
             const actualValElement = document.getElementById(`val-actual-${['lv', 'lh', 'rv', 'rh'][i]}`);
             if (actualValElement) {
-              actualValElement.textContent = Math.round(recvChannel[i]);
+              actualValElement.textContent = Math.round(tmpChannel[i]);
             }
             
             // 更新进度条宽度
