@@ -3349,13 +3349,13 @@ const calibStyle = document.createElement('style');
         if(upDataDev=="sensor")
         {
           
-          setTimeout(async () => {
-            await writer.write(new Uint8Array([0x60, 0xF1, 0x55, 0x55]));  
-          }, 500);
+          // setTimeout(async () => {
+          //   await writer.write(new Uint8Array([0x60, 0xF1, 0x55, 0x55]));  
+          // }, 500);
 
-          setTimeout(async () => {
-            await writer.write(new Uint8Array([0xA5, 0x66, 0x01, 0x0D, 0x0A]));
-          }, 500);
+          // setTimeout(async () => {
+          //   await writer.write(new Uint8Array([0xA5, 0x66, 0x01, 0x0D, 0x0A]));
+          // }, 500);
           
 
           upDataFlag = 1;
@@ -3497,7 +3497,9 @@ const calibStyle = document.createElement('style');
       fwReadyCheckTimer = setInterval(() => {
 
         if (!fwReadyCheckActive) return;
-
+        if (fwUpdateBtn) fwUpdateBtn.disabled = true;
+        if(upDataDev=="sensor"&&upDataFlag==1)
+        {
           setTimeout(async () => {
             await writer.write(new Uint8Array([0x60, 0xF1, 0x55, 0x55]));  
           }, 20);
@@ -3505,9 +3507,9 @@ const calibStyle = document.createElement('style');
           setTimeout(async () => {
             await writer.write(new Uint8Array([0xA5, 0x66, 0x01, 0x0D, 0x0A]));
           }, 20);  
+        }
 
 
-        if (fwUpdateBtn) fwUpdateBtn.disabled = true;
         // 检查serialBuffer是否有数据
         if (serialBuffer.length > 0) {
           // 检查是否有连续3个C
