@@ -425,7 +425,7 @@
       background: none;
       color: #fff;
       border: none;
-      padding: 10px 24px;
+      padding: 10px 10px;
       font-size: 1em;
       font-weight: 500;
       cursor: pointer;
@@ -4421,12 +4421,7 @@ const calibStyle = document.createElement('style');
         } else if (param.baseType === 13) {
           // COMMAND
           const btn = document.createElement('button');
-          //btn.textContent = '';//'启动';//langs[lang]['start']; // 统一命名为启动
-          if(currentLang === 'zh') {
-            btn.textContent = '开始';
-          } else {
-            btn.textContent = 'Start';
-          }
+          btn.textContent = LANGS[currentLang]['execute'];
           btn.setAttribute('data-i18n', 'execute');
           btn.style.minWidth = '130px';
           btn.style.maxWidth = '130px';
@@ -4470,7 +4465,7 @@ const calibStyle = document.createElement('style');
             // 判断bind类
             const isBind = (param.name && /bind|对频|配对/i.test(param.name)) || (param.info && /bind|对频|配对/i.test(param.info));
             if (isBind) {
-              msg.textContent = currentLang === 'zh' ? '正在对频...' : 'Binding...';
+              msg.textContent = LANGS[currentLang]['binding'];
               document.body.appendChild(dialog);
               dialog.appendChild(inner);
               // 2秒后自动发送06并关闭
@@ -4480,9 +4475,9 @@ const calibStyle = document.createElement('style');
                 document.body.removeChild(dialog);
               }, 2000);
             } else {
-              msg.textContent = currentLang === 'zh' ? '正在操作...' : 'Operating...';
+              msg.textContent = LANGS[currentLang]['command-running'];
               closeBtn = document.createElement('button');
-              closeBtn.textContent = currentLang === 'zh' ? '结束' : 'End';
+              closeBtn.textContent = LANGS[currentLang]['command-end'];
               closeBtn.style.marginTop = '12px';
               closeBtn.style.background = 'linear-gradient(90deg,#e74c3c 0%,#c0392b 100%)';
               closeBtn.style.color = '#fff';
@@ -4860,12 +4855,8 @@ const calibStyle = document.createElement('style');
         } else if (param.baseType === 13) {
           // COMMAND
           const btn = document.createElement('button');
-          if(currentLang === 'zh') {
-            btn.textContent = '启动';
-          } else {
-            btn.textContent = 'Start';
-          }
-          btn.setAttribute('data-i18n', 'Start');
+          btn.textContent = LANGS[currentLang]['start'];
+          btn.setAttribute('data-i18n', 'start');
           btn.style.minWidth = '130px';
           btn.style.maxWidth = '130px';
           btn.onclick = () => {
@@ -4906,7 +4897,7 @@ const calibStyle = document.createElement('style');
             // 判断bind类
             const isBind = (param.name && /bind|对频|配对/i.test(param.name)) || (param.info && /bind|对频|配对/i.test(param.info));
             if (isBind) {
-              msg.textContent = currentLang === 'zh' ? '正在对频...' : 'Binding...';
+              msg.textContent = LANGS[currentLang]['binding'];
               document.body.appendChild(dialog);
               dialog.appendChild(inner);
               // 2秒后自动发送06并关闭
@@ -4916,9 +4907,9 @@ const calibStyle = document.createElement('style');
                 document.body.removeChild(dialog);
               }, 2000);
             } else {
-              msg.textContent = currentLang === 'zh' ? '正在操作...' : 'Operating...';
+              msg.textContent = LANGS[currentLang]['command-running'];
               closeBtn = document.createElement('button');
-              closeBtn.textContent = currentLang === 'zh' ? '结束' : 'End';
+              closeBtn.textContent = LANGS[currentLang]['command-end'];
               closeBtn.style.marginTop = '12px';
               closeBtn.style.background = 'linear-gradient(90deg,#e74c3c 0%,#c0392b 100%)';
               closeBtn.style.color = '#fff';
@@ -7541,7 +7532,7 @@ const calibStyle = document.createElement('style');
       const attrPage = document.getElementById('page-attr');
       if (!attrPage) return;
       let html = '<div class="comm-container" style="display:flex;justify-content:center;align-items:center;min-height:calc(100vh - 64px);background:linear-gradient(135deg,#e0e7ff 0%,#f4f6fb 100%);">';
-      html += '<div style="background:#fff;border-radius:22px;box-shadow:0 8px 36px rgba(79,140,255,0.15);padding:48px 60px 40px 60px;min-width:380px;max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;">';
+      html += '<div style="background:#fff;border-radius:22px;box-shadow:0 8px 36px rgba(79,140,255,0.15);padding:48px 60px 40px 60px;min-width:380px;max-width:600px;width:100%;display:flex;flex-direction:column;align-items:center;">';
       html += '<div class="comm-title" data-i18n="attr-title" style="margin-bottom:32px;display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);padding:20px 32px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);border:2px solid #3b82f6;">';
       html += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1));"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#1e40af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       html += '<span style="color:#1e40af;font-size:1.4em;font-weight:700;text-shadow:0 1px 2px rgba(255,255,255,0.8);">设备属性</span>';
@@ -8115,7 +8106,7 @@ const calibStyle = document.createElement('style');
         updateFwUI();
         window.alert(LANGS[currentLang]['update-over']);
       } catch (e) {
-        fwStatus.textContent = '传输失败：' + e.message;
+        fwStatus.textContent = LANGS[currentLang]['transfer_fail'] + e.message;
       }
     };
 
@@ -8932,6 +8923,7 @@ const calibStyle = document.createElement('style');
         'trim-center-title': '微调',
         'trim-center-center-title': '舵机中立点',
         'mode-title': '摇杆模式',
+        'save-mode': '模式保存',
         'config-dev': '设备配置',
         'channel-attr-confirm-btn': '通道保存',
         'channel-attr-restore-btn': '通道还原',
@@ -9026,6 +9018,7 @@ const calibStyle = document.createElement('style');
         'open-wifi': '开启WiFi模式',
         'close-wifi': '关闭WiFi模式',
         'update-over' : '升级成功',
+        'binding': '正在对频...',
         // ... 你可以继续补充 ...
       },
       en: {
@@ -9102,6 +9095,7 @@ const calibStyle = document.createElement('style');
         'trim-center-title': 'Trim',
         'trim-center-center-title': 'Sub Trim',
         'mode-title': 'Mode',
+        'save-mode': 'Save mode',
         'config-dev': 'Channels',
         'channel-attr-confirm-btn': 'Save',
         'channel-attr-restore-btn': 'Restore',
@@ -9203,6 +9197,182 @@ const calibStyle = document.createElement('style');
         'open-wifi': 'Open WiFi',
         'close-wifi': 'Close WiFi',
         'update-over' : 'Update complete',
+        'binding': 'Binding...',
+      },
+      ua: {
+        'update': 'Оновлення прошивки',
+        'confirm_update': 'Підтвердити оновлення',
+        'select_file': 'Будь ласка, виберіть файл прошивки!',
+        'connect_serial': 'Спочатку підключіть COM-порт!',
+        'transferring': 'Передача, будь ласка, зачекайте...',
+        'transfer_done': 'Передача прошивки завершена!',
+        'transfer_fail': 'Помилка передачі: ',
+        'attr-title': 'Інформація про пристрій',
+        'connect-title': 'COM-з\'єднання',
+        'connect-port': 'COM-порт',
+        'connect-baudrate': 'Швидкість передачі',
+        'connect-btn': 'Підключити',
+        'connect-status': 'Відключено',
+        'new-device-detected': 'Виявлено новий пристрій, натисніть Підключити',
+        'update-progress': 'Прогрес оновлення',
+        'drag-fw-file': 'Перетягніть файл прошивки сюди',
+        'or': 'Або',
+        'fw-remote': 'Контролер T8L',
+        'fw-transmitter': 'Внутрішній модуль ELRS',
+        'fw-sensor': 'Датчик',
+        'factory-reset': 'Скинути до заводських налаштувань',
+        'exit-fw-update': 'Вийти з оновлення прошивки',
+        'keymode-title': 'Налаштування режиму клавіш',
+        'keymode-single': 'Одинарний',
+        'keymode-double': 'Подвійний',
+        'keymode-trigger': 'Клік',
+        'keymode-triple': '3-поз.',
+        'keymode-doubleStatus': '2-поз.',
+        'keymode-toggle': 'Перемикач',
+        'query-device-attr': 'Запит налаштувань пристрою',
+        'query-device-attr-loading': 'Запит...',
+        'no-device-info': 'Немає інформації про пристрій.',
+        'connect-port-desc': 'Спочатку підключіть COM-порт!',
+        'wifi-open': 'WiFi увімкнено',
+        'wifi-close': 'WiFi вимкнено',
+        'wifi-open-desc': 'WiFi успішно увімкнено',
+        'wifi-close-desc': 'WiFi успішно вимкнено',
+        'wifi-open-fail': 'Помилка увімкнення WiFi',
+        'volume': 'Гучність',
+        'serial-number': 'Серійний номер',
+        'elrs-firmware-version': 'Версія прошивки ExpressLRS',
+        'device-firmware-version': 'Версія прошивки пристрою',
+        'elrs-name': 'Радіокерування',
+        'company-name': 'Виробник',
+        'device-name': 'Пристрій',
+        'send-pack-speed': 'Швидкість пакетів',
+        'return-speed': 'Швидкість телеметрії',
+        'calibration-flag': 'Прапор калібрування',
+        'connect-protocol': 'Протокол з\'єднання',
+        'channel-num': 'Кількість каналів',
+        'secret-key': 'Ключ шифрування',
+        'power': 'Потужність',
+        'remote-type': 'Тип пульта',
+        'mixed-ctl': 'Мікшерне керування',
+        'remote-param': 'Параметри пульта',
+        'comm-uart': 'UART',
+        'attr-dev': 'Пристрій',
+        'config-channel': 'Канали',
+        'net-config': 'Налаштування RF',
+        'dev-cailation': 'Калібрування',
+        'frieware-updata': 'Оновлення прошивки',
+        'channel-monitor': 'Монітор каналів',
+        'channel-attr': 'Налаштування каналів',
+        'channel-map': 'Прив\'язка каналів',
+        'trim-center': 'Тример і суб-тример',
+        'mode': 'Режим',
+        'channel-map-relation': 'Прив\'язка каналів',
+        'channel-map-confirm-label': 'Якщо пульт не реагує, натисніть "Зберегти" ще раз',
+        'channel-attr-negative-travel': 'Від\'ємний хід',
+        'channel-attr-positive-travel': 'Додатній хід',
+        'trim-center-title': 'Тример',
+        'trim-center-center-title': 'Суб-тример',
+        'mode-title': 'Режим',
+        'save-mode': 'Зберегти',
+        'config-dev': 'Канали',
+        'channel-attr-confirm-btn': 'Зберегти',
+        'channel-attr-restore-btn': 'Відновити',
+        'channel-map-confirm-btn': 'Зберегти',
+        'channel-map-restore-btn': 'Відновити',
+        'net-lua-config': 'LUA Конфігурація',
+        'settings-status-label-Text': 'Будь ласка, не натискайте кнопки швидко підряд — це може призвести до помилок передачі даних та переповнення буфера.',
+        'settings-rxLua-label-Text': 'Для режимів 50 Гц та 150 Гц рекомендується змінити коефіцієнт телеметрії на 1:2 під час налаштування RX.',
+        'net-refresh-tx': 'Оновити TX',
+        'net-refresh-rx': 'Оновити RX',
+        'net-recv-hex': 'Шістнадцяткове відображення',
+        'mode-left-stick': 'Ліво',
+        'mode-right-stick': 'Право',
+        'channel-attr-confirm-label': 'Після зміни натисніть "Зберегти" для запису',
+        'trim-center-clear': 'Очистити',
+        'comm-send-text': 'Текстова передача',
+        'comm-send-hex': 'Шістнадцяткова передача',
+        'comm-send-input': 'Введіть дані для відправки',
+        'comm-send-btn': 'Надіслати',
+        'comm-clear-output': 'Очистити',
+        'refresh-getting': 'Отримання налаштувань...',
+        'refresh-done': 'Оновлення завершено',
+        'refresh-timeout': 'Час вичерпано',
+        'calib-title': 'Калібрування',
+        'calib-joystick-label-left': 'Лівий джойстик',
+        'calib-joystick-label-right': 'Правий джойстик',
+        'calib-step-label': 'Натисніть кнопку "Почати калібрування" для виконання калібрування',
+        'calib-action': 'Почати калібрування',
+        'calib-save-action': 'Зберегти калібрування',
+        'calib-reset-action': 'Скинути калібрування',
+        'calib-center-point': 'Центральна точка калібрування',
+        'calib-step-label-center-point': 'Встановіть джойстик у центральну точку, потім натисніть "Підтвердити центральну точку"',
+        'calib-done': 'Калібрування завершено',
+        'calib-step-label-done': 'Після звукового сигналу переміщуйте джойстик і ручки до крайніх положень (максимум і мінімум). Затримайтесь у кутових положеннях не менше 0.5–1 секунди. Після завершення натисніть "Калібрування завершено".',
+        'fw-change-title': 'Вибір оновлення прошивки',
+        'fw-device-type': 'Тип пристрою:',
+        'fw-file-input': 'Будь ласка, виберіть файл прошивки!',
+        'fw-file-name': 'Назва файлу прошивки:',
+        'fw-transmitting': 'Передача, будь ласка, зачекайте...',
+        'fw-select-file': 'Будь ласка, виберіть файл прошивки!',
+        'fw-connect-port': 'Спочатку підключіть COM-порт!',
+        'fw-ready-update': 'Пристрій готовий, можна розпочати оновлення прошивки',
+        'fw-ready-update-text': 'Щоб вийти з оновлення, вимкніть живлення та увімкніть знову, оновіть сторінку і натисніть "Вийти з оновлення прошивки" на головній сторінці.',
+        'fw-wait-ready': 'Будь ласка, зачекайте готовності пристрою...',
+        'fw-update-btn': 'Підтвердити оновлення',
+        'fw-update-progress': 'Прогрес оновлення',
+        'connecting': 'Підключення...',
+        'connect-failed': 'Помилка з\'єднання: ',
+        'browser-not-support': 'Браузер не підтримує цю функцію, будь ласка, використовуйте Chrome/Edge або інший браузер на основі Chromium',
+        'confirm-update': 'Ви впевнені, що хочете продовжити? Після початку ви не зможете виконувати інші дії, а будь-який підключений приймач буде відключено. Не від\'єднуйте пульт під час оновлення.',
+        'confirm-center-point': 'Підтвердити центральну точку',
+        'comm-disconnect-btn': 'Відключити',
+        'recv-hex-checked': 'Шістнадцяткове відображення',
+        'calib-start-step-label': 'Натисніть кнопку "Почати калібрування" для виконання калібрування',
+        'calib-save': 'Зберегти калібрування',
+        'calib-reset': 'Скинути калібрування',
+        'calib-start': 'Почати калібрування',
+        "comm-output-title": "Вивід",
+        "fw-enter-update": "Розпочати оновлення прошивки",
+        "start": "Розпочати",
+        "fw-file-selected": "Вибраний файл: ",
+        "fw-file-size": "Розмір: ",
+        "fw-file-bytes": "байт",
+        "execute": "Виконати",
+        'command-running': 'Виконання...',
+        'command-end': 'Завершити',
+        'channel-map-default-output': 'За замовчуванням',
+        'channel-map-channel-input': 'Вхід',
+        'factory-reset-confirm': 'Ви впевнені, що хочете відновити заводські налаштування? Це скине всі конфігурації та калібрування!!! Цю операцію не можна ігнорувати!',
+        'Sub-trim-title': 'Суб-тример',
+        'factory-reset-success': 'Інструкцію скидання до заводських налаштувань надіслано',
+        'slide_mid': 'Середній тон S1',
+        'elrs-missing-alert': 'Прошивку ELRS не виявлено. Будь ласка, перевірте пристрій або перезапустіть.',
+        'jump-to-elrs-website': 'Перейти на сайт ELRS для оновлення прошивки',
+        'update-esp-firmware': 'Оновити прошивку ESP за допомогою локального додатку',
+        'jump-to-elrs-website-desc': 'Режим оновлення прошивки ESP увімкнено. Натискання підтвердження відключить з\'єднання та відкриє інструмент ESPTool від RadioMaster для вибору оновлення через USB.',
+        'select-firmware-update-method': 'Будь ласка, виберіть метод оновлення прошивки:',
+        'select-firmware-update-method-desc': 'Вибір методу оновлення прошивки',
+        'cancel': 'Скасувати',
+        'progressStatus-label-Text': 'Оновлення конфігурації LUA',
+        'progressStatus-Text': 'Прогрес: ',
+        'serial-warning-test': 'Попередження про втрату приймача',
+        'lowpower-warning-test': 'Попередження про низький заряд',
+        'channel-confirm': 'Зберегти',
+        'send-success': 'Надіслано',
+        'trim-left-reset-test': 'Функція скидання лівого тримера',
+        'trim-right-reset-test': 'Функція скидання правого тримера',
+        'serial-not-found': 'COM-порт не знайдено. Якщо пристрій щойно підключено, зачекайте кілька секунд і спробуйте знову.',
+        'serial-access-failed': 'Помилка доступу до COM-порту: ',
+        'serial-permission-denied': 'Користувач відмовив у доступі до COM-порту, або середовище браузера не підтримує доступ до COM-порту.',
+        "baud-btn": "Ручний вибір швидкості",
+        "baud-enter-btn": "Підтвердити",
+        'bauding': 'Перемикання...',
+        'enter-passthrough': 'Увійти в режим наскрізної передачі',
+        'exit-passthrough': 'Вийти з режиму наскрізної передачі',
+        'open-wifi': 'Увімкнути WiFi',
+        'close-wifi': 'Вимкнути WiFi',
+        'update-over': 'Оновлення завершено',
+        'binding': 'Прив\'язка...',
         // ... 你可以继续补充 ...        
         // ... you can continue ...
       }
@@ -9229,9 +9399,20 @@ const calibStyle = document.createElement('style');
       let txt = '🌐';
       //let txt = '';
       //if (currentLang === 'auto') txt += 'Auto';
-      //else 
-      if (currentLang === 'en') txt += 'EN';
-      else txt += '中文';
+      //else
+      switch (currentLang) {
+        case 'en':
+          txt += 'EN';
+          break;
+        case 'zh':
+          txt += '中文';
+          break;
+        case 'ua':
+          txt += 'UA';
+          break;
+        default:
+          txt += 'N/A';
+      }
       btn.textContent = txt;
     }
 
@@ -9240,8 +9421,18 @@ const calibStyle = document.createElement('style');
       //if (currentLang === 'auto') setLang('zh');
       //else if (currentLang === 'zh') setLang('en');
       //else setLang('auto');
-      if (currentLang === 'zh') setLang('en');
-      else setLang('zh');
+      switch (currentLang) {
+        case 'en':
+          setLang('zh');
+          break;
+        case 'zh':
+          setLang('ua');
+          break;
+        case 'ua':
+          setLang('en');
+        default:
+          setLang('en');
+      }
       //console.log('[ATTR] 语言切换:', currentLang);
       updateAllLangText();
       //autoTranslateAllText();
