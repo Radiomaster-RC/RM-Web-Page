@@ -4644,6 +4644,9 @@ const calibStyle = document.createElement('style');
     //fwEnterUpdateBtn.textContent = LANGS[currentLang]['fw-enter-update'];
     fwEnterUpdateBtn.onclick = async function() {
       if (!writer) { fwStatus.textContent = LANGS[currentLang]['fw-connect-port']; return; }
+      // 重新获取设备类型，确保使用最新选择
+      upDataDev = document.getElementById('fw-device-type').value;
+      console.log('[FW] 开始固件更新，当前设备类型:', upDataDev);
       try {
         if(upDataDev=="remote")
         {
@@ -4651,15 +4654,15 @@ const calibStyle = document.createElement('style');
         }
         if(upDataDev=="sensor")
         {
-          
+
           // setTimeout(async () => {
-          //   await writer.write(new Uint8Array([0x60, 0xF1, 0x55, 0x55]));  
+          //   await writer.write(new Uint8Array([0x60, 0xF1, 0x55, 0x55]));
           // }, 500);
 
           // setTimeout(async () => {
           //   await writer.write(new Uint8Array([0xA5, 0x66, 0x01, 0x0D, 0x0A]));
           // }, 500);
-          
+
           upDataFlag = 1;
           updateFwUI();
           setTimeout(async () => {
