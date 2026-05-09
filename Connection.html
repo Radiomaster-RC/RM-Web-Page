@@ -4477,6 +4477,8 @@ const calibStyle = document.createElement('style');
           if (jsonResponse.ok) {
             const jsonData = await jsonResponse.json();
             fileNames = jsonData[deviceType] || [];
+            console.log('[DEBUG] JSON文件内容:', jsonData);
+            console.log('[DEBUG] 设备类型:', deviceType, '文件列表:', fileNames);
           } else {
             console.warn('无法读取files.json，使用默认列表');
             // 如果JSON读取失败，使用默认列表
@@ -4498,10 +4500,13 @@ const calibStyle = document.createElement('style');
 
         // 并行尝试加载JSON中的bin文件
         const loadPromises = fileNames.map(async (fileName) => {
+          console.log('[DEBUG] 尝试加载文件:', binPath + fileName);
           try {
             const response = await fetch(binPath + fileName);
+            console.log('[DEBUG] 文件响应状态:', fileName, response.status, response.ok);
             if (response.ok) {
               const arrayBuffer = await response.arrayBuffer();
+              console.log('[DEBUG] 成功加载文件:', fileName, '大小:', arrayBuffer.byteLength);
               return {
                 name: fileName,
                 data: new Uint8Array(arrayBuffer),
@@ -4509,6 +4514,7 @@ const calibStyle = document.createElement('style');
               };
             }
           } catch (error) {
+            console.log('[DEBUG] 文件加载失败:', fileName, error);
             // 文件不存在或无法访问，忽略
           }
           return null;
@@ -4516,6 +4522,8 @@ const calibStyle = document.createElement('style');
 
         const results = await Promise.all(loadPromises);
         foundFiles = results.filter(result => result !== null);
+        console.log('[DEBUG] 成功加载的文件数量:', foundFiles.length);
+        console.log('[DEBUG] 成功加载的文件列表:', foundFiles.map(f => f.name));
 
         if (foundFiles.length === 0) {
           fwStatus.textContent = LANGS[currentLang]['fw-no-bin-files'];
