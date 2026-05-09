@@ -1053,6 +1053,201 @@
       user-select: none;
     }
     
+    /* 飞行模式页面样式 */
+    .flight-mode-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .flight-mode-controls {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .flight-btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .flight-btn-save {
+      background: linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);
+      color: #fff;
+    }
+    
+    .flight-btn-save:hover {
+      background: linear-gradient(90deg, #3358e0 0%, #4f8cff 100%);
+    }
+    
+    .flight-btn-restore {
+      background: linear-gradient(90deg, #f1c40f 0%, #e67e22 100%);
+      color: #fff;
+    }
+    
+    .flight-btn-restore:hover {
+      background: linear-gradient(90deg, #e67e22 0%, #f1c40f 100%);
+    }
+    
+    .flight-type-section {
+      background: #eaf1ff;
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      border: 1.5px solid #d0d7e6;
+    }
+    
+    .flight-type-label {
+      font-size: 1.1em;
+      color: #3358e0;
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    
+    .flight-type-options {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .flight-type-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    
+    .flight-type-option input[type="radio"] {
+      display: none;
+    }
+    
+    .flight-type-radio {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #3358e0;
+      border-radius: 50%;
+      position: relative;
+    }
+    
+    .flight-type-option input[type="radio"]:checked + .flight-type-radio {
+      background: #3358e0;
+    }
+    
+    .flight-type-option input[type="radio"]:checked + .flight-type-radio::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    
+    .flight-type-text {
+      font-size: 1.05em;
+      color: #3358e0;
+      font-weight: 500;
+    }
+    
+    .flight-channels-section {
+      background: #f7faff;
+      border-radius: 12px;
+      border: 1.5px solid #e0e7ff;
+      overflow: hidden;
+    }
+    
+    .flight-channel-header {
+      display: flex;
+      background: #3358e0;
+      color: #fff;
+      font-weight: 500;
+      padding: 12px 16px;
+      font-size: 1em;
+    }
+    
+    .flight-channel-num { width: 80px; text-align: center; }
+    .flight-channel-source { flex: 1; text-align: center; }
+    .flight-channel-reverse { width: 100px; text-align: center; }
+    .flight-channel-range { width: 150px; text-align: center; }
+    
+    .flight-channel-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid #e0e7ff;
+    }
+    
+    .flight-channel-row:hover { background: #eaf1ff; }
+    .flight-channel-row:last-child { border-bottom: none; }
+    
+    .flight-channel-num-value {
+      width: 80px;
+      text-align: center;
+      font-weight: 500;
+      color: #3358e0;
+    }
+    
+    .flight-channel-source select {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1.5px solid #d0d7e6;
+      border-radius: 6px;
+      font-size: 1em;
+      background: #fff;
+      color: #3358e0;
+      outline: none;
+    }
+    
+    .flight-channel-reverse { width: 100px; display: flex; justify-content: center; }
+    
+    .flight-reverse-toggle {
+      display: flex;
+      border: 1.5px solid #d0d7e6;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    .flight-reverse-toggle input { display: none; }
+    
+    .flight-reverse-toggle label {
+      padding: 6px 14px;
+      font-size: 0.95em;
+      cursor: pointer;
+      color: #888;
+    }
+    
+    .flight-reverse-toggle label:first-child { border-right: 1px solid #d0d7e6; }
+    
+    .flight-reverse-toggle input:checked + label {
+      background: #3358e0;
+      color: #fff;
+    }
+    
+    .flight-channel-range {
+      width: 150px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .flight-range-input {
+      width: 50px;
+      padding: 6px 8px;
+      border: 1.5px solid #d0d7e6;
+      border-radius: 4px;
+      font-size: 0.95em;
+      text-align: center;
+      outline: none;
+    }
+    
+    .flight-range-label { color: #888; font-size: 0.9em; }
+    
   </style>
 </head>
 <body style="margin:0;">
@@ -1070,13 +1265,22 @@
           var commBtn = document.querySelector('.menu-btn[data-page="comm"]');
           if (commBtn) commBtn.style.display = 'none'; 
         -->
-        <button data-i18n="comm-uart" class="menu-btn" data-page="comm">串口通信</button>
-        <!--<button class="menu-btn" data-page="comm" style="display:none;">串口通信</button> -->
-        <button data-i18n='attr-dev' class="menu-btn" data-page="attr">设备概况</button>
-        <button data-i18n='config-dev' class="menu-btn" data-page="config">设备配置</button>
-        <button data-i18n='net-config' class="menu-btn" data-page="net">无线配置</button>
-        <button data-i18n='dev-cailation' class="menu-btn" data-page="calib">设备校准</button>
-        <button data-i18n='frieware-updata' class="menu-btn" data-page="fw">固件更新</button>
+        <button id="dev-uart"  data-i18n="comm-uart" class="menu-btn" data-page="comm">串口通信</button>
+        <!--button class="menu-btn" data-page="comm" style="display:none;">串口通信</button>-->
+        <!-- <button id="dev-attr"  data-i18n='attr-dev' class="menu-btn" data-page="attr" style="display:none;">设备概况</button> -->
+        <button id="dev-attr"  data-i18n='attr-dev' class="menu-btn" data-page="attr" >设备概况</button>
+        <!--<button data-i18n='config-dev' class="menu-btn" data-page="config">设备配置</button>
+        <button data-i18n='net-config' class="menu-btn" data-page="net">无线配置</button> -->
+
+        <!-- <button data-i18n='attr-dev' class="menu-btn" data-page="attr" style="display:none;">设备概况</button> -->
+        <button id="dev-conf" data-i18n='config-dev' class="menu-btn" data-page="config" style="display:none;">设备配置</button>
+        <button id="dev-net"  data-i18n='net-config' class="menu-btn" data-page="net" style="display:none;">无线配置</button>  
+
+        <!-- <button data-i18n='dev-cailation' class="menu-btn" data-page="calib">设备校准</button> -->
+
+        <button id="dev-cail" data-i18n='dev-cailation' class="menu-btn" data-page="calib" style="display:none;">设备校准</button>
+        <button id="dev-updata" data-i18n='frieware-updata' class="menu-btn" data-page="fw">固件更新</button>
+
       </div>
     </div>
     <div id="signalContainer" class="signal-container state-disconnected">
@@ -1142,10 +1346,10 @@
               <label style="font-size:0.98em;color:#3358e0;font-weight:bold;"  data-i18n="recv-hex-checked">16进制显示接收内容</label>
             </div>
             <div class="form-group" style="margin-top:18px;margin-bottom:18px;">
-              <label for="manual-baudrate" style="font-size:1.08em;color:#3358e0;margin-bottom:8px; font-weight:500;" data-i18n="baud-btn">手动选择波特率</label>
+              <label for="manual-baudrate" style="font-size:1.08em;color:#3358e0;margin-bottom:8px;font-weight:500;">手动选择波特率</label>
               <div style="display:flex;gap:10px;width:100%;">
                 <input id="manual-baudrate" type="number" min="1200" max="921600" step="1" placeholder="请输入波特率" style="flex:1;padding:12px 14px;border:1.5px solid #d0d7e6;border-radius:8px;font-size:1.08em;outline:none;transition:border 0.2s;">
-                <button id="apply-baudrate" style="padding:12px 24px;background:linear-gradient(90deg,#4f8cff 0%,#3358e0 100%);color:#fff;border:none;border-radius:8px;font-size:1.08em;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'";data-i18n="baud-enter-btn">Confirm</button>
+                <button id="apply-baudrate" style="padding:12px 24px;background:linear-gradient(90deg,#4f8cff 0%,#3358e0 100%);color:#fff;border:none;border-radius:8px;font-size:1.08em;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">确认</button>
               </div>
             </div>
             <button class="connect-btn" id="disconnect" style="margin-top:18px;background:linear-gradient(90deg,#e74c3c 0%,#c0392b 100%);" data-i18n="comm-disconnect-btn">断开连接</button>
@@ -1157,7 +1361,11 @@
         </div>
         
         <div id="page-config" class="main-page" style="display:none;">
-          <div class="comm-container"><div class="comm-title">通道配置</div><div>这里是设备配置内容。</div></div>
+          <!-- 飞行模式内容已移至config-stack中的flight-mode子页面 -->
+        </div>
+        
+        <div id="page-flight" class="main-page" style="display:none;">
+          <!-- 已合并到page-config -->
         </div>
         
         <div id="page-net" class="main-page" style="display:none;">
@@ -1219,6 +1427,16 @@
                   <option value="sensor" data-i18n="fw-sensor">传感器</option>
                 </select>
               </div>
+              <!-- 本地bin文件夹选择区 -->
+              <div style="margin-bottom:18px;width:100%;display:flex;flex-direction:column;gap:12px;">
+                <button id="fw-load-local-bin-btn" style="padding:8px 20px;background:linear-gradient(135deg,#4f8cff 0%,#3358e0 100%);color:#fff;border:none;border-radius:8px;font-size:1em;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(51,88,224,0.3);transition:all 0.3s;" data-i18n="fw-load-local-bin">加载本地bin文件夹</button>
+                <div id="fw-bin-file-list" style="display:none;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;padding:8px;background:#f4f8ff;border-radius:8px;border:1px solid #e0e7ff;">
+                  <!-- bin文件列表将在这里动态生成 -->
+                </div>
+              </div>
+              <!-- 分隔线 -->
+              <div style="margin:18px 0;width:100%;height:1px;background:#e0e7ff;"></div>
+              <div style="text-align:center;color:#888;font-size:0.95em;margin-bottom:12px;" data-i18n="or">或</div>
               <!-- 文件拖拽上传区 -->
               <div id="fw-drop-area" style="border:2.5px dashed #4f8cff;border-radius:14px;padding:32px 18px;margin-bottom:22px;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:border-color 0.2s;position:relative;background:#f4f8ff;">
                 <div data-i18n="drag-fw-file" style="font-size:1.13em;color:#3358e0;font-weight:500;margin-bottom:10px;">拖拽固件文件到此处</div>
@@ -1401,6 +1619,7 @@
     let upDataFlag = 0;
     let upDataDev = "remote";
     let channelMap = {};
+    let changeChannelData = [];
     // 根据操作系统设置初始波特率：Mac使用460800，Windows使用420000
     let currentBaudRate = (currentOS === 'Windows') ? 420000 : 460800; // 当前使用的波特率
     let baudRateDetectionActive = false; // 波特率检测是否激活
@@ -1430,15 +1649,189 @@
     // 页面切换逻辑
     const menuBtns = document.querySelectorAll('.menu-btn');
     const mainPages = document.querySelectorAll('.main-page');
-    // 页面初始化注册表
+    // 页面初始化注册表 (flight已合并到config页面)
     const pageInits = {
       comm: initCommPage,
       attr: initAttrPage,
       config: initConfigPage,
+      // flight: initFlightPage, // 已移除，飞行模式已合并到config页面
       net: initNetPage,
       calib: initCalibPage,
       fw: initFwPage,
     };
+
+    // 飞行模式事件绑定
+    function bindFlightModeEvents() {
+      // 绑定模式切换事件
+      const flightTypeRadios = document.querySelectorAll('input[name="flight-type"]');
+      flightTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          console.log('[Flight] 飞行模式切换:', this.value);
+          updateFlightModeByType(this.value);
+        });
+      });
+
+      // 绑定保存按钮
+      const saveBtn = document.getElementById('flight-mode-save');
+      if (saveBtn) {
+        saveBtn.onclick = function() {
+          saveFlightMode();
+        };
+      }
+      
+      // 绑定还原按钮
+      const restoreBtn = document.getElementById('flight-mode-restore');
+      if (restoreBtn) {
+        restoreBtn.onclick = function() {
+          restoreFlightMode();
+        };
+      }
+    }
+
+    // 飞行模式页面初始化
+    function initFlightPage() {
+      console.log('[Flight] 初始化飞行模式页面');
+      
+      // 检查是否已经初始化过通道
+      const container = document.getElementById('flight-channels-container');
+      if (!container || container.children.length === 0) {
+        initFlightChannels(10);
+      }
+      
+      bindFlightModeEvents();
+    }
+
+    // 初始化通道数据
+    function initFlightChannels(channelCount) {
+      const container = document.getElementById('flight-channels-container');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      // 通道控制源选项
+      const sourceOptions = [
+        { value: 'ch1', label: 'CH1' },
+        { value: 'ch2', label: 'CH2' },
+        { value: 'ch3', label: 'CH3' },
+        { value: 'ch4', label: 'CH4' },
+        { value: 'ch5', label: 'CH5' },
+        { value: 'ch6', label: 'CH6' },
+        { value: 'ch7', label: 'CH7' },
+        { value: 'ch8', label: 'CH8' },
+        { value: 'ch9', label: 'CH9' },
+        { value: 'ch10', label: 'CH10' },
+        { value: 'ch11', label: 'CH11' },
+        { value: 'ch12', label: 'CH12' },
+        { value: 'ch13', label: 'CH13' },
+        { value: 'ch14', label: 'CH14' },
+        { value: 'ch15', label: 'CH15' },
+        { value: 'ch16', label: 'CH16' },
+        { value: 'idle', label: '---' },
+      ];
+      
+      for (let i = 1; i <= channelCount; i++) {
+        const row = document.createElement('div');
+        row.className = 'flight-channel-row';
+        row.dataset.channel = i;
+        
+        // 通道号
+        const numSpan = document.createElement('span');
+        numSpan.className = 'flight-channel-num-value';
+        numSpan.textContent = 'CH' + i;
+        
+        // 通道控制源选择
+        const sourceDiv = document.createElement('div');
+        sourceDiv.className = 'flight-channel-source';
+        const sourceSelect = document.createElement('select');
+        sourceSelect.dataset.channel = i;
+        sourceSelect.dataset.field = 'source';
+        
+        sourceOptions.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt.value;
+          option.textContent = opt.label;
+          if (i <= 4 && opt.value === 'ch' + (i + 4)) {
+            option.selected = true;
+          }
+          sourceSelect.appendChild(option);
+        });
+        sourceDiv.appendChild(sourceSelect);
+        
+        // 正反开关
+        const reverseDiv = document.createElement('div');
+        reverseDiv.className = 'flight-channel-reverse';
+        const reverseToggle = document.createElement('div');
+        reverseToggle.className = 'flight-reverse-toggle';
+        reverseToggle.innerHTML = `
+          <input type="radio" name="reverse-${i}" id="rev-norm-${i}" value="normal" checked>
+          <label for="rev-norm-${i}">正常</label>
+          <input type="radio" name="reverse-${i}" id="rev-rev-${i}" value="reverse">
+          <label for="rev-rev-${i}">反舵</label>
+        `;
+        reverseDiv.appendChild(reverseToggle);
+        
+        // 范围设置
+        const rangeDiv = document.createElement('div');
+        rangeDiv.className = 'flight-channel-range';
+        rangeDiv.innerHTML = `
+          <input type="number" class="flight-range-input" data-channel="${i}" data-field="min" value="-100" min="-150" max="150">
+          <span class="flight-range-label">~</span>
+          <input type="number" class="flight-range-input" data-channel="${i}" data-field="max" value="100" min="-150" max="150">
+        `;
+        
+        row.appendChild(numSpan);
+        row.appendChild(sourceDiv);
+        row.appendChild(reverseDiv);
+        row.appendChild(rangeDiv);
+        
+        container.appendChild(row);
+      }
+    }
+
+    // 根据飞行模式类型更新通道配置
+    function updateFlightModeByType(type) {
+      console.log('[Flight] 更新飞行模式类型:', type);
+    }
+
+    // 保存飞行模式
+    function saveFlightMode() {
+      console.log('[Flight] 保存飞行模式');
+      
+      const flightData = {
+        type: document.querySelector('input[name="flight-type"]:checked').value,
+        channels: []
+      };
+      console.log('[Flight] 当前飞行模式类型:', flightData.type);
+      const channelRows = document.querySelectorAll('.flight-channel-row');
+      channelRows.forEach(row => {
+        const channelNum = row.dataset.channel;
+        const source = row.querySelector('select[data-field="source"]').value;
+        const reverse = row.querySelector('input[name="reverse-' + channelNum + '"]:checked').value;
+        const minInput = row.querySelector('input[data-field="min"]');
+        const maxInput = row.querySelector('input[data-field="max"]');
+        
+        flightData.channels.push({
+          channel: parseInt(channelNum),
+          source: source,
+          reverse: reverse,
+          min: parseInt(minInput.value),
+          max: parseInt(maxInput.value)
+        });
+      });
+      
+      console.log('[Flight] 保存数据:', flightData);
+      alert('飞行模式保存成功！\n类型: ' + flightData.type + '\n通道数: ' + flightData.channels.length);
+    }
+
+    // 还原飞行模式
+    function restoreFlightMode() {
+      console.log('[Flight] 还原飞行模式');
+      if (confirm('确定要还原飞行模式吗？当前未保存的更改将会丢失。')) {
+        document.querySelector('input[name="flight-type"][value="none"]').checked = true;
+        initFlightChannels(10);
+        alert('飞行模式已还原为默认值');
+      }
+    }
 
     // 记录当前页面，防止重复初始化
     window._currentPage = null;
@@ -1746,19 +2139,19 @@
       
       // 验证波特率范围
       if (isNaN(newBaudRate) || newBaudRate < 1200 || newBaudRate > 921600) {
-        alert('Please enter a valid baud rate.（1200-921600）');
+        alert('请输入有效的波特率（1200-921600）');
         return;
       }
       
       // 如果和当前波特率相同，不需要切换
       if (newBaudRate === currentBaudRate) {
-        alert(`The current baud rate is already ${newBaudRate} `);
+        alert(`当前已经是 ${newBaudRate} 波特率`);
         return;
       }
       
       // 显示切换中状态
       applyBaudrateBtn.disabled = true;
-      applyBaudrateBtn.textContent = LANGS[currentLang]['bauding'];
+      applyBaudrateBtn.textContent = '切换中...';
       applyBaudrateBtn.style.opacity = '0.6';
       
       try {
@@ -1776,7 +2169,7 @@
       } finally {
         // 恢复按钮状态
         applyBaudrateBtn.disabled = false;
-        applyBaudrateBtn.textContent = LANGS[currentLang]['baud-enter-btn'];
+        applyBaudrateBtn.textContent = '确认';
         applyBaudrateBtn.style.opacity = '1';
       }
     };
@@ -2638,9 +3031,424 @@
   }, 1800000/60);   //60s就会清空缓冲区,以免内存溢出
 
 
+    // --- M8L车控校准页面 ---
+    function renderCarCalibPage(calibPage) {
+      const MIN_VAL = 988;
+      const MAX_VAL = 2012;
+      const INIT_VAL = 1500;
+      const INIT_PCT = ((INIT_VAL - MIN_VAL) / (MAX_VAL - MIN_VAL) * 100).toFixed(4);
+
+      calibPage.innerHTML = `
+      <style>
+        .car-calib-container {
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .car-calib-card {
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+          max-width: 600px;
+          width: 100%;
+        }
+        
+        .car-calib-title {
+          font-size: 1.5em;
+          font-weight: bold;
+          color: #333;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        
+        .car-animation {
+          width: 200px;
+          height: 120px;
+          margin: 0 auto 30px;
+          position: relative;
+        }
+        
+        .car-body {
+          width: 120px;
+          height: 50px;
+          background: #e74c3c;
+          border-radius: 10px;
+          position: absolute;
+          top: 35px;
+          left: 40px;
+          transition: transform 0.1s ease-out;
+        }
+        
+        .car-top {
+          width: 80px;
+          height: 30px;
+          background: #c0392b;
+          border-radius: 10px 10px 0 0;
+          position: absolute;
+          top: 5px;
+          left: 60px;
+        }
+        
+        .car-wheel {
+          width: 25px;
+          height: 25px;
+          background: #333;
+          border-radius: 50%;
+          position: absolute;
+          top: 80px;
+        }
+        
+        .car-wheel.front { left: 50px; }
+        .car-wheel.back { left: 125px; }
+        
+        .car-steering-indicator {
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 24px;
+          transition: transform 0.1s ease-out;
+        }
+        
+        .calib-channel-row {
+          margin-bottom: 25px;
+        }
+        
+        .calib-channel-label {
+          font-weight: bold;
+          color: #555;
+          margin-bottom: 10px;
+          display: block;
+        }
+        
+        .calib-progress-bar {
+          width: 100%;
+          height: 30px;
+          background: #e0e7ff;
+          border-radius: 15px;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        .calib-progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);
+          transition: width 0.05s;
+        }
+        
+        .calib-progress-indicator {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 3px;
+          background: #e74c3c;
+          opacity: 0.8;
+          transition: left 0.05s;
+        }
+        
+        .calib-value-display {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 8px;
+          font-family: 'Roboto', monospace;
+          font-size: 0.9em;
+        }
+        
+        .calib-btn-group {
+          display: flex;
+          gap: 15px;
+          justify-content: center;
+          margin-top: 30px;
+        }
+        
+        .calib-btn {
+          padding: 12px 30px;
+          border: none;
+          border-radius: 8px;
+          font-size: 1em;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        
+        .calib-btn-primary {
+          background: linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);
+          color: white;
+        }
+        
+        .calib-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(79, 140, 255, 0.4);
+        }
+        
+        .calib-btn-success {
+          background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+          color: white;
+        }
+        
+        .calib-btn-warning {
+          background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%);
+          color: white;
+        }
+        
+        .calib-btn:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+          transform: none;
+        }
+        
+        .calib-step-label {
+          text-align: center;
+          color: #e74c3c;
+          font-weight: bold;
+          margin-bottom: 20px;
+          min-height: 24px;
+        }
+      </style>
+      
+      <div class="car-calib-container">
+        <div class="car-calib-card">
+          <div class="car-calib-title" data-i18n="car-calib-title">M8L 车控校准</div>
+          
+          <div class="car-animation">
+            <div class="car-top"></div>
+            <div class="car-body" id="car-body"></div>
+            <div class="car-wheel front"></div>
+            <div class="car-wheel back"></div>
+            <div class="car-steering-indicator" id="steering-indicator">⬆️</div>
+          </div>
+          
+          <div id="calib-step-label" class="calib-step-label" data-i18n="calib-start-step-label">点击"开始校准"按键进行校准操作</div>
+          
+          <div class="calib-channel-row">
+            <span class="calib-channel-label" data-i18n="throttle-channel">油门通道 (CH1)</span>
+            <div class="calib-progress-bar">
+              <div class="calib-progress-fill" id="throttle-fill" style="width: ${INIT_PCT}%"></div>
+              <div class="calib-progress-indicator" id="throttle-ind" style="left: ${INIT_PCT}%"></div>
+            </div>
+            <div class="calib-value-display">
+              <span id="throttle-value">${INIT_VAL}</span>
+              <span id="throttle-percent">${INIT_PCT}%</span>
+            </div>
+          </div>
+          
+          <div class="calib-channel-row">
+            <span class="calib-channel-label" data-i18n="steering-channel">方向通道 (CH2)</span>
+            <div class="calib-progress-bar">
+              <div class="calib-progress-fill" id="steering-fill" style="width: ${INIT_PCT}%"></div>
+              <div class="calib-progress-indicator" id="steering-ind" style="left: ${INIT_PCT}%"></div>
+            </div>
+            <div class="calib-value-display">
+              <span id="steering-value">${INIT_VAL}</span>
+              <span id="steering-percent">${INIT_PCT}%</span>
+            </div>
+          </div>
+          
+          <div class="calib-btn-group">
+            <button id="car-calib-action-btn" class="calib-btn calib-btn-primary" data-i18n="calib-start">开始校准</button>
+            <button id="car-calib-save-btn" class="calib-btn calib-btn-success" style="display:none;" data-i18n="calib-save">校准保存</button>
+            <button id="car-calib-reset-btn" class="calib-btn calib-btn-warning" style="display:none;" data-i18n="calib-reset">重新校准</button>
+          </div>
+        </div>
+      </div>
+      `;
+
+      // 校准状态管理
+      window.carCalibState = 'idle';
+      window.carAdcMax = [0, 0];
+      window.carAdcMin = [65535, 65535];
+      window.carMidAdc = [0, 0];
+
+      const calibBtn = document.getElementById('car-calib-action-btn');
+      const saveBtn = document.getElementById('car-calib-save-btn');
+      const resetBtn = document.getElementById('car-calib-reset-btn');
+      const stepLabel = document.getElementById('calib-step-label');
+
+      calibBtn.onclick = async function() {
+        if (window.carCalibState === 'idle') {
+          window.carCalibState = 'calibrating';
+          calibBtn.textContent = LANGS[currentLang]['confirm-center-point'] || '确认中心点';
+          stepLabel.textContent = LANGS[currentLang]['calib-step-label-center-point'] || '请将油门和方向置于中位，然后点击确认';
+          stopGlobalChannelTimer();
+        } else if (window.carCalibState === 'calibrating') {
+          // 记录中心点
+          if (window.lastCarChannelData) {
+            window.carMidAdc[0] = window.lastCarChannelData[0]; // 油门
+            window.carMidAdc[1] = window.lastCarChannelData[1]; // 方向
+          }
+          
+          if (writer) {
+            writer.write(new Uint8Array([0xA5, 0x55, 0x22, 0x02, 0x0D, 0x0A]));
+          }
+          
+          window.carCalibState = 'calibrating-range';
+          calibBtn.textContent = LANGS[currentLang]['confirm-range'] || '确认行程';
+          stepLabel.textContent = LANGS[currentLang]['calib-step-label-range'] || '请将油门和方向推到最大行程，然后点击确认';
+        } else if (window.carCalibState === 'calibrating-range') {
+          calibBtn.style.display = 'none';
+          saveBtn.style.display = '';
+          resetBtn.style.display = '';
+          stepLabel.textContent = LANGS[currentLang]['calib-ready-save'] || '校准完成，请保存或重新校准';
+          window.carCalibState = 'ready-save';
+        }
+      };
+
+      saveBtn.onclick = async function() {
+        const data = new Uint8Array(14); // 2通道 * 6字节 + 2字节
+        for (let i = 0; i < 2; i++) {
+          data[i*6+0] = window.carAdcMax[i] & 0xFF;
+          data[i*6+1] = (window.carAdcMax[i] >> 8) & 0xFF;
+          data[i*6+2] = window.carAdcMin[i] & 0xFF;
+          data[i*6+3] = (window.carAdcMin[i] >> 8) & 0xFF;
+          data[i*6+4] = window.carMidAdc[i] & 0xFF;
+          data[i*6+5] = (window.carMidAdc[i] >> 8) & 0xFF;
+        }
+        
+        const buf = new Uint8Array(3+14+2);
+        buf[0] = 0xA5;
+        buf[1] = 0x55;
+        buf[2] = 0x0A;
+        buf.set(data, 3);
+        buf[17] = 0x0D;
+        buf[18] = 0x0A;
+        
+        if (writer) {
+          writer.write(buf);
+          console.log('[车控校准] 已发送校准数据');
+        }
+        
+        window.alert(LANGS[currentLang]['update-over'] || '保存成功');
+        saveBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
+        calibBtn.style.display = '';
+        calibBtn.textContent = LANGS[currentLang]['calib-start'] || '开始校准';
+        stepLabel.textContent = LANGS[currentLang]['calib-start-step-label'] || '点击"开始校准"按键进行校准操作';
+        window.carCalibState = 'idle';
+      };
+
+      resetBtn.onclick = async function() {
+        calibBtn.textContent = LANGS[currentLang]['calib-start'] || '开始校准';
+        stepLabel.textContent = LANGS[currentLang]['calib-start-step-label'] || '点击"开始校准"按键进行校准操作';
+        saveBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
+        calibBtn.style.display = '';
+        window.carCalibState = 'idle';
+        window.carAdcMax = [0, 0];
+        window.carAdcMin = [65535, 65535];
+        window.carMidAdc = [0, 0];
+      };
+
+      // 解析车控通道数据
+      window.tryParseCarChannelPacket = function(buf) {
+        if (!buf || buf.length < 3) return false;
+        if (buf[0] !== 0x22) return false;
+        const len = buf[1];
+        if (buf.length < len + 2) return false;
+        const crc = buf[len+1];
+        const calcCrc = crc8tab_js(buf.slice(2, 2+len-1), len-1);
+        if (crc !== calcCrc) return false;
+        
+        let recvChannel = [];
+        for(let i = 0; i < 10; i++) {
+          let off = 8 + i*2;
+          let val = buf[off] | (buf[off+1]<<8);
+          recvChannel[i] = val;
+        }
+        
+        window.lastCarChannelData = recvChannel;
+        
+        // 更新油门和方向显示
+        const throttleVal = recvChannel[0]; // CH1 油门
+        const steeringVal = recvChannel[1]; // CH2 方向
+        
+        // 更新进度条
+        const throttlePct = ((throttleVal - MIN_VAL) / (MAX_VAL - MIN_VAL) * 100).toFixed(2);
+        const steeringPct = ((steeringVal - MIN_VAL) / (MAX_VAL - MIN_VAL) * 100).toFixed(2);
+        
+        const throttleFill = document.getElementById('throttle-fill');
+        const throttleInd = document.getElementById('throttle-ind');
+        const throttleValue = document.getElementById('throttle-value');
+        const throttlePercent = document.getElementById('throttle-percent');
+        
+        const steeringFill = document.getElementById('steering-fill');
+        const steeringInd = document.getElementById('steering-ind');
+        const steeringValue = document.getElementById('steering-value');
+        const steeringPercent = document.getElementById('steering-percent');
+        
+        if (throttleFill) {
+          throttleFill.style.width = throttlePct + '%';
+          throttleInd.style.left = throttlePct + '%';
+          throttleValue.textContent = throttleVal;
+          throttlePercent.textContent = throttlePct + '%';
+        }
+        
+        if (steeringFill) {
+          steeringFill.style.width = steeringPct + '%';
+          steeringInd.style.left = steeringPct + '%';
+          steeringValue.textContent = steeringVal;
+          steeringPercent.textContent = steeringPct + '%';
+        }
+        
+        // 更新车辆动画
+        const carBody = document.getElementById('car-body');
+        const steeringIndicator = document.getElementById('steering-indicator');
+        
+        if (carBody) {
+          // 油门控制车辆前后移动
+          const throttleOffset = (throttleVal - 1500) / 10;
+          carBody.style.transform = `translateX(${throttleOffset}px)`;
+        }
+        
+        if (steeringIndicator) {
+          // 方向控制转向指示
+          const steeringAngle = (steeringVal - 1500) / 20;
+          steeringIndicator.style.transform = `translateX(-50%) rotate(${steeringAngle}deg)`;
+          
+          // 更新方向图标
+          if (steeringVal < 1400) {
+            steeringIndicator.textContent = '⬅️';
+          } else if (steeringVal > 1600) {
+            steeringIndicator.textContent = '➡️';
+          } else {
+            steeringIndicator.textContent = '⬆️';
+          }
+        }
+        
+        // 记录最大最小值
+        if (window.carCalibState === 'calibrating-range') {
+          if (throttleVal > window.carAdcMax[0]) window.carAdcMax[0] = throttleVal;
+          if (throttleVal < window.carAdcMin[0]) window.carAdcMin[0] = throttleVal;
+          if (steeringVal > window.carAdcMax[1]) window.carAdcMax[1] = steeringVal;
+          if (steeringVal < window.carAdcMin[1]) window.carAdcMin[1] = steeringVal;
+        }
+        
+        return true;
+      };
+
+      // 请求通道数据
+      if (writer) {
+        writer.write(new Uint8Array([0xA5, 0x55, 0x02, 0x0D, 0x0A]));
+      }
+    }
+
+
     // --- 设备校准页面 ---
     function renderCalibPage() {
     const calibPage = document.getElementById('page-calib');
+
+    // 判断设备类型，M8L使用车控校准页面，T8L使用原有4通道校准页面
+    const deviceName = window._deviceInfo ? window._deviceInfo.devName : '';
+    
+    if (deviceName === 'RadioMaster M8L') {
+      renderCarCalibPage(calibPage);
+      return;
+    }
 
     const MIN_VAL = 988;
     const MAX_VAL = 2012;
@@ -2670,11 +3478,11 @@
     <style>
       /* slider 样式：轨道为单色坐标轴，不显示"已填充"效果 */
       .horizontal-slider, .vertical-slider { -webkit-appearance: none; appearance: none; background: transparent; }
-      .horizontal-slider { width:200px; height:6px; } /* 缩短横向滑块 */
+      .horizontal-slider { width:160px; height:5px; } /* 缩短横向滑块 */
       .horizontal-slider::-webkit-slider-runnable-track{ 
-        height:6px; 
+        height:5px; 
         background:#e0e7ff; 
-        border-radius:6px; 
+        border-radius:4px; 
         position: relative; 
       }
       .horizontal-slider::-webkit-slider-runnable-track::before{ 
@@ -2683,7 +3491,7 @@
         top: 50%; 
         left: 50%; 
         width: 2px; 
-        height: 12px; 
+        height: 10px; 
         background: #e74c3c; 
         transform: translate(-50%, -50%); 
         border-radius: 1px; 
@@ -2691,20 +3499,20 @@
       }
       .horizontal-slider::-webkit-slider-thumb{ 
         -webkit-appearance:none; 
-        width:16px; 
-        height:16px; 
+        width:14px; 
+        height:14px; 
         border-radius:50%; 
         background:#4f8cff; 
-        box-shadow:0 1px 4px rgba(0,0,0,0.15); 
-        margin-top:-5px; 
+        box-shadow:0 1px 3px rgba(0,0,0,0.15); 
+        margin-top:-4.5px; 
         cursor:pointer; 
         z-index: 2;
         position: relative;
       }
       .horizontal-slider::-moz-range-track{ 
-        height:6px; 
+        height:5px; 
         background:#e0e7ff; 
-        border-radius:6px; 
+        border-radius:4px; 
         position: relative; 
       }
       .horizontal-slider::-moz-range-track::before{ 
@@ -2713,15 +3521,15 @@
         top: 50%; 
         left: 50%; 
         width: 2px; 
-        height: 12px; 
+        height: 10px; 
         background: #e74c3c; 
         transform: translate(-50%, -50%); 
         border-radius: 1px; 
         z-index: 1;
       }
       .horizontal-slider::-moz-range-thumb{ 
-        width:16px; 
-        height:16px; 
+        width:14px; 
+        height:14px; 
         border-radius:50%; 
         background:#4f8cff; 
         border:none; 
@@ -2730,11 +3538,11 @@
       }
 
       /* 竖向用旋转实现（旋转后看起来像竖直轴） */
-      .vertical-slider { width:200px; height:22px; transform: rotate(-90deg); } /* 加长竖向滑块 */
+      .vertical-slider { width:160px; height:18px; transform: rotate(-90deg); } /* 加长竖向滑块 */
       .vertical-slider::-webkit-slider-runnable-track{ 
-        height:6px; 
+        height:5px; 
         background:#e0e7ff; 
-        border-radius:6px; 
+        border-radius:4px; 
         position: relative; 
       }
       .vertical-slider::-webkit-slider-runnable-track::before{ 
@@ -2742,7 +3550,7 @@
         position: absolute; 
         top: 50%; 
         left: 50%; 
-        width: 12px; 
+        width: 10px; 
         height: 2px; 
         background: #e74c3c; 
         transform: translate(-50%, -50%); 
@@ -2751,20 +3559,20 @@
       }
       .vertical-slider::-webkit-slider-thumb{ 
         -webkit-appearance:none; 
-        width:16px; 
-        height:16px; 
+        width:14px; 
+        height:14px; 
         border-radius:50%; 
         background:#4f8cff; 
-        box-shadow:0 1px 4px rgba(0,0,0,0.15); 
-        margin-top:-5px; 
+        box-shadow:0 1px 3px rgba(0,0,0,0.15); 
+        margin-top:-4.5px; 
         cursor:pointer; 
         z-index: 2;
         position: relative;
       }
       .vertical-slider::-moz-range-track{ 
-        height:6px; 
+        height:5px; 
         background:#e0e7ff; 
-        border-radius:6px; 
+        border-radius:4px; 
         position: relative; 
       }
       .vertical-slider::-moz-range-track::before{ 
@@ -2772,7 +3580,7 @@
         position: absolute; 
         top: 50%; 
         left: 50%; 
-        width: 12px; 
+        width: 10px; 
         height: 2px; 
         background: #e74c3c; 
         transform: translate(-50%, -50%); 
@@ -2780,8 +3588,8 @@
         z-index: 1;
       }
       .vertical-slider::-moz-range-thumb{ 
-        width:16px; 
-        height:16px; 
+        width:14px; 
+        height:14px; 
         border-radius:50%; 
         background:#4f8cff; 
         border:none; 
@@ -2790,137 +3598,137 @@
       }
 
       /* 缩小一些间距让 bar 与 joystick 更靠近 */
-      .calib-joystick-row { gap:0.4vw; } /* 进一步缩小间距 */
-      .calib-joystick-wrap { gap:2px; }  /* 进一步缩小间距 */
+      .calib-joystick-row { gap:0.3vw; } /* 进一步缩小间距 */
+      .calib-joystick-wrap { gap:1px; }  /* 进一步缩小间距 */
 
       /* 新增：叠加滑块到进度条上的样式（水平方向） */
       .slider-bar-overlay { position: relative; display: inline-block; }
-      .slider-bar-overlay .horizontal-slider { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: 6px; z-index: 2; pointer-events: none; }
+      .slider-bar-overlay .horizontal-slider { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: 5px; z-index: 2; pointer-events: none; }
       .slider-bar-overlay .horizontal-slider::-webkit-slider-thumb { pointer-events: auto; }
       .slider-bar-overlay .horizontal-slider::-moz-range-thumb { pointer-events: auto; }
 
       /* 新增：叠加滑块到进度条上的样式（竖直方向） */
       .vertical-slider-bar-overlay { position: relative; display: inline-flex; align-items: center; }
-      .vertical-slider-bar-overlay .vertical-slider-container { position: absolute; top: 0; left: 50%; transform: translateX(-50%) rotate(-90deg); width: 100%; height: 22px; z-index: 2; pointer-events: none; }
+      .vertical-slider-bar-overlay .vertical-slider-container { position: absolute; top: 0; left: 50%; transform: translateX(-50%) rotate(-90deg); width: 100%; height: 18px; z-index: 2; pointer-events: none; }
       .vertical-slider-bar-overlay .vertical-slider-container input { pointer-events: auto; }
     </style>
 
-    <div class="calib-container" style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.2vh 0;">
+    <div class="calib-container" style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.1vh 0;">
       <div>
-        <div style="display:flex;align-items:center;gap:0.4vw;margin-bottom:0.3vh;">
-          <div class="calib-btn-slider-row" style="display:flex;align-items:center;gap:0.4vw;">
-            <div class="calib-btn-group" id="calib-btn-group" style="display:flex;gap:0.2vw;"></div>
-            <div class="calib-slider-row" style="display:flex;align-items:center;gap:0.2vw;min-width:100px;">
-              <span class="calib-slider-label" style="font-size:1.0em;color:#3358e0;text-align:center;">S1</span>
+        <div style="display:flex;align-items:center;gap:0.3vw;margin-bottom:0.2vh;">
+          <div class="calib-btn-slider-row" style="display:flex;align-items:center;gap:0.3vw;">
+            <div class="calib-btn-group" id="calib-btn-group" style="display:flex;gap:0.15vw;"></div>
+            <div class="calib-slider-row" style="display:flex;align-items:center;gap:0.15vw;min-width:80px;">
+              <span class="calib-slider-label" style="font-size:0.9em;color:#3358e0;text-align:center;">S1</span>
               <input type="range" min="0" max="100" value="50" class="calib-slider-sao" id="calib-slider">
-              <span class="calib-slider-value" id="calib-slider-value" style="font-size:0.9em;">50</span>
+              <span class="calib-slider-value" id="calib-slider-value" style="font-size:0.8em;">50</span>
             </div>
           </div>
         </div>
       </div>
 
       <div>
-        <div id="calib-step-label" style="margin-bottom:0.3vh;color:#e74c3c;font-weight:bold;font-size:0.85em;text-align:center;" data-i18n="calib-start-step-label">点击"开始校准"按键进行校准操作</div>
-        <div style="display:flex;gap:3px;flex-wrap:wrap;justify-content:center;width:100%;margin-bottom:0.2vh;">
-          <div style="display: flex; flex-direction: row; gap: 4px; min-height: 50px; align-items: center; justify-content: center;">
-              <button id="calib-action-btn" class="connect-btn" style="min-width: 140px; min-height: 40px; font-size: 0.75em; padding: 4px 6px;" data-i18n="calib-start">开始校准</button>
-              <button id="calib-save-action-btn" class="connect-btn" style="min-width: 140px; min-height: 40px; font-size: 0.75em; padding: 4px 6px;" data-i18n="calib-save">校准保存</button>
-              <button id="calib-reset-action-btn" class="connect-btn" style="min-width: 140px; min-height: 40px; font-size: 0.75em; padding: 4px 6px;" data-i18n="calib-reset">重新校准</button>
+        <div id="calib-step-label" style="margin-bottom:0.2vh;color:#e74c3c;font-weight:bold;font-size:0.8em;text-align:center;" data-i18n="calib-start-step-label">点击"开始校准"按键进行校准操作</div>
+        <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center;width:100%;margin-bottom:0.15vh;">
+          <div style="display: flex; flex-direction: row; gap: 3px; min-height: 36px; align-items: center; justify-content: center;">
+              <button id="calib-action-btn" class="connect-btn" style="min-width: 120px; min-height: 32px; font-size: 0.7em; padding: 3px 5px;" data-i18n="calib-start">开始校准</button>
+              <button id="calib-save-action-btn" class="connect-btn" style="min-width: 120px; min-height: 32px; font-size: 0.7em; padding: 3px 5px;" data-i18n="calib-save">校准保存</button>
+              <button id="calib-reset-action-btn" class="connect-btn" style="min-width: 120px; min-height: 32px; font-size: 0.7em; padding: 3px 5px;" data-i18n="calib-reset">重新校准</button>
           </div>
         </div>
 
-        <div class="calib-joystick-row" style="display:flex;justify-content:center;align-items:center;min-height:0;gap:0.6vw;">
+        <div class="calib-joystick-row" style="display:flex;justify-content:center;align-items:center;min-height:0;gap:0.4vw;">
 
           <!-- 左竖：滑块 + 原进度条（保持原样，新增滑块值显示）-->
-          <div style="display:flex;flex-direction:column;gap:2px;align-items:center;">
-            <div style="display:flex;align-items:center;gap:3px;">
+          <div style="display:flex;flex-direction:column;gap:1px;align-items:center;">
+            <div style="display:flex;align-items:center;gap:2px;">
               <!-- 竖向滑块容器（旋转实现） -->
-              <div style="width:16px;height:120px;display:flex;align-items:center;justify-content:center;">
+              <div style="width:14px;height:100px;display:flex;align-items:center;justify-content:center;">
                 <input id="calib-slider-lv" class="vertical-slider" type="range" min="${TRIM_MIN_VAL}" max="${TRIM_MAX_VAL}" value="${TRIM_INIT_VAL}">
               </div>
 
               <!-- 保留原进度条结构，添加 fill 与 indicator 的 id 以便同步 -->
-              <div id="calib-bar-lv" style="width:16px;height:180px;background:#e0e7ff;border-radius:8px;overflow:hidden;position:relative;box-shadow:0 1px 4px #b3cfff;">
+              <div id="calib-bar-lv" style="width:14px;height:150px;background:#e0e7ff;border-radius:6px;overflow:hidden;position:relative;box-shadow:0 1px 3px #b3cfff;">
                 <div id="calib-bar-lv-fill" style="width:100%;height:${INIT_PCT}%;background:linear-gradient(0deg, #4f8cff 0%, #3358e0 100%);transition:height 0.05s;"></div>
                 <div id="calib-bar-lv-ind" style="position:absolute;top:${INIT_PCT}%;left:0;right:0;height:2px;background:#e74c3c;opacity:0.7;"></div>
               </div>
             </div>
             <!-- 紧凑的数值显示区域 -->
-            <div style="display:flex;flex-direction:column;gap:1px;align-items:center;">
-              <span id="val-calib-slider-lv" style="font-family:'Roboto',monospace;font-size:0.8em;color:#666;background:#f0f0f0;border-radius:3px;padding:1px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
-              <span id="val-bar-lv" style="font-family:'Roboto',monospace;font-size:0.9em;color:#222;background:#fff;border-radius:4px;padding:1px 8px;box-shadow:0 1px 2px #e0e7ff;min-width:3em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
-              <span id="val-actual-lv" style="font-family:'Roboto',monospace;font-size:0.75em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:3px;padding:1px 4px;box-shadow:0 1px 2px #fecaca;min-width:2.2em;display:inline-block;text-align:center;">0</span>
+            <div style="display:flex;flex-direction:column;gap:0.5px;align-items:center;">
+              <span id="val-calib-slider-lv" style="font-family:'Roboto',monospace;font-size:0.7em;color:#666;background:#f0f0f0;border-radius:2px;padding:0.5px 4px;box-shadow:0 1px 2px #e0e7ff;min-width:2.2em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+              <span id="val-bar-lv" style="font-family:'Roboto',monospace;font-size:0.8em;color:#222;background:#fff;border-radius:3px;padding:0.5px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+              <span id="val-actual-lv" style="font-family:'Roboto',monospace;font-size:0.7em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:2px;padding:0.5px 3px;box-shadow:0 1px 2px #fecaca;min-width:2em;display:inline-block;text-align:center;">0</span>
             </div>
           </div>
 
           <!-- 左横条 + Joystick -->
-          <div class="calib-joystick-wrap" style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-            <div style="display:flex; align-items: center; gap: 3px;">
+          <div class="calib-joystick-wrap" style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="display:flex; align-items: center; gap: 2px;">
               <!-- 修改：水平滑块 -->
-              <div class="slider-bar-overlay" style="width:140px;">
+              <div class="slider-bar-overlay" style="width:120px;">
                 <input id="calib-slider-lh" class="horizontal-slider" type="range" min="${TRIM_MIN_VAL}" max="${TRIM_MAX_VAL}" value="${TRIM_INIT_VAL}">
               </div>
               <!-- 新增：滑块值显示 -->
-              <span id="val-calib-slider-lh" style="font-family:'Roboto',monospace;font-size:0.8em;color:#666;background:#f0f0f0;border-radius:3px;padding:1px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+              <span id="val-calib-slider-lh" style="font-family:'Roboto',monospace;font-size:0.7em;color:#666;background:#f0f0f0;border-radius:2px;padding:0.5px 4px;box-shadow:0 1px 2px #e0e7ff;min-width:2.2em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
             </div>
-            <div style="display:flex; align-items: center; gap: 3px;">
+            <div style="display:flex; align-items: center; gap: 2px;">
               <!-- 进度条 -->
-              <div id="calib-bar-lh" style="height:16px;width:180px;background:#e0e7ff;border-radius:8px;overflow:hidden;position:relative;box-shadow:0 1px 4px #b3cfff;">
+              <div id="calib-bar-lh" style="height:14px;width:150px;background:#e0e7ff;border-radius:6px;overflow:hidden;position:relative;box-shadow:0 1px 3px #b3cfff;">
                 <div id="calib-bar-lh-fill" style="height:100%;width:${INIT_PCT}%;background:linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);transition:width 0.05s;"></div>
                 <div id="calib-bar-lh-ind" style="position:absolute;left:${INIT_PCT}%;top:0;bottom:0;width:2px;background:#e74c3c;opacity:0.7;"></div>
               </div>
               <!-- 紧凑的数值显示区域 -->
-              <div style="display:flex;flex-direction:column;gap:1px;align-items:center;">
-                <span id="val-bar-lh" style="font-family:'Roboto',monospace;font-size:0.85em;color:#222;background:#fff;border-radius:3px;padding:1px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.8em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
-                <span id="val-actual-lh" style="font-family:'Roboto',monospace;font-size:0.75em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:3px;padding:1px 4px;box-shadow:0 1px 2px #fecaca;min-width:2.2em;display:inline-block;text-align:center;">0</span>
+              <div style="display:flex;flex-direction:column;gap:0.5px;align-items:center;">
+                <span id="val-bar-lh" style="font-family:'Roboto',monospace;font-size:0.75em;color:#222;background:#fff;border-radius:2px;padding:0.5px 5px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+                <span id="val-actual-lh" style="font-family:'Roboto',monospace;font-size:0.7em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:2px;padding:0.5px 3px;box-shadow:0 1px 2px #fecaca;min-width:2em;display:inline-block;text-align:center;">0</span>
             </div>
             </div>
-            <canvas class="calib-joystick" id="joystick1" width="200" height="200" style="width:10vh;height:10vh;max-width:140px;max-height:140px;min-width:60px;min-height:60px;"></canvas>
+            <canvas class="calib-joystick" id="joystick1" width="200" height="200" style="width:8vh;height:8vh;max-width:120px;max-height:120px;min-width:50px;min-height:50px;"></canvas>
           </div>
 
 
           <!-- 右横条 + Joystick -->
-          <div class="calib-joystick-wrap" style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-            <div style="display:flex; align-items: center; gap: 3px;">
+          <div class="calib-joystick-wrap" style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="display:flex; align-items: center; gap: 2px;">
               <!-- 修改：水平滑块 -->
-              <div class="slider-bar-overlay" style="width:140px;">
+              <div class="slider-bar-overlay" style="width:120px;">
                 <input id="calib-slider-rh" class="horizontal-slider" type="range" min="${TRIM_MIN_VAL}" max="${TRIM_MAX_VAL}" value="${TRIM_INIT_VAL}">
               </div>
               <!-- 新增：滑块值显示 -->
-              <span id="val-calib-slider-rh" style="font-family:'Roboto',monospace;font-size:0.8em;color:#666;background:#f0f0f0;border-radius:3px;padding:1px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+              <span id="val-calib-slider-rh" style="font-family:'Roboto',monospace;font-size:0.7em;color:#666;background:#f0f0f0;border-radius:2px;padding:0.5px 4px;box-shadow:0 1px 2px #e0e7ff;min-width:2.2em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
             </div>
-            <div style="display:flex; align-items: center; gap: 3px;">
+            <div style="display:flex; align-items: center; gap: 2px;">
               <!-- 进度条 -->
-              <div id="calib-bar-rh" style="height:16px;width:180px;background:#e0e7ff;border-radius:8px;overflow:hidden;position:relative;box-shadow:0 1px 4px #b3cfff;">
+              <div id="calib-bar-rh" style="height:14px;width:150px;background:#e0e7ff;border-radius:6px;overflow:hidden;position:relative;box-shadow:0 1px 3px #b3cfff;">
                 <div id="calib-bar-rh-fill" style="height:100%;width:${INIT_PCT}%;background:linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);transition:width 0.05s;"></div>
                 <div id="calib-bar-rh-ind" style="position:absolute;left:${INIT_PCT}%;top:0;bottom:0;width:2px;background:#e74c3c;opacity:0.7;"></div>
               </div>
               <!-- 紧凑的数值显示区域 -->
-              <div style="display:flex;flex-direction:column;gap:1px;align-items:center;">
-                <span id="val-bar-rh" style="font-family:'Roboto',monospace;font-size:0.85em;color:#222;background:#fff;border-radius:3px;padding:1px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.8em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
-                <span id="val-actual-rh" style="font-family:'Roboto',monospace;font-size:0.75em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:3px;padding:1px 4px;box-shadow:0 1px 2px #fecaca;min-width:2.2em;display:inline-block;text-align:center;">0</span>
+              <div style="display:flex;flex-direction:column;gap:0.5px;align-items:center;">
+                <span id="val-bar-rh" style="font-family:'Roboto',monospace;font-size:0.75em;color:#222;background:#fff;border-radius:2px;padding:0.5px 5px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+                <span id="val-actual-rh" style="font-family:'Roboto',monospace;font-size:0.7em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:2px;padding:0.5px 3px;box-shadow:0 1px 2px #fecaca;min-width:2em;display:inline-block;text-align:center;">0</span>
             </div>
             </div>
-            <canvas class="calib-joystick" id="joystick2" width="200" height="200" style="width:10vh;height:10vh;max-width:140px;max-height:140px;min-width:60px;min-height:60px;"></canvas>
+            <canvas class="calib-joystick" id="joystick2" width="200" height="200" style="width:8vh;height:8vh;max-width:120px;max-height:120px;min-width:50px;min-height:50px;"></canvas>
           </div>
 
           <!-- 右竖：进度条 + 滑块（保持原样，新增滑块值显示） -->
-          <div style="display:flex;flex-direction:column;gap:2px;align-items:center;">
-            <div style="display:flex;align-items:center;gap:3px;">
-              <div id="calib-bar-rv" style="width:16px;height:180px;background:#e0e7ff;border-radius:8px;overflow:hidden;position:relative;box-shadow:0 1px 4px #b3cfff;">
+          <div style="display:flex;flex-direction:column;gap:1px;align-items:center;">
+            <div style="display:flex;align-items:center;gap:2px;">
+              <div id="calib-bar-rv" style="width:14px;height:150px;background:#e0e7ff;border-radius:6px;overflow:hidden;position:relative;box-shadow:0 1px 3px #b3cfff;">
                 <div id="calib-bar-rv-fill" style="width:100%;height:${INIT_PCT}%;background:linear-gradient(0deg, #4f8cff 0%, #3358e0 100%);transition:height 0.05s;"></div>
                 <div id="calib-bar-rv-ind" style="position:absolute;top:${INIT_PCT}%;left:0;right:0;height:2px;background:#e74c3c;opacity:0.7;"></div>
               </div>
 
-              <div style="width:16px;height:120px;display:flex;align-items:center;justify-content:center;">
+              <div style="width:14px;height:100px;display:flex;align-items:center;justify-content:center;">
                 <input id="calib-slider-rv" class="vertical-slider" type="range" min="${TRIM_MIN_VAL}" max="${TRIM_MAX_VAL}" value="${TRIM_INIT_VAL}">
               </div>
             </div>
             <!-- 紧凑的数值显示区域 -->
-            <div style="display:flex;flex-direction:column;gap:1px;align-items:center;">
-              <span id="val-calib-slider-rv" style="font-family:'Roboto',monospace;font-size:0.8em;color:#666;background:#f0f0f0;border-radius:3px;padding:1px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
-              <span id="val-bar-rv" style="font-family:'Roboto',monospace;font-size:0.9em;color:#222;background:#fff;border-radius:4px;padding:1px 8px;box-shadow:0 1px 2px #e0e7ff;min-width:3em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
-              <span id="val-actual-rv" style="font-family:'Roboto',monospace;font-size:0.75em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:3px;padding:1px 4px;box-shadow:0 1px 2px #fecaca;min-width:2.2em;display:inline-block;text-align:center;">0</span>
+            <div style="display:flex;flex-direction:column;gap:0.5px;align-items:center;">
+              <span id="val-calib-slider-rv" style="font-family:'Roboto',monospace;font-size:0.7em;color:#666;background:#f0f0f0;border-radius:2px;padding:0.5px 4px;box-shadow:0 1px 2px #e0e7ff;min-width:2.2em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+              <span id="val-bar-rv" style="font-family:'Roboto',monospace;font-size:0.8em;color:#222;background:#fff;border-radius:3px;padding:0.5px 6px;box-shadow:0 1px 2px #e0e7ff;min-width:2.5em;display:inline-block;text-align:center;">${TRIM_INIT_VAL}</span>
+              <span id="val-actual-rv" style="font-family:'Roboto',monospace;font-size:0.7em;color:#e74c3c;background:#fff5f5;border:1px solid #fecaca;border-radius:2px;padding:0.5px 3px;box-shadow:0 1px 2px #fecaca;min-width:2em;display:inline-block;text-align:center;">0</span>
             </div>
           </div>
 
@@ -3178,6 +3986,16 @@
         // let joy1y = Math.round((recvChannel[1]-1500)/5);
         // let joy2x = Math.round((recvChannel[3]-1500)/5);
         // let joy2y = Math.round((recvChannel[2]-1500)/5);
+        for(let i = 0;i<4;i++)
+        {
+            if(recvChannel[i]==0) 
+            {
+              //conlole.log("通道数据异常，全部为0");
+              console.log("异常小");
+              return; // 避免初始数据异常导致的显示问题
+            }
+        }
+        
         joxy[0] = Math.round((recvChannel[0]-1500)/5);
         joxy[1] = Math.round((recvChannel[1]-1500)/5);
         joxy[2] = Math.round((recvChannel[3]-1500)/5);
@@ -3188,11 +4006,13 @@
             {
               //console.log("异常大:",joxy[i],";recvChannel:",recvChannel,";buf:",buf);
               joxy[i] = 100;
+              //return;
             }
             else if(joxy[i]<-100)
             {
               //console.log("异常小:",joxy[i],";recvChannel:",recvChannel,";buf:",buf);
               joxy[i] = -100;
+              //return;
             }
         }
         const calibElements = [          //映射表
@@ -3435,8 +4255,16 @@
 
           window._globalChannelTask = {
             channelRequest: () => {
-              //console.log('[定时器] 发送 0xA5,0x55,0x02,0x0D,0x0A');
-              if (writer) writer.write(new Uint8Array([0xA5,0x55,0x02,0x0D,0x0A]));
+              //console.log('[定时器] 发送数据源:', window._channelDataSourceRaw ? '原始数据' : '输出数据');
+              if (writer) {
+                if (window._channelDataSourceRaw==0) {
+                  // 输出数据
+                  writer.write(new Uint8Array([0xA5,0x55,0x1B,0x0D,0x0A]));
+                } else {
+                  // 原始数据
+                  writer.write(new Uint8Array([0xA5,0x55,0x02,0x0D,0x0A]));
+                }
+              }
             },
             commandRequest: () => {}
           };
@@ -3453,7 +4281,8 @@
       };
     }
 
-    renderCalibPage();
+    // 移除页面加载时的自动调用，改为在initCalibPage中调用
+    // renderCalibPage();
 
 // --- 校准页面样式增强 ---
 const calibStyle = document.createElement('style');
@@ -3595,6 +4424,178 @@ const calibStyle = document.createElement('style');
     const fwProgressText = document.getElementById('fw-progress-text');
     const fwStatus = document.getElementById('fw-status');
     let fwFileData = null;
+    let fwFileNameForUpload = null;
+
+    // 本地bin文件夹加载功能
+    const fwLoadLocalBinBtn = document.getElementById('fw-load-local-bin-btn');
+    const fwBinFileList = document.getElementById('fw-bin-file-list');
+    const fwDeviceTypeSelect = document.getElementById('fw-device-type');
+    const fwBinFileNameInput = document.getElementById('fw-bin-file-name');
+
+    // 设备类型到文件夹名称的映射
+    const deviceTypeToFolderName = {
+      'remote': 'ctl',
+      'transmitter': 'radio',
+      'sensor': 'sensor'
+    };
+
+    // 获取当前HTML文件的目录路径
+    function getCurrentDirectoryPath() {
+      const currentPath = window.location.pathname;
+      const lastSlashIndex = currentPath.lastIndexOf('/');
+      if (lastSlashIndex !== -1) {
+        return currentPath.substring(0, lastSlashIndex + 1);
+      }
+      return './';
+    }
+
+    // 加载本地bin文件夹
+    fwLoadLocalBinBtn.onclick = async function() {
+      const deviceType = fwDeviceTypeSelect.value;
+      const folderName = deviceTypeToFolderName[deviceType];
+      if (!folderName) {
+        fwStatus.textContent = LANGS[currentLang]['fw-load-error'];
+        return;
+      }
+
+      fwLoadLocalBinBtn.textContent = LANGS[currentLang]['fw-loading'];
+      fwLoadLocalBinBtn.disabled = true;
+      fwBinFileList.innerHTML = '';
+      fwBinFileList.style.display = 'none';
+      fwStatus.textContent = '';
+
+      try {
+        // 获取当前目录路径
+        const basePath = getCurrentDirectoryPath();
+        const binPath = basePath + 'bin/' + folderName + '/';
+        const jsonPath = basePath + 'bin/files.json';
+
+        // 读取JSON文件获取文件列表
+        let fileNames = [];
+        try {
+          const jsonResponse = await fetch(jsonPath);
+          if (jsonResponse.ok) {
+            const jsonData = await jsonResponse.json();
+            fileNames = jsonData[deviceType] || [];
+          } else {
+            console.warn('无法读取files.json，使用默认列表');
+            // 如果JSON读取失败，使用默认列表
+            fileNames = ['remote.bin', 'controller.bin', 'transmitter.bin', 'sensor.bin'];
+          }
+        } catch (error) {
+          console.warn('读取files.json失败，使用默认列表', error);
+          fileNames = ['remote.bin', 'controller.bin', 'transmitter.bin', 'sensor.bin'];
+        }
+
+        if (fileNames.length === 0) {
+          fwStatus.textContent = 'JSON中没有该设备类型的文件列表';
+          fwLoadLocalBinBtn.textContent = LANGS[currentLang]['fw-load-local-bin'];
+          fwLoadLocalBinBtn.disabled = false;
+          return;
+        }
+
+        let foundFiles = [];
+
+        // 并行尝试加载JSON中的bin文件
+        const loadPromises = fileNames.map(async (fileName) => {
+          try {
+            const response = await fetch(binPath + fileName);
+            if (response.ok) {
+              const arrayBuffer = await response.arrayBuffer();
+              return {
+                name: fileName,
+                data: new Uint8Array(arrayBuffer),
+                url: binPath + fileName
+              };
+            }
+          } catch (error) {
+            // 文件不存在或无法访问，忽略
+          }
+          return null;
+        });
+
+        const results = await Promise.all(loadPromises);
+        foundFiles = results.filter(result => result !== null);
+
+        if (foundFiles.length === 0) {
+          fwStatus.textContent = LANGS[currentLang]['fw-no-bin-files'];
+          fwLoadLocalBinBtn.textContent = LANGS[currentLang]['fw-load-local-bin'];
+          fwLoadLocalBinBtn.disabled = false;
+          return;
+        }
+
+        // 如果只找到一个文件，自动执行拖拽操作
+        if (foundFiles.length === 1) {
+          const file = foundFiles[0];
+          const blob = new Blob([file.data], { type: 'application/octet-stream' });
+          const fileObj = new File([blob], file.name, { type: 'application/octet-stream' });
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(fileObj);
+          fwFileInput.files = dataTransfer.files;
+          fwFileInput.dispatchEvent(new Event('change'));
+          fwStatus.textContent = LANGS[currentLang]['fw-file-selected'] + file.name;
+        } else if (foundFiles.length > 1) {
+          // 如果找到多个文件，显示下拉选择
+          const select = document.createElement('select');
+          select.style.padding = '8px 12px';
+          select.style.border = '1px solid #4f8cff';
+          select.style.borderRadius = '6px';
+          select.style.background = '#fff';
+          select.style.color = '#3358e0';
+          select.style.fontSize = '0.95em';
+          select.style.cursor = 'pointer';
+
+          // 添加默认选项
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = '-- 请选择文件 --';
+          defaultOption.disabled = true;
+          defaultOption.selected = true;
+          select.appendChild(defaultOption);
+
+          foundFiles.forEach(file => {
+            const option = document.createElement('option');
+            option.value = file.name;
+            option.textContent = file.name;
+            select.appendChild(option);
+          });
+
+          select.onchange = function() {
+            const selectedName = select.value;
+            const selectedFile = foundFiles.find(f => f.name === selectedName);
+            if (selectedFile) {
+              const blob = new Blob([selectedFile.data], { type: 'application/octet-stream' });
+              const fileObj = new File([blob], selectedFile.name, { type: 'application/octet-stream' });
+              const dataTransfer = new DataTransfer();
+              dataTransfer.items.add(fileObj);
+              fwFileInput.files = dataTransfer.files;
+              fwFileInput.dispatchEvent(new Event('change'));
+              fwStatus.textContent = LANGS[currentLang]['fw-file-selected'] + selectedFile.name;
+              fwBinFileList.style.display = 'none';
+            }
+          };
+
+          fwBinFileList.innerHTML = '';
+          fwBinFileList.appendChild(select);
+          fwBinFileList.style.display = 'flex';
+        }
+
+        fwLoadLocalBinBtn.textContent = LANGS[currentLang]['fw-load-local-bin'];
+        fwLoadLocalBinBtn.disabled = false;
+
+      } catch (error) {
+        console.error('Error loading local bin files:', error);
+        fwStatus.textContent = LANGS[currentLang]['fw-load-error'];
+        fwLoadLocalBinBtn.textContent = LANGS[currentLang]['fw-load-local-bin'];
+        fwLoadLocalBinBtn.disabled = false;
+      }
+    };
+
+    // 设备类型变化时清空文件列表
+    fwDeviceTypeSelect.onchange = function() {
+      fwBinFileList.style.display = 'none';
+      fwBinFileList.innerHTML = '';
+    };
     //fwFileBtn.onclick = () => fwFileInput.click();
     fwDropArea.ondragover = e => { e.preventDefault(); fwDropArea.style.borderColor = '#3358e0'; };
     fwDropArea.ondragleave = e => { e.preventDefault(); fwDropArea.style.borderColor = '#4f8cff'; };
@@ -3612,7 +4613,7 @@ const calibStyle = document.createElement('style');
       const reader = new FileReader();
       reader.onload = function(e) {
         fwFileData = new Uint8Array(e.target.result);
-        fwFileName.textContent = LANGS[currentLang]['fw-file-selected'] + file.name 
+        fwFileName.textContent = LANGS[currentLang]['fw-file-selected'] + file.name
                                       + LANGS[currentLang]['fw-file-size'] + fwFileData.length + LANGS[currentLang]['fw-file-bytes'];
         fwProgressBar.style.width = '0%';
         fwProgressText.textContent = '0%';
@@ -4630,18 +5631,45 @@ const calibStyle = document.createElement('style');
         const LowPowerWarning = buf[offset+9+10];
         const LeftTrimReset = buf[offset+9+11];
         const RightTrimReset = buf[offset+9+12];
+
+        let slideM8LMid = [0,0,0,0,0,0];
+        let slideM8LMidData = [2000,2000,2000,2000,2000,2000];
+
+        if(devName=="RadioMaster M8L")
+        {
+          slideM8LMid = [
+            buf[offset+9+13] , buf[offset+9+14],
+            buf[offset+9+15] , buf[offset+9+16],
+            buf[offset+9+17] , buf[offset+9+18]];
+
+          slideM8LMidData = [
+            buf[offset+9+20]<<8 | buf[offset+9+19],
+            buf[offset+9+22]<<8 | buf[offset+9+21],
+            buf[offset+9+24]<<8 | buf[offset+9+23],
+            buf[offset+9+26]<<8 | buf[offset+9+25],
+            buf[offset+9+28]<<8 | buf[offset+9+27],
+            buf[offset+9+30]<<8 | buf[offset+9+29],
+          ];
+          console.log("RadioMaster M8L");
+        }
+        else if(devName=="RadioMaster T8L")
+        {
+          console.log("RadioMaster T8L");
+        }
+
+
         //console.log("数据:",buf[offset+9+7],buf[offset+9+8]);
         // 打印所有字段
         console.log('[设备属性] 字段明细:', {
           devVolume, serialNumber, elrsFirmWare, deviceFirmWare, elrsName, companyName, devName,
           sendPackSpeed, returnSpeed, calibrationFlag, connectProtocol, channelNum, secretKey, powerVal, remoteCtlClass, mixedCtl,
-          keyModel,slideMid,slideMidData,RxWarning,LowPowerWarning,LeftTrimReset,RightTrimReset
+          keyModel,slideMid,slideMidData,RxWarning,LowPowerWarning,LeftTrimReset,RightTrimReset,slideM8LMid,slideM8LMidData
 
         });
         return {
           devVolume, serialNumber, elrsFirmWare, deviceFirmWare, elrsName, companyName, devName,
           sendPackSpeed, returnSpeed, calibrationFlag, connectProtocol, channelNum, secretKey, powerVal, remoteCtlClass, mixedCtl,
-          keyModel,slideMid,slideMidData,RxWarning,LowPowerWarning,LeftTrimReset,RightTrimReset
+          keyModel,slideMid,slideMidData,RxWarning,LowPowerWarning,LeftTrimReset,RightTrimReset,slideM8LMid,slideM8LMidData
         };
       }
     }
@@ -4983,6 +6011,7 @@ const calibStyle = document.createElement('style');
       }
     };
 
+    let channelFlag  = 0;
     // 设备配置页面渲染函数
     function renderConfigPage() {
       const configPage = document.getElementById('page-config');
@@ -5012,7 +6041,8 @@ const calibStyle = document.createElement('style');
             <button class="config-menu-btn" data-page="channel-map" style="padding:18px 0;border:none;background:none;font-size:1.13em;color:#3358e0;font-weight:bold;cursor:pointer;transition:background 0.2s;" data-i18n="channel-map">通道映射</button>
             <button class="config-menu-btn" data-page="trim-center" style="padding:18px 0;border:none;background:none;font-size:1.13em;color:#3358e0;font-weight:bold;cursor:pointer;transition:background 0.2s;" data-i18n="trim-center">Trim和Center</button>
             <button class="config-menu-btn" data-page="mode" style="padding:18px 0;border:none;background:none;font-size:1.13em;color:#3358e0;font-weight:bold;cursor:pointer;transition:background 0.2s;" data-i18n="mode">摇杆模式</button>
-            <button class="config-menu-btn" data-page="expo" style="padding:18px 0;display:none;border:none;background:none;font-size:1.13em;color:#3358e0;font-weight:bold;cursor:pointer;transition:background 0.2s;" data-i18n="dual-rate-title">大小舵</button>
+            <button class="config-menu-btn" data-page="expo" ;" style="padding:18px 0;border:none;background:none;font-size:1.13em;color:#3358e0;font-weight:bold;cursor:pointer;transition:background 0.2s;" data-i18n="dual-rate-title">大小舵</button>
+            <button class="config-menu-btn" data-page="flight-mode" style="padding:18px 0;border:none;background:none;font-size:1.13em;color:#3358e0;font-weight:bold;cursor:pointer;transition:background 0.2s;" data-i18n="flight-mode">飞行模式</button>
           </div>
           <div id="config-stack" style="flex:1 1 0;background:#fff;border-radius:0 12px 12px 0;box-shadow:0 2px 8px #e0e7ff;padding:32px 36px;min-height:900px;position:relative;">
             <div class="config-stack-page" data-page="channel-map" style="display:none;">
@@ -5036,30 +6066,63 @@ const calibStyle = document.createElement('style');
                   <tbody>
                     ${(() => {
                       let html = '';
-                      //let mapData = channelMap.channelMapSend;
-                      const inputOptions = ['AIL','ELE','THR','RUD','SA','SB','SC','SD','SE','S1'];
-                      const nowInputOptions = ['AIL','ELE','THR','RUD','SE','SA','SB','SC','SD','S1'];  //目前默认是SE是CH5,但是下位机是SA作为CH5,下位机改代码,难度太高了,要改整个逻辑和映射表,这个只是显示,为什么啦,数据是对的,满足下位就好了
-                      for (let i = 0; i < 10; i++) {
-                        let chName = `Channel_${i+1}`;
-                        let outName = '';
-                        let inSelect = '';
-                        //console.log('console.log-',i,"配置完成");
-                        if (i < 4) {
-                          outName = nowInputOptions[i];
-                          inSelect = '';
-                        } else {
-                          outName = nowInputOptions[i];
-                          inSelect = `<select id="ch-map-in2-${i}" style="font-size:1em;padding:4px 12px;border-radius:6px;border:1.5px solid #d0d7e6;">
-                            ${inputOptions.map((opt, idx) => `<option value='${idx+1}'${opt===inputOptions[i]?' selected':''}>${opt}</option>`).join('')}
-                          </select>`;
-                          
+
+                      if(window._deviceInfo.devName=="RadioMaster T8L")
+                      {
+                        //let mapData = channelMap.channelMapSend;
+                        const inputOptions = ['AIL','ELE','THR','RUD','SA','SB','SC','SD','SE','S1'];
+                        const nowInputOptions = ['AIL','ELE','THR','RUD','SE','SA','SB','SC','SD','S1'];  //目前默认是SE是CH5,但是下位机是SA作为CH5,下位机改代码,难度太高了,要改整个逻辑和映射表,这个只是显示,为什么啦,数据是对的,满足下位就好了
+                        for (let i = 0; i < 10; i++) {
+                          let chName = `Channel_${i+1}`;
+                          let outName = '';
+                          let inSelect = '';
+                          //console.log('console.log-',i,"配置完成");
+                          if (i < 4) {
+                            outName = nowInputOptions[i];
+                            inSelect = '';
+                          } else {
+                            outName = nowInputOptions[i];
+                            inSelect = `<select id="ch-map-in2-${i}" style="font-size:1em;padding:4px 12px;border-radius:6px;border:1.5px solid #d0d7e6;">
+                              ${inputOptions.map((opt, idx) => `<option value='${idx+1}'${opt===inputOptions[i]?' selected':''}>${opt}</option>`).join('')}
+                            </select>`;
+                            
+                          }
+                          html += `<tr style="background:#fff;box-shadow:0 1px 8px #e0e7ff;border-radius:10px;">
+                            <td style="padding:10px 18px;text-align:center;font-weight:bold;color:#3358e0;font-size:1.08em;">${chName}</td>
+                            <td style="padding:10px 18px;text-align:center;font-family:'Roboto',monospace;font-size:1.08em;">${outName}</td>
+                            <td style="padding:10px 18px;text-align:center;">${inSelect}</td>
+                          </tr>`;
                         }
-                        html += `<tr style="background:#fff;box-shadow:0 1px 8px #e0e7ff;border-radius:10px;">
-                          <td style="padding:10px 18px;text-align:center;font-weight:bold;color:#3358e0;font-size:1.08em;">${chName}</td>
-                          <td style="padding:10px 18px;text-align:center;font-family:'Roboto',monospace;font-size:1.08em;">${outName}</td>
-                          <td style="padding:10px 18px;text-align:center;">${inSelect}</td>
-                        </tr>`;
                       }
+                      else if(window._deviceInfo.devName=="RadioMaster M8L")
+                      {
+                        //let mapData = channelMap.channelMapSend;
+                        const inputOptions =    ['THR','STE','CH3','CH4','SW1','SW2','SW3','SW4','P1','P2'];
+                        const nowInputOptions = ['THR','STE','CH3','CH4','SW1','SW2','SW3','SW4','P1','P2'];  //目前默认是SE是CH5,但是下位机是SA作为CH5,下位机改代码,难度太高了,要改整个逻辑和映射表,这个只是显示,为什么啦,数据是对的,满足下位就好了
+                        for (let i = 0; i < 10; i++) {
+                          let chName = `Channel_${i+1}`;
+                          let outName = '';
+                          let inSelect = '';
+                          //console.log('console.log-',i,"配置完成");
+                          if (i < 4) {
+                            outName = nowInputOptions[i];
+                            inSelect = '';
+                          } else {
+                            outName = nowInputOptions[i];
+                            inSelect = `<select id="ch-map-in2-${i}" style="font-size:1em;padding:4px 12px;border-radius:6px;border:1.5px solid #d0d7e6;">
+                              ${inputOptions.map((opt, idx) => `<option value='${idx+1}'${opt===inputOptions[i]?' selected':''}>${opt}</option>`).join('')}
+                            </select>`;
+                            
+                          }
+                          html += `<tr style="background:#fff;box-shadow:0 1px 8px #e0e7ff;border-radius:10px;">
+                            <td style="padding:10px 18px;text-align:center;font-weight:bold;color:#3358e0;font-size:1.08em;">${chName}</td>
+                            <td style="padding:10px 18px;text-align:center;font-family:'Roboto',monospace;font-size:1.08em;">${outName}</td>
+                            <td style="padding:10px 18px;text-align:center;">${inSelect}</td>
+                          </tr>`;
+                        }
+                      }
+
+
                       return html;
                     })()}
                   </tbody>
@@ -5067,7 +6130,10 @@ const calibStyle = document.createElement('style');
               </div>
             </div>
             <div class="config-stack-page" data-page="channel" style="display:block;">
-              <div style="font-weight:bold;color:#3358e0;margin-bottom:8px;" data-i18n="channel-monitor">通道监视器</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <div style="font-weight:bold;color:#3358e0;" data-i18n="channel-monitor">通道监视器</div>
+                <button id="channel-data-source-toggle-btn" style="background:linear-gradient(90deg,#3358e0 0%,#4f8cff 100%);color:#fff;border:none;border-radius:8px;padding:8px 24px;font-size:1em;font-weight:bold;box-shadow:0 1px 4px #e0e7ff;cursor:pointer;transition:all 0.2s;" data-i18n="channel-data-source-raw">原始数据</button>
+              </div>
               <div style="display:flex;flex-direction:column;gap:18px;">
                 ${(() => {
                   let html = '';
@@ -5092,6 +6158,7 @@ const calibStyle = document.createElement('style');
                 <div style="font-weight:bold;color:#3358e0;margin-bottom:8px;" data-i18n="channel-attr">通道属性</div>
                 <div style="display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-bottom:8px;">
                   <label id="channel-confirm-label" style="color:#3358e0;font-weight:bold;font-size:1.13em;" data-i18n="channel-attr-confirm-label">修改后点击"通道保存"即可写入</label>
+                  <button id="attr-data-source-toggle-btn" style="background:linear-gradient(90deg,#3358e0 0%,#4f8cff 100%);color:#fff;border:none;border-radius:8px;padding:8px 24px;font-size:1em;font-weight:bold;box-shadow:0 1px 4px #e0e7ff;cursor:pointer;transition:all 0.2s;" data-i18n="channel-data-source-raw">原始数据</button>
                   <button id="channel-confirm-btn" style="background:linear-gradient(90deg,#3358e0 0%,#4f8cff 100%);color:#fff;border:none;border-radius:8px;padding:8px 24px;font-size:1em;font-weight:bold;box-shadow:0 1px 4px #e0e7ff;cursor:pointer;" data-i18n="channel-attr-confirm-btn">通道保存</button>
                   <button id="channel-restore-btn" style="background:linear-gradient(90deg,#aaa 0%,#e0e7ff 100%);color:#3358e0;border:none;border-radius:8px;padding:8px 24px;font-size:1em;font-weight:bold;box-shadow:0 1px 4px #e0e7ff;cursor:pointer;" data-i18n="channel-attr-restore-btn">通道还原</button>
                 </div>
@@ -5122,7 +6189,8 @@ const calibStyle = document.createElement('style');
               <div style="display:flex;flex-direction:column;gap:18px;">
                 ${(() => {
                   let html = '';
-                  for (let i = 0; i < 4; i++) {
+                  const trimCount = window._deviceInfo.devName === 'RadioMaster M8L' ? 2 : 4;
+                  for (let i = 0; i < trimCount; i++) {
                     const min = -130, max = 130, val = 0, percent = ((val - min) / (max - min)) * 100;
         html += `<div style="display:flex;align-items:center;gap:32px;background:linear-gradient(90deg,#eaf1ff 60%,#f4f8ff 100%);border-radius:16px;padding:8px 18px;box-shadow:0 2px 16px #e0e7ff;min-height:32px;flex-wrap:wrap;">
           <span style="color:#3358e0;font-weight:bold;font-size:1.18em;min-width:90px;">Trim${i+1}</span>
@@ -5145,7 +6213,8 @@ const calibStyle = document.createElement('style');
               <div style="display:flex;flex-direction:column;gap:18px;">
                 ${(() => {
                   let html = '';
-                  for (let i = 0; i < 4; i++) {
+                  const subTrimCount = window._deviceInfo.devName === 'RadioMaster M8L' ? 2 : 4;
+                  for (let i = 0; i < subTrimCount; i++) {
                     const min = -100, max = 100, val = 0, percent = ((val - min) / (max - min)) * 100;
         html += `<div style="display:flex;align-items:center;gap:32px;background:linear-gradient(90deg,#f4f8ff 60%,#eaf1ff 100%);border-radius:16px;padding:8px 18px;box-shadow:0 2px 16px #e0e7ff;min-height:32px;flex-wrap:wrap;">
           <span style="color:#3358e0;font-weight:bold;font-size:1.18em;min-width:90px;">Sub Trim${i+1}</span>
@@ -5186,29 +6255,35 @@ const calibStyle = document.createElement('style');
               </div>
             </div>
             <div class="config-stack-page" data-page="expo" style="display:none;">
-              <div style="font-weight:bold;color:#3358e0;margin-bottom:24px;font-size:1.22em;" data-i18n="dual-rate-title">Dual Rate</div>
+              <div style="font-weight:bold;color:#3358e0;margin-bottom:24px;font-size:1.22em;" data-i18n="dual-rate-title-text">Dual Rate</div>
               <div style="display:flex;flex-direction:column;gap:24px;">
                 <!-- 通道选择和开关选择 -->
                 <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#f4f8ff;border-radius:12px;box-shadow:0 2px 8px #e0e7ff;">
                   <label style="color:#3358e0;font-weight:500;min-width:100px;" data-i18n="channel-select">通道选择:</label>
                   <select id="expo-channel-select" style="flex:1;max-width:200px;padding:8px 12px;border:2px solid #e0e7ff;border-radius:8px;background:#fff;color:#3358e0;font-size:1em;outline:none;cursor:pointer;">
+                    ${window._deviceInfo.devName === 'RadioMaster M8L' ? `
+                    <option value="0">THR</option>
+                    <option value="1">STE</option>
+                    ` : `
                     <option value="0">AIL</option>
                     <option value="1">ELE</option>
                     <option value="2">THR</option>
                     <option value="3">RUD</option>
+                    `}
                   </select>
                   <!-- 查询按钮 -->
                   <div style="display:flex;justify-content:center;padding:16px;">
                     <button id="expo-query-btn" style="width:150px;padding:10px 20px;background:linear-gradient(135deg, #4f8cff 0%, #3358e0 100%);color:#fff;border:none;border-radius:8px;font-size:1.1em;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(51,88,224,0.3);transition:all 0.3s;" data-i18n="confirm">通道查询</button>
                   </div>                  
                   <label style="color:#3358e0;font-weight:500;min-width:100px;" data-i18n="switch-channel-select">开关选择:</label>
-                  <select id="expo-switch-channel-select" style="flex:1;max-width:200px;padding:8px 12px;border:2px solid #e0e7ff;border-radius:8px;background:#fff;color:#3358e0;font-size:1em;outline:none;cursor:pointer;">
-                    <option value="0">SA</option>
-                    <option value="1">SB</option>
-                    <option value="2">SC</option>
-                    <option value="3">SD</option>
-                    <option value="4">SE</option>
-                    <option value="5">S1</option>
+                  <select id="expo-switch-channel-select"  style="flex:1;max-width:200px;padding:8px 12px;border:2px solid #e0e7ff;border-radius:8px;background:#fff;color:#3358e0;font-size:1em;outline:none;cursor:pointer;">
+                    <option value="0">None</option>
+                    <option value="6">SA</option>
+                    <option value="7">SB</option>
+                    <option value="8">SC</option>
+                    <option value="9">SD</option>
+                    <option value="5">SE</option>
+                    <option value="10">S1</option>
                   </select>
                   <!-- 反正向按钮 -->
                   <div style="display:flex;justify-content:center;padding:16px;">
@@ -5261,17 +6336,222 @@ const calibStyle = document.createElement('style');
                 </div>
                 <!-- 确认按钮 -->
                 <div style="display:flex;justify-content:center;padding:16px;">
-                  <button id="expo-confirm-btn" style="width:300px;padding:10px 20px;background:linear-gradient(135deg, #4f8cff 0%, #3358e0 100%);color:#fff;border:none;border-radius:8px;font-size:1.1em;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(51,88,224,0.3);transition:all 0.3s;" data-i18n="confirm">确认</button>
+                  <!-- 1. 先添加disabled属性（如需默认禁用） -->
+                  <button id="expo-confirm-btn" 
+                    style="width:300px;padding:10px 20px;
+                          /* 正常状态的渐变背景 */
+                          background:linear-gradient(135deg, #4f8cff 0%, #3358e0 100%);
+                          color:#fff;border:none;border-radius:8px;font-size:1.1em;
+                          font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(51,88,224,0.3);
+                          transition:all 0.3s;
+                          /* 禁用状态的样式（核心） */
+                          &:disabled {
+                            background:linear-gradient(135deg, #b0b8c4 0%, #8e9cad 100%);
+                            color:#e0e0e0;
+                            cursor:not-allowed;
+                            box-shadow:none;
+                            opacity:0.7;
+                          }" 
+                    data-i18n="confirm">确认</button>
                 </div>
               </div>
+            </div>
+            </div>
+            <!-- 飞行模式页面 -->
+            <div class="config-stack-page" data-page="flight-mode" style="display:none;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <div style="font-weight:bold;color:#3358e0;font-size:1.22em;" data-i18n="flight-mode-title">飞行模式配置</div>
+                <div style="display:flex;gap:12px;">
+                  <button id="flight-data-source-toggle-btn" style="background:linear-gradient(90deg,#3358e0 0%,#4f8cff 100%);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:1em;font-weight:bold;box-shadow:0 2px 8px rgba(51,88,224,0.3);cursor:pointer;transition:all 0.2s;" data-i18n="channel-data-source-raw">原始数据</button>
+                  <button id="flight-mode-query-btn" style="background:linear-gradient(90deg,#f39c12 0%,#f1c40f 100%);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:1em;font-weight:bold;box-shadow:0 2px 8px rgba(243,156,18,0.3);cursor:pointer;" data-i18n="flight-mode-query">模式查询</button>
+                  <button id="flight-mode-save-btn" style="background:linear-gradient(90deg,#3358e0 0%,#4f8cff 100%);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:1em;font-weight:bold;box-shadow:0 2px 8px rgba(51,88,224,0.3);cursor:pointer;" data-i18n="flight-mode-save">模式保存</button>
+                  <button id="flight-mode-restore-btn" style="background:linear-gradient(90deg,#aaa 0%,#e0e7ff 100%);color:#3358e0;border:none;border-radius:8px;padding:10px 24px;font-size:1em;font-weight:bold;box-shadow:0 1px 4px #e0e7ff;cursor:pointer;" data-i18n="flight-mode-restore">模式还原</button>
+                </div>
+              </div>
+              
+              <!-- 飞行模式类型选择 V尾/三角翼 -->
+              <div style="background:#eaf1ff;border-radius:12px;padding:18px 22px;margin-bottom:20px;border:1.5px solid #d0d7e6;">
+                <div style="font-size:1.1em;color:#3358e0;font-weight:500;margin-bottom:14px;">飞行模式类型</div>
+                <div style="display:flex;gap:32px;">
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                    <input type="radio" name="flight-type" value="none" style="width:20px;height:20px;">
+                    <span style="font-size:1.05em;color:#3358e0;font-weight:500;">无模式</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                    <input type="radio" name="flight-type" value="vtail" checked style="width:20px;height:20px;">
+                    <span style="font-size:1.05em;color:#3358e0;font-weight:500;">V尾混控</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                    <input type="radio" name="flight-type" value="delta" style="width:20px;height:20px;">
+                    <span style="font-size:1.05em;color:#3358e0;font-weight:500;">三角翼混控</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- 飞行模式可视化区域 -->
+              <div id="flight-mode-visual-container" style="background:#eaf1ff;border-radius:12px;padding:18px 22px;margin-bottom:20px;border:1.5px solid #d0d7e6;">
+                <div style="font-size:1.1em;color:#3358e0;font-weight:500;margin-bottom:14px;">飞行模式可视化</div>
+                <div style="display:flex;gap:20px;align-items:flex-start;">
+                  <!-- 飞机动画区域 -->
+                  <div style="flex:1;display:flex;justify-content:center;align-items:center;min-height:250px;background:#fff;border-radius:10px;padding:20px;border:2px solid #b3cfff;">
+                    <svg id="flight-mode-svg" width="220" height="220" viewBox="0 0 220 220">
+                      <!-- V尾飞机俯视图 -->
+                      <g id="vtail-plane" style="display:none;">
+                        <!-- 机身 -->
+                        <rect x="95" y="40" width="10" height="120" fill="#3358e0" stroke="#2a4bc2" stroke-width="2" rx="2"/>
+                        <!-- 机头 -->
+                        <polygon points="100,20 95,40 105,40" fill="#3358e0" stroke="#2a4bc2" stroke-width="2"/>
+                        <!-- 机翼 -->
+                        <polygon points="100,80 30,110 100,100 170,110" fill="#4f8cff" stroke="#3358e0" stroke-width="2"/>
+                        <!-- V尾左舵面 -->
+                        <polygon points="100,160 70,190 100,175" fill="#e74c3c" stroke="#c0392b" stroke-width="2" opacity="0.8"/>
+                        <!-- V尾左舵机转速表 -->
+                        <g id="vtail-left-gauge" transform="translate(85, 175)">
+                          <circle cx="0" cy="0" r="10" fill="none" stroke="#e0e7ff" stroke-width="2"/>
+                          <line id="vtail-left-needle" x1="0" y1="0" x2="0" y2="-8" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" style="transition: transform 0.1s ease-out;"/>
+                        </g>
+                        <!-- V尾右舵面 -->
+                        <polygon points="100,160 150,190 100,175" fill="#27ae60" stroke="#229954" stroke-width="2" opacity="0.8"/>
+                        <!-- V尾右舵机转速表 -->
+                        <g id="vtail-right-gauge" transform="translate(115, 175)">
+                          <circle cx="0" cy="0" r="10" fill="none" stroke="#e0e7ff" stroke-width="2"/>
+                          <line id="vtail-right-needle" x1="0" y1="0" x2="0" y2="-8" stroke="#27ae60" stroke-width="2" stroke-linecap="round" style="transition: transform 0.1s ease-out;"/>
+                        </g>
+                        <!-- 标签 -->
+                        <text x="60" y="205" font-size="10" fill="#e74c3c" font-weight="bold">左舵机</text>
+                        <text x="130" y="205" font-size="10" fill="#27ae60" font-weight="bold">右舵机</text>
+                      </g>
+                      <!-- 三角翼飞机俯视图 -->
+                      <g id="delta-plane" style="display:none;">
+                        <!-- 机身 -->
+                        <rect x="95" y="40" width="10" height="120" fill="#3358e0" stroke="#2a4bc2" stroke-width="2" rx="2"/>
+                        <!-- 机头 -->
+                        <polygon points="100,20 95,40 105,40" fill="#3358e0" stroke="#2a4bc2" stroke-width="2"/>
+                        <!-- 三角翼 -->
+                        <polygon points="100,50 20,140 100,120 180,140" fill="#4f8cff" stroke="#3358e0" stroke-width="2"/>
+                        <!-- 左舵面 -->
+                        <polygon points="40,140 20,180 60,180" fill="#e74c3c" stroke="#c0392b" stroke-width="2" opacity="0.8"/>
+                        <!-- 左舵机转速表 -->
+                        <g id="delta-left-gauge" transform="translate(40, 165)">
+                          <circle cx="0" cy="0" r="10" fill="none" stroke="#e0e7ff" stroke-width="2"/>
+                          <line id="delta-left-needle" x1="0" y1="0" x2="0" y2="-8" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" style="transition: transform 0.1s ease-out;"/>
+                        </g>
+                        <!-- 右舵面 -->
+                        <polygon points="160,140 180,180 140,180" fill="#27ae60" stroke="#229954" stroke-width="2" opacity="0.8"/>
+                        <!-- 右舵机转速表 -->
+                        <g id="delta-right-gauge" transform="translate(160, 165)">
+                          <circle cx="0" cy="0" r="10" fill="none" stroke="#e0e7ff" stroke-width="2"/>
+                          <line id="delta-right-needle" x1="0" y1="0" x2="0" y2="-8" stroke="#27ae60" stroke-width="2" stroke-linecap="round" style="transition: transform 0.1s ease-out;"/>
+                        </g>
+                        <!-- 标签 -->
+                        <text x="25" y="195" font-size="10" fill="#e74c3c" font-weight="bold">左舵机</text>
+                        <text x="145" y="195" font-size="10" fill="#27ae60" font-weight="bold">右舵机</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <!-- 左右输出数据显示 -->
+                  <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+                    <div style="background:#fff;border-radius:10px;padding:16px;border:2px solid #b3cfff;">
+                      <div style="font-size:1em;color:#3358e0;font-weight:600;margin-bottom:8px;">左输出</div>
+                      <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="flex:1;height:20px;background:#e0e7ff;border-radius:10px;overflow:hidden;">
+                          <div id="left-output-bar" style="width:50%;height:100%;background:linear-gradient(90deg,#e74c3c,#ff6b6b);transition:width 0.1s;"></div>
+                        </div>
+                        <span id="left-output-val" style="min-width:60px;text-align:right;font-family:'Roboto',monospace;font-size:1.1em;color:#3358e0;font-weight:600;">0</span>
+                      </div>
+                    </div>
+                    <div style="background:#fff;border-radius:10px;padding:16px;border:2px solid #b3cfff;">
+                      <div style="font-size:1em;color:#3358e0;font-weight:600;margin-bottom:8px;">右输出</div>
+                      <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="flex:1;height:20px;background:#e0e7ff;border-radius:10px;overflow:hidden;">
+                          <div id="right-output-bar" style="width:50%;height:100%;background:linear-gradient(90deg,#27ae60,#2ecc71);transition:width 0.1s;"></div>
+                        </div>
+                        <span id="right-output-val" style="min-width:60px;text-align:right;font-family:'Roboto',monospace;font-size:1.1em;color:#3358e0;font-weight:600;">0</span>
+                      </div>
+                    </div>
+                    <!-- <div style="background:#fff;border-radius:10px;padding:16px;border:2px solid #b3cfff;">
+                      <div style="font-size:0.9em;color:#666;margin-bottom:8px;">输入通道值（测试用）</div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                        <div>
+                          <span style="font-size:0.85em;color:#888;">ELE:</span>
+                          <input type="number" id="input-ele-test" min="1000" max="2000" value="1500" style="width:60px;padding:4px;border:1px solid #b3cfff;border-radius:4px;font-family:'Roboto',monospace;font-size:0.9em;color:#3358e0;">
+                        </div>
+                        <div>
+                          <span style="font-size:0.85em;color:#888;">RUD:</span>
+                          <input type="number" id="input-rud-test" min="1000" max="2000" value="1500" style="width:60px;padding:4px;border:1px solid #b3cfff;border-radius:4px;font-family:'Roboto',monospace;font-size:0.9em;color:#3358e0;">
+                        </div>
+                        <div>
+                          <span style="font-size:0.85em;color:#888;">AIL:</span>
+                          <input type="number" id="input-ail-test" min="1000" max="2000" value="1500" style="width:60px;padding:4px;border:1px solid #b3cfff;border-radius:4px;font-family:'Roboto',monospace;font-size:0.9em;color:#3358e0;">
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 飞行模式通道配置 -->
+              <div id="flight-mode-channels-container" style="display:flex;flex-direction:column;gap:12px;">
+              </div>
+            </div>
             </div>
           </div>
         </div>
       </div>`;
       configPage.innerHTML = html;
+      
+
+      if(window._deviceInfo.devName=="RadioMaster M8L")
+      {
+        //document.querySelector('.config-menu-btn[data-page="channel-map"]').style.display = 'none';
+        document.querySelector('.config-menu-btn[data-page="mode"]').style.display = 'none';
+        document.querySelector('.config-menu-btn[data-page="flight-mode"]').style.display = 'none';
+      }
+      else if(window._deviceInfo.devName=="RadioMaster T8L")
+      {
+        //document.querySelector('.config-menu-btn[data-page="channel-map"]').style.display = 'none';
+        //document.querySelector('.config-menu-btn[data-page="mode"]').style.display = 'none';
+        document.querySelector('.config-menu-btn[data-page="flight-mode"]').style.display = 'none';
+        document.querySelector('.config-menu-btn[data-page="expo"]').style.display = 'none';
+      }
+
+
+      // 飞行模式菜单按钮点击事件
+      const flightModeBtn = document.querySelector('.config-menu-btn[data-page="flight-mode"]');
+      if (flightModeBtn) {
+        flightModeBtn.onclick = function() {
+          console.log('[Flight] 飞行模式按钮被点击');
+          // 先隐藏所有config-stack-page
+          document.querySelectorAll('.config-stack-page').forEach(p => {
+            p.style.display = 'none';
+          });
+          // 显示飞行模式页面
+          const flightPage = document.querySelector('.config-stack-page[data-page="flight-mode"]');
+          if (flightPage) {
+            flightPage.style.display = 'block';
+            console.log('[Flight] 飞行模式页面已显示, container:', document.getElementById('flight-mode-channels-container'));
+          } else {
+            console.error('[Flight] 未找到飞行模式页面元素');
+          }
+          // 更新菜单按钮状态
+          document.querySelectorAll('.config-menu-btn').forEach(b => b.classList.remove('active'));
+          flightModeBtn.classList.add('active');
+          // 调用初始化函数
+          if (typeof initFlightModePage === 'function') {
+            try {
+              initFlightModePage();
+            } catch(e) {
+              console.error('[Flight] initFlightModePage执行错误:', e);
+            }
+          } else {
+            console.error('[Flight] initFlightModePage函数未定义');
+          }
+        };
+      }
+      
       // 菜单切换逻辑
-      setTimeout(() => {
-        const btns = document.querySelectorAll('.config-menu-btn');
+      const btns = document.querySelectorAll('.config-menu-btn');
+      {
         const pages = document.querySelectorAll('.config-stack-page');
         btns.forEach(btn => {
           btn.onclick = function() {
@@ -5322,21 +6602,78 @@ const calibStyle = document.createElement('style');
 
           // Expo平滑算法页面初始化
           if (btn.dataset.page === 'expo') {
+            //channelFlag = window._channelDataSourceRaw;
+            //window._channelDataSourceRaw = 0;
             setTimeout(initExpoPage, 0);
+          }
+          else
+          {
+            // 离开expo页面时清除定时器
+            if (window.expoUpdateInterval) {
+              clearInterval(window.expoUpdateInterval);
+              window.expoUpdateInterval = null;
+            }
+            //window._channelDataSourceRaw = 1;
+          }
+
+
+
+
+
+          // 飞行模式页面初始化
+          if (btn.dataset.page === 'flight-mode') {
+            console.log('飞行模式按钮被点击');
+            //window._channelDataSourceRaw = 0;
+            // 先确保飞行模式页面显示
+            const flightModePage = document.querySelector('.config-stack-page[data-page="flight-mode"]');
+            if (flightModePage) {
+              flightModePage.style.display = 'block';
+            }
+            
+            // 强制执行初始化函数
+            try {
+              initFlightModePage();
+            } catch(e) {
+              console.error('initFlightModePage执行错误:', e);
+            }
+            // 注意：不要return，要继续执行后面的菜单状态更新代码
           }
 
             btns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const page = btn.dataset.page;
-            pages.forEach(p => {
-              p.style.display = (p.dataset.page === page) ? 'block' : 'none';
+            console.log('[菜单] 切换到页面:', page);
+            
+            // 隐藏所有config-stack-page
+            const allPages = document.querySelectorAll('.config-stack-page');
+            console.log('[菜单] 找到页面数:', allPages.length);
+            allPages.forEach(p => {
+              p.style.display = 'none';
+              //console.log('[菜单] 隐藏页面:', p.dataset.page);
             });
+            
+            // 显示当前选中的页面
+            const currentPage = document.querySelector(`.config-stack-page[data-page="${page}"]`);
+            console.log('[菜单] 当前页面元素:', currentPage);
+            console.log('[菜单] 页面父元素:', currentPage ? currentPage.parentElement : null);
+            console.log('[菜单] 页面父元素的display:', currentPage && currentPage.parentElement ? getComputedStyle(currentPage.parentElement).display : 'N/A');
+            
+            if (currentPage) {
+              currentPage.style.display = 'block';
+              // 强制刷新
+              void currentPage.offsetHeight;
+              console.log('[菜单] 已显示页面:', page);
+              console.log('[菜单] 页面实际display:', getComputedStyle(currentPage).display);
+            } else {
+              console.error('[菜单] 未找到页面:', page);
+            }
           };
         });
         // 初始显示第一个
         pages.forEach(p => {
           p.style.display = (p.dataset.page === 'channel') ? 'block' : 'none';
         });
+      }
 
 
         // 操作模式页面的摇杆绘制和下拉事件
@@ -5390,7 +6727,7 @@ const calibStyle = document.createElement('style');
           // 转换为-500到500：output = (input - 1500) * 500 / 512
           if (channelValue < 988) channelValue = 988;
           if (channelValue > 2012) channelValue = 2012;
-          return (channelValue - 1500) * 500 / 512;
+          return (channelValue - 1500) ;//* 500 / 512;
         };
         
         // 获取当前选择的通道的实时输入数据
@@ -5426,8 +6763,46 @@ const calibStyle = document.createElement('style');
           
           // 获取原始通道值并转换
           const rawValue = window.origChannelData[inputChannelIdx];
+          //console.log('rawValue:', rawValue);
           return convertChannelToInput(rawValue);
         };
+
+        const getChangeCurrentChannelInput = () => {
+          const channelSelect = document.getElementById('expo-channel-select');
+          if (!channelSelect) return null;
+          
+          const selectedChannel = parseInt(channelSelect.value); // 0-3 (AIL/ELE/THR/RUD)
+          
+          // 获取原始通道数据
+          if (!window.origChannelData || window.origChannelData.length < 4) {
+            return null;
+          }
+          
+          // 根据map找到对应的输入通道
+          const channelMapSend = (window.channelMap && window.channelMap.channelMapSend) 
+            ? window.channelMap.channelMapSend 
+            : Array.from({length:10}, (_,i)=>i+1);
+          
+          // selectedChannel是0-3，对应AIL/ELE/THR/RUD
+          // 需要找到channelMapSend中值为selectedChannel+1的位置
+          let inputChannelIdx = -1;
+          for (let i = 0; i < channelMapSend.length; i++) {
+            if (channelMapSend[i] === selectedChannel + 1) {
+              inputChannelIdx = i;
+              break;
+            }
+          }
+          
+          if (inputChannelIdx < 0 || inputChannelIdx >= window.origChannelData.length) {
+            return null;
+          }
+          
+          // 获取原始通道值并转换
+          const rawValue = changeChannelData[inputChannelIdx];
+          return convertChannelToInput(rawValue);
+        };
+
+
         
         // Expo平滑算法图表绘制函数
         const drawExpoGraph = () => {
@@ -5899,28 +7274,28 @@ const calibStyle = document.createElement('style');
               }
             }
             
-            // 更新对应物理通道的Channel Monitor显示
-            if (physicalChannelIdx >= 0 && physicalChannelIdx < 10) {
-              const chVal = document.getElementById(`ch-val-${physicalChannelIdx}`);
-              const chInput = document.getElementById(`ch-input-${physicalChannelIdx}`);
-              const chBar = document.getElementById(`ch-bar-${physicalChannelIdx}`);
-              const chBarAttr = document.getElementById(`ch-bar-attr-${physicalChannelIdx}`);
+            // // 更新对应物理通道的Channel Monitor显示
+            // if (physicalChannelIdx >= 0 && physicalChannelIdx < 10) {
+            //   const chVal = document.getElementById(`ch-val-${physicalChannelIdx}`);
+            //   const chInput = document.getElementById(`ch-input-${physicalChannelIdx}`);
+            //   const chBar = document.getElementById(`ch-bar-${physicalChannelIdx}`);
+            //   const chBarAttr = document.getElementById(`ch-bar-attr-${physicalChannelIdx}`);
               
-              // 更新数值显示
-              if (chVal) chVal.textContent = channelValue;
-              if (chInput) chInput.value = channelValue;
+            //   // 更新数值显示
+            //   if (chVal) chVal.textContent = channelValue;
+            //   if (chInput) chInput.value = channelValue;
               
-              // 更新进度条
-              const percent = ((channelValue - 988) / (2012 - 988) * 100);
-              if (chBar) {
-                const barFill = chBar.children[0];
-                if (barFill) barFill.style.width = percent + '%';
-              }
-              if (chBarAttr) {
-                const barFillAttr = chBarAttr.children[0];
-                if (barFillAttr) barFillAttr.style.width = percent + '%';
-              }
-            }
+            //   // 更新进度条
+            //   const percent = ((channelValue - 988) / (2012 - 988) * 100);
+            //   if (chBar) {
+            //     const barFill = chBar.children[0];
+            //     if (barFill) barFill.style.width = percent + '%';
+            //   }
+            //   if (chBarAttr) {
+            //     const barFillAttr = chBarAttr.children[0];
+            //     if (barFillAttr) barFillAttr.style.width = percent + '%';
+            //   }
+            // }
             // ========== 结束：Channel Monitor更新 ==========
           }
         };
@@ -5942,7 +7317,8 @@ const calibStyle = document.createElement('style');
           // 其他元素
           const channelSelect = document.getElementById('expo-channel-select');
           const switchChannelSelect = document.getElementById('expo-switch-channel-select');
-          const confirmBtn = document.getElementById('expo-confirm-btn');
+          const confirmExpoBtn = document.getElementById('expo-confirm-btn');
+          //confirmExpoBtn.disabled = true;
           const queryBtn = document.getElementById('expo-query-btn');
           const reverseBtn = document.getElementById('expo-reverse-btn');
           
@@ -5951,16 +7327,21 @@ const calibStyle = document.createElement('style');
             queryBtn.onclick = function() {
               const channel = channelSelect ? parseInt(channelSelect.value) : 0;
               const channelNames = ['AIL', 'ELE', 'THR', 'RUD'];
+              const channelNum = channel + 1; // 从1开始计数 (1,2,3,4)
               console.log('通道查询:', {
-                channel: channel + 1,
+                channel: channelNum,
                 channelName: channelNames[channel] || 'Unknown',
                 action: '查询通道'
               });
               
-              // TODO: 发送查询指令
-              // if (typeof writer !== 'undefined' && writer) {
-              //   // 发送查询指令
-              // }
+              // 发送查询指令 {0xA5,0x55,0x2D,channel,'\r','\n'}
+              if (typeof writer !== 'undefined' && writer) {
+                const queryCmd = new Uint8Array([0xA5, 0x55, 0x2D, channelNum, 0x0D, 0x0A]);
+                writer.write(queryCmd);
+                console.log('[查询指令] 发送通道查询:', channelNum, Array.from(queryCmd).map(x => '0x' + x.toString(16).padStart(2, '0').toUpperCase()).join(' '));
+              } else {
+                console.warn('[查询指令] 串口未连接');
+              }
               
               // 按钮反馈效果
               this.style.transform = 'scale(0.95)';
@@ -5977,12 +7358,18 @@ const calibStyle = document.createElement('style');
               const switchChannel = switchChannelSelect ? parseInt(switchChannelSelect.value) : 0;
               const channelNames = ['AIL', 'ELE', 'THR', 'RUD'];
               const switchNames = ['SA', 'SB', 'SC', 'SD', 'SE', 'S1'];
-              
+             
+
               // 切换按钮文本
               const currentText = this.textContent;
               const newText = currentText === 'NOR' ? 'REV' : 'NOR';
               this.textContent = newText;
-              
+              if(newText === 'NOR'){
+                data[5] = 0;
+              }else{
+                data[5] = 1;
+              }
+
               console.log('正反方向切换:', {
                 channel: channel + 1,
                 channelName: channelNames[channel] || 'Unknown',
@@ -6155,8 +7542,9 @@ const calibStyle = document.createElement('style');
           }
           
           // 确认按钮事件
-          if (confirmBtn) {
-            confirmBtn.onclick = function() {
+          if (confirmExpoBtn) {
+            confirmExpoBtn.onclick = function() {
+
               const channel = channelSelect ? parseInt(channelSelect.value) : 0;
               const switchChannel = switchChannelSelect ? parseInt(switchChannelSelect.value) : 0;
               const kLeft = kInputLeft ? parseFloat(kInputLeft.value) : 0;
@@ -6167,7 +7555,7 @@ const calibStyle = document.createElement('style');
               // 这里可以发送数据到设备
               console.log('确认设置:', {
                 channel: channel + 1,
-                switchChannel: switchChannel + 1,
+                switchChannel: switchChannel ,
                 left: {
                   rate: kLeft,
                   expo: expoLeft
@@ -6178,12 +7566,31 @@ const calibStyle = document.createElement('style');
                 }
               });
               
+
+              let data = new Uint8Array(12);  
+              data[0] = 0xA5;
+              data[1] = 0x55;
+              data[2] = 0x2C;
+              data[3] = channel+1;
+              data[4] = switchChannel;
+              data[5] = 0;
+              data[6] = kLeft;
+              data[7] = kRight;
+              data[8] = expoLeft;
+              data[9] = expoRight;
+              data[10] = 0x0D;
+              data[11] = 0x0A;
+
+              if(writer){
+                writer.write(data);
+              }
+
               // 可以在这里添加发送数据的代码
               // if (typeof writer !== 'undefined' && writer) {
               //   // 发送数据协议
               // }
               
-              // 按钮反馈效果
+              //按钮反馈效果
               this.style.transform = 'scale(0.95)';
               setTimeout(() => {
                 this.style.transform = 'scale(1)';
@@ -6191,10 +7598,10 @@ const calibStyle = document.createElement('style');
             };
             
             // 按钮悬停效果
-            confirmBtn.onmouseenter = function() {
+            confirmExpoBtn.onmouseenter = function() {
               this.style.boxShadow = '0 4px 12px rgba(51,88,224,0.4)';
             };
-            confirmBtn.onmouseleave = function() {
+            confirmExpoBtn.onmouseleave = function() {
               this.style.boxShadow = '0 2px 8px rgba(51,88,224,0.3)';
             };
           }
@@ -6212,6 +7619,416 @@ const calibStyle = document.createElement('style');
             drawExpoGraph();
           }, 50); // 每50ms更新一次
         };
+
+        // 飞行模式页面初始化函数
+        function initFlightModePage() {
+          console.log('initFlightModePage: 初始化飞行模式页面');
+          
+          // 监听飞行模式类型radio按钮变化
+          const radioButtons = document.querySelectorAll('input[name="flight-type"]');
+          radioButtons.forEach(radio => {
+            radio.onchange = function() {
+              const selectedMode = this.value;
+              const container = document.getElementById('flight-mode-channels-container');
+              const visualContainer = document.getElementById('flight-mode-visual-container');
+              
+              if (selectedMode === 'none') {
+                container.style.display = 'none';
+                visualContainer.style.display = 'none';
+              } else {
+                container.style.display = 'flex';
+                visualContainer.style.display = 'block';
+                updateFlightModeVisual(selectedMode);
+              }
+            };
+          });
+          
+          // 根据当前选择的模式显示/隐藏通道容器和可视化区域
+          const currentMode = document.querySelector('input[name="flight-type"]:checked')?.value;
+          const container = document.getElementById('flight-mode-channels-container');
+          const visualContainer = document.getElementById('flight-mode-visual-container');
+          if (currentMode === 'none') {
+            container.style.display = 'none';
+            visualContainer.style.display = 'none';
+          } else {
+            container.style.display = 'flex';
+            visualContainer.style.display = 'block';
+            updateFlightModeVisual(currentMode);
+          }
+
+          // // 暂时使用模拟的recvChannel数据（后期替换为真实数据）
+          // window.flightModeRecvChannel = [1500, 1500, 1500, 1500]; // ELE, RUD, AIL, THR
+          
+          // // 监听测试输入框变化
+          // const eleInput = document.getElementById('input-ele-test');
+          // const rudInput = document.getElementById('input-rud-test');
+          // const ailInput = document.getElementById('input-ail-test');
+          
+          // if (eleInput) {
+          //   eleInput.oninput = function() {
+          //     window.flightModeRecvChannel[0] = parseInt(this.value) || 1500;
+          //   };
+          // }
+          // if (rudInput) {
+          //   rudInput.oninput = function() {
+          //     window.flightModeRecvChannel[1] = parseInt(this.value) || 1500;
+          //   };
+          // }
+          // if (ailInput) {
+          //   ailInput.oninput = function() {
+          //     window.flightModeRecvChannel[2] = parseInt(this.value) || 1500;
+          //   };
+          // }
+          
+          // // 启动定时更新可视化
+          startFlightModeVisualUpdate();
+          
+          // 动态生成10个通道配置行的HTML（2行，每行5个）
+          console.log('[Flight] 容器元素:', container);
+          console.log('[Flight] 容器内容长度:', container ? container.innerHTML.length : 0);
+          if (container) {
+            let html = '';
+            // 表头
+            // html += `<div style="display:flex;align-items:center;gap:8px;background:#e0e7ff;padding:10px 16px;border-radius:8px;font-weight:bold;color:#3358e0;font-size:1em;">
+            //   <span style="min-width:60px;">通道</span>
+            //   <span style="min-width:100px;">受控通道</span>
+            //   <span style="min-width:60px;">正反</span>
+            // </div>`;
+            
+            // 2行，每行5个通道配置
+            for (let row = 0; row < 2; row++) {
+              html += `<div style="display:flex;gap:12px;margin-bottom:12px;">`;
+              for (let col = 0; col < 5; col++) {
+                const i = row * 5 + col;
+                html += `<div style="flex:1;display:flex;flex-direction:column;gap:6px;background:linear-gradient(90deg,#f4f8ff 60%,#eaf1ff 100%);border-radius:10px;padding:12px;box-shadow:0 1px 6px #e0e7ff;">
+                  <span style="font-weight:bold;color:#3358e0;font-size:1.1em;">CH${i+1}</span>
+                  <select id="flight-mode-ch-${i}" style="width:100%;padding:6px 8px;border-radius:6px;border:2px solid #b3cfff;background:#fff;color:#3358e0;font-size:0.9em;font-weight:500;">
+                    <option value="0">关闭</option>
+                    <option value="1">左</option>
+                    <option value="2">右</option>
+                  </select>
+                  <button id="flight-mode-dir-${i}" style="width:100%;padding:6px 8px;border-radius:6px;border:2px solid #b3cfff;background:#fff;color:#3358e0;font-weight:bold;cursor:pointer;font-size:0.9em;">NOR</button>
+                </div>`;
+              }
+              html += `</div>`;
+            }
+            console.log('[Flight] 生成的HTML长度:', html.length);
+            container.innerHTML = html;
+            console.log('[Flight] 已写入HTML到容器');
+          }
+          
+          // 初始化10个通道的方向按钮和比例滑块
+          for (let i = 0; i < 10; i++) {
+            // 方向按钮 - 正反切换
+            const dirBtn = document.getElementById(`flight-mode-dir-${i}`);
+            if (dirBtn) {
+              dirBtn.onclick = function() {
+                if (!window.flightModeData) window.flightModeData = {};
+                if (!window.flightModeData.channels) window.flightModeData.channels = [];
+                window.flightModeData.channels[i] = window.flightModeData.channels[i] || {};
+                window.flightModeData.channels[i].dir = window.flightModeData.channels[i].dir ? 0 : 1;
+                this.textContent = window.flightModeData.channels[i].dir ? 'REV' : 'NOR';
+                this.style.background = window.flightModeData.channels[i].dir ? '#ffe066' : '#fff';
+                this.style.color = window.flightModeData.channels[i].dir ? '#e74c3c' : '#3358e0';
+              };
+            }
+            
+            // 左控制比例滑块
+            const leftSlider = document.getElementById(`flight-mode-left-${i}`);
+            const leftVal = document.getElementById(`flight-mode-left-val-${i}`);
+            if (leftSlider && leftVal) {
+              leftSlider.oninput = function() {
+                leftVal.textContent = this.value + '%';
+                if (!window.flightModeData) window.flightModeData = {};
+                if (!window.flightModeData.channels) window.flightModeData.channels = [];
+                window.flightModeData.channels[i] = window.flightModeData.channels[i] || {};
+                window.flightModeData.channels[i].left = parseInt(this.value);
+              };
+            }
+            
+            // 右控制比例滑块
+            const rightSlider = document.getElementById(`flight-mode-right-${i}`);
+            const rightVal = document.getElementById(`flight-mode-right-val-${i}`);
+            if (rightSlider && rightVal) {
+              rightSlider.oninput = function() {
+                rightVal.textContent = this.value + '%';
+                if (!window.flightModeData) window.flightModeData = {};
+                if (!window.flightModeData.channels) window.flightModeData.channels = [];
+                window.flightModeData.channels[i] = window.flightModeData.channels[i] || {};
+                window.flightModeData.channels[i].right = parseInt(this.value);
+              };
+            }
+          }
+          
+          // 模式查询按钮
+          const queryBtn = document.getElementById('flight-mode-query-btn');
+          if (queryBtn) {
+            queryBtn.onclick = function() {
+              console.log('飞行模式: 查询配置');
+              
+              // 发送查询指令到设备
+              // 协议格式: 0xA5, 0x55, 0x32, 0x0D, 0x0A
+              if (typeof writer !== 'undefined' && writer) {
+                const queryData = new Uint8Array([0xA5, 0x55, 0x32, 0x0D, 0x0A]);
+                writer.write(queryData);
+                console.log('[飞行模式] 已发送查询指令:', Array.from(queryData).map(x => '0x' + x.toString(16).padStart(2, '0').toUpperCase()).join(' '));
+              } else {
+                console.warn('[飞行模式] 串口未连接');
+              }
+              
+              // 按钮反馈效果
+              this.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                this.style.transform = 'scale(1)';
+              }, 100);
+            };
+          }
+          
+          // 模式保存按钮
+          const saveBtn = document.getElementById('flight-mode-save-btn');
+          if (saveBtn) {
+            saveBtn.onclick = function() {
+              console.log('飞行模式: 保存配置');
+              
+              // 收集10个通道的配置数据
+              let flightModeConfig = [];
+              for (let i = 0; i < 10; i++) {
+                const chSelect = document.getElementById(`flight-mode-ch-${i}`);
+                const dirBtn = document.getElementById(`flight-mode-dir-${i}`);
+                const leftSlider = document.getElementById(`flight-mode-left-${i}`);
+                const rightSlider = document.getElementById(`flight-mode-right-${i}`);
+                
+                flightModeConfig.push({
+                  channel: chSelect ? parseInt(chSelect.value) : 0,
+                  direction: dirBtn && dirBtn.textContent === 'REV' ? 1 : 0,
+                  left: leftSlider ? parseInt(leftSlider.value) : 100,
+                  right: rightSlider ? parseInt(rightSlider.value) : 100
+                });
+              }
+              
+              // 保存到全局变量
+            if (!window.flightModeData) window.flightModeData = {};
+              window.flightModeData.channels = flightModeConfig;
+              
+              console.log('飞行模式配置数据:', JSON.stringify(flightModeConfig));
+              
+              // 发送保存指令到设备
+              // 协议格式: 0xA5, 0x55, 0x30, [数据...], 0x0D, 0x0A
+              if (typeof writer !== 'undefined' && writer) {
+                // 组包发送 - 这里需要根据实际协议格式调整
+                // 数据格式: 每个通道4字节 (受控通道, 方向, 左比例, 右比例) * 10通道 = 40字节
+                let dataLen = 4 + 20 + 1; // cmd + 40字节数据 + \r\n
+
+                let saveData = new Uint8Array(dataLen);
+                saveData[0] = 0xA5;
+                saveData[1] = 0x55;
+                saveData[2] = 0x30; // 保存命令
+
+                // 获取当前飞行模式：无=0, V尾=1, 三角=2
+                const flightTypeRadio = document.querySelector('input[name="flight-type"]:checked');
+                let flightMode = 0;
+                if (flightTypeRadio) {
+                  const type = flightTypeRadio.value;
+                  if (type === 'vtail') flightMode = 1;
+                  else if (type === 'delta') flightMode = 2;
+                  else flightMode = 0; // none
+                }
+                saveData[3] = flightMode;
+                for (let i = 0; i < 10; i++) {
+                  let idx = 4 + i * 2;
+                  saveData[idx] = flightModeConfig[i].channel;
+                  saveData[idx + 1] = flightModeConfig[i].direction;
+                  //saveData[idx + 2] = flightModeConfig[i].left;
+                  //saveData[idx + 3] = flightModeConfig[i].right;
+                }
+                
+                saveData[dataLen - 2] = 0x0D;
+                saveData[dataLen - 1] = 0x0A;
+                
+                writer.write(saveData);
+                console.log('[飞行模式] 已发送保存指令:', Array.from(saveData).map(x => '0x' + x.toString(16).padStart(2, '0').toUpperCase()).join(' '));
+              }
+              
+              // 按钮反馈效果
+              this.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                this.style.transform = 'scale(1)';
+              }, 100);
+              
+              alert('飞行模式配置已保存');
+            };
+          }
+          
+          // 模式还原按钮
+          const restoreBtn = document.getElementById('flight-mode-restore-btn');
+          if (restoreBtn) {
+            restoreBtn.onclick = function() {
+              console.log('飞行模式: 还原配置');
+              
+              // 发送查询指令获取设备配置
+              if (typeof writer !== 'undefined' && writer) {
+                let queryData = new Uint8Array([0xA5, 0x55, 0x31, 0x0D, 0x0A]);
+                writer.write(queryData);
+                console.log('[飞行模式] 已发送查询指令');
+              }
+              
+              // 按钮反馈效果
+              this.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                this.style.transform = 'scale(1)';
+              }, 100);
+            };
+          }
+          
+          console.log('initFlightModePage: 飞行模式页面初始化完成');
+        }
+        
+        // 更新飞行模式可视化（切换飞机动画）
+        function updateFlightModeVisual(mode) {
+          const vtailPlane = document.getElementById('vtail-plane');
+          const deltaPlane = document.getElementById('delta-plane');
+          
+          if (mode === 'vtail') {
+            vtailPlane.style.display = 'block';
+            deltaPlane.style.display = 'none';
+          } else if (mode === 'delta') {
+            vtailPlane.style.display = 'none';
+            deltaPlane.style.display = 'block';
+          }
+        }
+        
+        // 启动飞行模式可视化更新定时器
+        function startFlightModeVisualUpdate() {
+          if (window.flightModeUpdateInterval) {
+            clearInterval(window.flightModeUpdateInterval);
+          }
+          
+          window.flightModeUpdateInterval = setInterval(() => {
+            updateFlightModeOutputs();
+          }, 50); // 每50ms更新一次
+        }
+        
+        // 更新飞行模式输出显示
+        function updateFlightModeOutputs() {
+          // 获取当前模式
+          const currentMode = document.querySelector('input[name="flight-type"]:checked')?.value;
+          if (!currentMode || currentMode === 'none') return;
+
+          // 获取原始通道数据
+          if (!window.origChannelData || window.origChannelData.length < 4) {
+            return;
+          }
+
+          // // 获取通道映射
+          // const channelMapSend = (window.channelMap && window.channelMap.channelMapSend)
+          //   ? window.channelMap.channelMapSend
+          //   : Array.from({length:10}, (_,i)=>i+1);
+
+          // // 根据map找到AIL/ELE/THR/RUD对应的输入通道索引
+          // // AIL=1, ELE=2, THR=3, RUD=4
+          // let ailIdx = -1, eleIdx = -1, thrIdx = -1, rudIdx = -1;
+          // for (let i = 0; i < channelMapSend.length; i++) {
+          //   if (channelMapSend[i] === 1) ailIdx = i;
+          //   if (channelMapSend[i] === 2) eleIdx = i;
+          //   if (channelMapSend[i] === 3) thrIdx = i;
+          //   if (channelMapSend[i] === 4) rudIdx = i;
+          // }
+
+          // // 获取输入通道值
+          // const ele = (eleIdx >= 0) ? window.origChannelData[eleIdx] : 1500;
+          // const rud = (rudIdx >= 0) ? window.origChannelData[rudIdx] : 1500;
+          // const ail = (ailIdx >= 0) ? window.origChannelData[ailIdx] : 1500;
+      
+          //console.log("origChannelData:",window.origChannelData);
+          const ele = window.origChannelData[1] || 1500;
+          const rud = window.origChannelData[3] || 1500;
+          const ail = window.origChannelData[0] || 1500;
+
+          // 转换为-100到100范围
+          const eleNorm = ((ele - 1500) / 5);
+          const rudNorm = ((rud - 1500) / 5);
+          const ailNorm = ((ail - 1500) / 5);
+          
+          // 限制范围
+          const eleClamped = Math.max(-100, Math.min(100, eleNorm));
+          const rudClamped = Math.max(-100, Math.min(100, rudNorm));
+          const ailClamped = Math.max(-100, Math.min(100, ailNorm));
+          
+          // 计算左右输出
+          let leftOutput = 0;
+          let rightOutput = 0;
+          
+          if (currentMode === 'vtail') {
+            // V尾混控：左 = ELE + RUD, 右 = ELE - RUD
+            leftOutput = eleClamped + rudClamped;
+            rightOutput = eleClamped - rudClamped;
+          } else if (currentMode === 'delta') {
+            // 三角翼混控：左 = ELE + AIL, 右 = ELE - AIL
+            leftOutput = eleClamped + ailClamped;
+            rightOutput = eleClamped - ailClamped;
+          }
+          
+          // 限制输出范围
+          leftOutput = Math.max(-100, Math.min(100, leftOutput));
+          rightOutput = Math.max(-100, Math.min(100, rightOutput));
+          
+          // 更新UI显示
+          const leftVal = document.getElementById('left-output-val');
+          const rightVal = document.getElementById('right-output-val');
+          const leftBar = document.getElementById('left-output-bar');
+          const rightBar = document.getElementById('right-output-bar');
+          const inputEle = document.getElementById('input-ele');
+          const inputRud = document.getElementById('input-rud');
+          const inputAil = document.getElementById('input-ail');
+          
+          if (leftVal) leftVal.textContent = Math.round(leftOutput);
+          if (rightVal) rightVal.textContent = Math.round(rightOutput);
+          if (leftBar) leftBar.style.width = (50 + leftOutput / 2) + '%';
+          if (rightBar) rightBar.style.width = (50 + rightOutput / 2) + '%';
+          if (inputEle) inputEle.textContent = Math.round(eleClamped);
+          if (inputRud) inputRud.textContent = Math.round(rudClamped);
+          if (inputAil) inputAil.textContent = Math.round(ailClamped);
+          
+          // 更新飞机动画线条
+          updatePlaneAnimation(currentMode, leftOutput, rightOutput);
+        }
+        
+        // 更新飞机动画线条
+        function updatePlaneAnimation(mode, leftOutput, rightOutput) {
+          if (mode === 'vtail') {
+            const vtailLeftNeedle = document.getElementById('vtail-left-needle');
+            const vtailRightNeedle = document.getElementById('vtail-right-needle');
+
+            // V尾：左右舵机偏转方向一致
+            // 垂直为常态，负值向左偏转，正值向右偏转
+            const leftRotation = leftOutput * 1.5; // -150到150度
+            const rightRotation = rightOutput * 1.5;
+
+            if (vtailLeftNeedle) {
+              vtailLeftNeedle.style.transform = `rotate(${leftRotation}deg)`;
+            }
+
+            if (vtailRightNeedle) {
+              vtailRightNeedle.style.transform = `rotate(${rightRotation}deg)`;
+            }
+          } else if (mode === 'delta') {
+            const deltaLeftNeedle = document.getElementById('delta-left-needle');
+            const deltaRightNeedle = document.getElementById('delta-right-needle');
+
+            // 三角翼：左右舵机偏转方向一致
+            // 垂直为常态，负值向左偏转，正值向右偏转
+            const leftRotation = leftOutput * 1.5;
+            const rightRotation = rightOutput * 1.5;
+
+            if (deltaLeftNeedle) {
+              deltaLeftNeedle.style.transform = `rotate(${leftRotation}deg)`;
+            }
+
+            if (deltaRightNeedle) {
+              deltaRightNeedle.style.transform = `rotate(${rightRotation}deg)`;
+            }
+          }
+        }
 
         // 初始绘制
         setTimeout(drawModePage, 0);
@@ -6398,22 +8215,148 @@ const calibStyle = document.createElement('style');
               if (window.channelMap.channelMapSend) {
                 window.channelMap.channelMapSend.splice(4, 10, ...dataTmp);
               }
-              for(let i=4;i<10;i++){  
-                const sel = document.getElementById(`ch-map-in2-${i}`); 
-                if (sel) {
-                    //console.log('sel:',sel.value);          
-                    sel.value = window.channelMap.channelMapSend[i];
-                  };
+              // for(let i=4;i<10;i++){  
+              //   const sel = document.getElementById(`ch-map-in2-${i}`); 
+              //   if (sel) {
+              //       //console.log('sel:',sel.value);          
+              //       sel.value = window.channelMap.channelMapSend[i];
+              //     };
+              //   }
+
+              // setTimeout(()=>{
+              //     if (confirmMapBtn) {
+              //       confirmMapBtn.click(); // 触发确认按钮
+              //     }  
+              //   }, 200);
+
+              setTimeout(()=>{
+                if (typeof writer !== 'undefined' && writer) {
+                  console.log('发送通道数据');
+                  writer.write(new Uint8Array([0xA5,0x55,0x31,0x0D,0x0A]));
                 }
-              if (confirmMapBtn) {
-                confirmMapBtn.click(); // 触发确认按钮
-              }  
+              }, 200);
+
+
+              setTimeout(()=>{
+                if (typeof writer !== 'undefined' && writer) {
+                  console.log('发送通道查询数据');
+                  writer.write(new Uint8Array([0xA5,0x55,0x0D,0,0,0x0D,0x0A]));
+                }
+              }, 200);
+
+
+
+            }
+          }
+
+          // 数据源切换按钮事件
+          const dataSourceToggleBtn = document.getElementById('channel-data-source-toggle-btn');
+          const expoDataSourceBtn = document.getElementById('expo-data-source-toggle-btn');
+          const attrDataSourceBtn = document.getElementById('attr-data-source-toggle-btn');
+          const flightDataSourceBtn = document.getElementById('flight-data-source-toggle-btn');
+
+          // 初始化按钮状态
+          if (typeof window._channelDataSourceRaw === 'undefined') {
+            window._channelDataSourceRaw = 0;
+          }
+
+          // 更新所有数据源按钮文本
+          function updateAllDataSourceButtons() {
+            if (dataSourceToggleBtn) updateDataSourceButtonText(dataSourceToggleBtn);
+            if (expoDataSourceBtn) updateDataSourceButtonText(expoDataSourceBtn);
+            if (attrDataSourceBtn) updateDataSourceButtonText(attrDataSourceBtn);
+            if (flightDataSourceBtn) updateDataSourceButtonText(flightDataSourceBtn);
+          }
+
+          // 初始化所有按钮状态
+          updateAllDataSourceButtons();
+
+          if (dataSourceToggleBtn) {
+            updateDataSourceButtonText(dataSourceToggleBtn);
+            dataSourceToggleBtn.onclick = function() {
+              // 切换数据源状态
+              if(window._channelDataSourceRaw==1)
+              {
+                window._channelDataSourceRaw = 0;
+                channelFlag = 0;
+              }
+              else
+              {
+                window._channelDataSourceRaw = 1;
+                channelFlag = 1;
+              }
+              updateAllDataSourceButtons();
+              console.log('[数据源切换] 当前数据源:', window._channelDataSourceRaw ? '原始数据' : '输出数据');
+            };
+          }
+
+          // 大小舵页面数据源切换按钮
+          if (expoDataSourceBtn) {
+            updateDataSourceButtonText(expoDataSourceBtn);
+            expoDataSourceBtn.onclick = function() {
+              if(window._channelDataSourceRaw==1)
+              {
+                window._channelDataSourceRaw = 0;
+                channelFlag = 0;
+              }
+              else
+              {
+                window._channelDataSourceRaw = 1;
+                channelFlag = 1;
+              }
+              updateAllDataSourceButtons();
+              console.log('[数据源切换-大小舵] 当前数据源:', window._channelDataSourceRaw ? '原始数据' : '输出数据');
+            };
+          }
+
+          // 通道属性页面数据源切换按钮
+          if (attrDataSourceBtn) {
+            updateDataSourceButtonText(attrDataSourceBtn);
+            attrDataSourceBtn.onclick = function() {
+              if(window._channelDataSourceRaw==1)
+              {
+                window._channelDataSourceRaw = 0;
+                channelFlag = 0;
+              }
+              else
+              {
+                window._channelDataSourceRaw = 1;
+                channelFlag = 1;
+              }
+              updateAllDataSourceButtons();
+              console.log('[数据源切换-通道属性] 当前数据源:', window._channelDataSourceRaw ? '原始数据' : '输出数据');
+            };
+          }
+
+          // 飞行模式页面数据源切换按钮
+          if (flightDataSourceBtn) {
+            updateDataSourceButtonText(flightDataSourceBtn);
+            flightDataSourceBtn.onclick = function() {
+              if(window._channelDataSourceRaw==1)
+              {
+                window._channelDataSourceRaw = 0;
+                channelFlag = 0;
+              }
+              else
+              {
+                window._channelDataSourceRaw = 1;
+                channelFlag = 1;
+              }
+              updateAllDataSourceButtons();
+              console.log('[数据源切换-飞行模式] 当前数据源:', window._channelDataSourceRaw ? '原始数据' : '输出数据');
+            };
+          }
+          
+          // 更新数据源按钮文本的辅助函数
+          function updateDataSourceButtonText(btn) {
+            const lang = typeof getLang === 'function' ? getLang() : currentLang;
+            if (window._channelDataSourceRaw) {
+              btn.textContent = LANGS[lang]['channel-data-source-raw'] || '原始数据';
+            } else {
+              btn.textContent = LANGS[lang]['channel-data-source-output'] || '输出数据';
             }
           }
         }, 0);
-
-
-      }, 0);
 
       // 在renderConfigPage渲染后添加如下JS逻辑，确保圆点始终居中在线段上
       setTimeout(() => {
@@ -6751,6 +8694,16 @@ const calibStyle = document.createElement('style');
         window._onCalibMapReceived();
         window._onCalibMapReceived = null;
       }
+
+      for(let i=4;i<10;i++){    
+      const sel = document.getElementById(`ch-map-in2-${i}`); 
+      if (sel) {
+          //console.log('sel:',sel.value);          
+          sel.value = window.channelMap.channelMapSend[i];
+        };
+      }
+
+
       return channelMap;
     }
     // 在tryParseTrimAndMidPacket里收到包后，重置标志
@@ -6919,6 +8872,123 @@ const calibStyle = document.createElement('style');
     }
 
 
+ // 解析0x22包，显示原始通道数据
+ function tryParseOutputChannelPacket(buf) {
+      //console.log('tryParseOrigChannelPacket Running', buf);
+      if (!buf || buf.length < 3) return false;
+      if (buf[0] !== 0xEE) return false;
+      const len = buf[1];
+      if (buf.length < len + 2) return false;
+      const crc = buf[len+1];
+      const calcCrc = crc8tab_js(buf.slice(2,2+len-1), len-1);
+      if (crc !== calcCrc) return false;
+      // 解析原始通道数据
+      let recvChannel = [];
+      for(let i=0;i<10;i++){
+        let off = 8 + i*2;
+        let val = buf[off] | (buf[off+1]<<8);
+        recvChannel[i] = val;
+      }
+      
+      //console.log('tryParseOrigChannelPacket Running', buf);
+      // ========== 新增：通道数据处理算法 ==========
+      let channlMinRoute = 988;
+      let channlMaxRoute = 2012;
+      let channlMidRoute = 1500;
+      let processedCH = new Array(10);
+      // 获取映射、反向、行程、中心点、Trim参数
+      let channelMapSend = (window.channelMap && window.channelMap.channelMapSend) ? window.channelMap.channelMapSend : Array.from({length:10}, (_,i)=>i+1);
+      let channelDirSend = (window.channelMap && window.channelMap.channelDirSend) ? window.channelMap.channelDirSend : Array(10).fill(0);
+      let routeLeft = (window.channelMap && window.channelMap.channelLeftSend) ? window.channelMap.channelLeftSend : Array(10).fill(0);
+      let routeRight = (window.channelMap && window.channelMap.channelRightSend) ? window.channelMap.channelRightSend : Array(10).fill(0);
+      let centerVal = (window.channelMap && window.channelMap.channelMidSend) ? window.channelMap.channelMidSend : Array(4).fill(0);
+      let trimVal = (window.channelMap && window.channelMap.channelTrimSend) ? window.channelMap.channelTrimSend : Array(4).fill(0);
+      // 1. 先中心点+行程，再Trim，再映射，最后反向
+      let tmpRouteData = new Array(10);
+      // 检查channelMap是否存在，如果不存在则直接使用原始数据
+      if (window.channelMap && window.channelMap.channelMapSend) {
+        for(let i = 0; i < 10; i++)
+        {
+          tmpRouteData[i] = recvChannel[channelMapSend[i]-1];
+        }
+      } else {
+        // 如果channelMap不存在，直接使用原始数据
+        for(let i = 0; i < 10; i++)
+        {
+          tmpRouteData[i] = recvChannel[i];
+        }
+      }
+      
+      //   for (let i = 0; i < 10; i++) {
+      //   // 先中心点+行程
+      //   let raw = tmpRouteData[i];
+      //   let midOffset = (i < 4) ? (centerVal[channelMapSend[i]-1] || 0) : 0;
+      //   let leftPercent = routeLeft[i] || 0;
+      //   let rightPercent = routeRight[i] || 0;
+      //   if (raw >= channlMidRoute) {
+      //     tmpRouteData[i] = ((raw - channlMidRoute) * (channlMaxRoute - channlMidRoute - midOffset) / (channlMaxRoute - channlMidRoute)) * (100 - rightPercent) / 100 + channlMidRoute + midOffset;
+      //   } else {
+      //     tmpRouteData[i] = (-1 * (channlMidRoute - raw) * (channlMidRoute + midOffset - channlMinRoute) / (channlMidRoute - channlMinRoute)) * (100 - leftPercent) / 100 + channlMidRoute + midOffset;
+      //   }
+      //   // 再Trim（仅前4个）
+      //   // if (i < 4) {
+      //   //   let handOffset = trimVal[window.channelMap.channelMapSend[i]-1] || 0;
+      //   //   if (handOffset > 0) {
+      //   //     if (tmpRouteData[i] + handOffset > channlMaxRoute) {
+      //   //       tmpRouteData[i] = channlMaxRoute;
+      //   //     } else {
+      //   //       tmpRouteData[i] = tmpRouteData[i] + handOffset;
+      //   //     }
+      //   //   } else if (handOffset < 0) {
+      //   //     if (tmpRouteData[i] + handOffset < channlMinRoute) {
+      //   //       tmpRouteData[i] = channlMinRoute;
+      //   //     } else {
+      //   //       tmpRouteData[i] = tmpRouteData[i] + handOffset;
+      //   //     }
+      //   //   }
+      //   // }
+      // }
+      // // 再映射
+      // let mappedCH = new Array(10);
+      // for (let i = 0; i < 10; i++) {
+      //   //let srcIdx = (channelMapSend[i] || (i+1)) - 1;
+      //   mappedCH[i] = tmpRouteData[i];
+      // }
+      // 最后反向
+      // 对于0xEE包（输出数据），数据已经是处理后的，直接使用
+      for (let i = 0; i < 10; i++) {
+        // 0xEE包是输出数据，可能已经按照映射关系排列，直接使用原始数据
+        // 如果需要反向，可以根据channelDirSend进行反向
+        if (window.channelMap && window.channelMap.channelDirSend && channelDirSend[i]) {
+          processedCH[i] = 2 * channlMidRoute - recvChannel[i];
+        } else {
+          processedCH[i] = recvChannel[i];
+        }
+        // 边界保护
+        if (processedCH[i] > channlMaxRoute) processedCH[i] = channlMaxRoute;
+        if (processedCH[i] < channlMinRoute) processedCH[i] = channlMinRoute;
+      }
+      // ========== 用处理后的数据显示到页面 ==========
+      if (processedCH && processedCH.length > 0 && processedCH[0] !== undefined) {
+        for(let i=0;i<10;i++){
+          let chVal = document.getElementById(`ch-val-${i}`);
+          let chInput = document.getElementById(`ch-input-${i}`);
+          if(chVal) chVal.textContent = Math.round(processedCH[i]);
+          if(chInput) chInput.value = Math.round(processedCH[i]);
+          let bar = document.getElementById(`ch-bar-${i}`)?.children[0];
+          if(bar) bar.style.width = ((processedCH[i]-988)/(2012-988)*100) + '%';
+          let barAttr = document.getElementById(`ch-bar-attr-${i}`)?.children[0];
+          if(barAttr) barAttr.style.width = ((processedCH[i]-988)/(2012-988)*100) + '%';
+        }
+      }
+      window.origChannelData = recvChannel;
+      // 新增：保存最新原始包
+      window._lastOrigChannelBuf = buf;
+      //console.log('原始通道数据:', recvChannel);
+      return true;
+    }
+
+
 
 
 
@@ -7084,7 +9154,7 @@ const calibStyle = document.createElement('style');
             }
 
 
-            // 检查0x22包
+            // 检查0x22包   原始数据包
             if (this[i] === 0x22) {
               const len = this[i+1];
               if (this.length >= i + len + 2 && len >0) {
@@ -7092,13 +9162,14 @@ const calibStyle = document.createElement('style');
                 let parsed = tryParseOrigChannelPacket(buf);
                 // 新增：校准页面同步解析
                 //console.log('window._currentPage1:', window._currentPage);
-                if (window._currentPage === 'calib' && typeof tryParseOrigChannelPacketCalib === 'function') {
-                  //console.log('window._currentPage2:', window._currentPage);
-                  tryParseOrigChannelPacketCalib(buf);
+                if (window._currentPage === 'calib') {
+                  const deviceName = window._deviceInfo ? window._deviceInfo.devName : '';
+                  if (deviceName === 'RadioMaster M8L' && typeof tryParseCarChannelPacket === 'function') {
+                    tryParseCarChannelPacket(buf);
+                  } else if (typeof tryParseOrigChannelPacketCalib === 'function') {
+                    tryParseOrigChannelPacketCalib(buf);
+                  }
                 }
-                // else
-                // {
-                // }
                 if (parsed) {
                   this.splice(i, len+2);
                   found = true;
@@ -7106,8 +9177,22 @@ const calibStyle = document.createElement('style');
                 }
               }
             }
-            
-          
+
+
+            // 检查0xEE包   输出数据包
+            if(this[i] === 0xEE) {
+              const len = this[i+1];
+              if (this.length >= i + len + 2 && len >0) {
+                const buf = this.slice(i, i+len+2);
+                let parsed = tryParseOutputChannelPacket(buf);
+                if (parsed) {
+                  this.splice(i, len+2);
+                  found = true;
+                  break;
+                }
+              }
+            }
+
             // 检查0x33包
             if (this[i] === 0x33) {
               const len = this[i+1];
@@ -7168,12 +9253,36 @@ const calibStyle = document.createElement('style');
               }
             }
 
+            if(this[i] === 0x9A) {
+              const len = this[i+1];
+              if (this.length >= i + len + 2 && len >0) {
+                const buf = this.slice(i, i+len+2);
+                let parsed = false;
+                if(typeof tryParseDRChannelPacket === 'function') {
+                  parsed = tryParseDRChannelPacket(buf);
+                }
+                if (parsed) {
+                  this.splice(i, len+2);
+                  found = true;
+                  break;
+                }
+              }
+            }
+
 
             if(this[i] === 0x89) {
               const len = this[i+1];
               if (this.length >= i + len + 2 && len >0) {
                 const buf = this.slice(i, i+len+2);
                 let parsed = false;
+                if(typeof tryParseDRPacket === 'function') {
+                  parsed = tryParseDRPacket(buf);
+                }
+                if (parsed) {
+                  this.splice(i, len+2);
+                  found = true;
+                  break;
+                }
               }
             }
 
@@ -7360,6 +9469,8 @@ const calibStyle = document.createElement('style');
     }
     
     function initConfigPage() {
+      initFlightChannels(10);
+      bindFlightModeEvents();
       linkSacn();
       serialBuffer= [];
       renderConfigPage();
@@ -7401,8 +9512,30 @@ const calibStyle = document.createElement('style');
       window._globalChannelTask = {
         channelRequest: () => {
           if (state.gotMap && state.gotTrim) {
-            writer.write(new Uint8Array([0xA5,0x55,0x02,0x0D,0x0A])); // 通道数据
+            if (!writer) return;
+            if (window._channelDataSourceRaw==0)
+            {
+              // 输出数据
+              writer.write(new Uint8Array([0xA5,0x55,0x1B,0x0D,0x0A]));
+            }
+            else
+            {
+              // 原始数据
+              writer.write(new Uint8Array([0xA5,0x55,0x02,0x0D,0x0A]));
+            }
+            // else if(window._channelDataSourceRaw==2)
+            // {
+            //   //const channelSelect = document.getElementById('expo-channel-select');
+
+            //   const channelValue = document.getElementById('expo-channel-select').value;
+            //   const sendCmd = new Uint8Array([0xA5,0x55,0x2E,parseInt(channelValue)+1,0x0D,0x0A]);
+            //   //console.log('[DR发送] 下拉框value:', channelValue, '发送完整指令:', Array.from(sendCmd).map(x => '0x' + x.toString(16).padStart(2, '0').toUpperCase()).join(' '));
+            //   writer.write(sendCmd);
+            //   //console.log(document.getElementById('expo-channel-select').value);
+            // }
+            // writer.write(new Uint8Array([0xA5,0x55,0x02,0x0D,0x0A])); // 通道数据
           }
+
         },
         commandRequest: () => {}
       };
@@ -7454,6 +9587,10 @@ const calibStyle = document.createElement('style');
       linkSacn();
       serialBuffer= [];
       //document.body.style.zoom = 1;
+      
+      // 调用renderCalibPage来根据设备类型渲染对应的校准页面
+      renderCalibPage();
+      
       let state = { step: 0, gotMap: false, calibState: 'idle' };
       function sendMapLoop() {
         if (window._currentPage !== 'calib' || state.gotMap) return;
@@ -7540,6 +9677,12 @@ const calibStyle = document.createElement('style');
       const dev = window._deviceInfo;
       const attrPage = document.getElementById('page-attr');
       if (!attrPage) return;
+
+      // if (!dev) {
+      //   return;
+      // }
+
+
       let html = '<div class="comm-container" style="display:flex;justify-content:center;align-items:center;min-height:calc(100vh - 64px);background:linear-gradient(135deg,#e0e7ff 0%,#f4f6fb 100%);">';
       html += '<div style="background:#fff;border-radius:22px;box-shadow:0 8px 36px rgba(79,140,255,0.15);padding:48px 60px 40px 60px;min-width:380px;max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;">';
       html += '<div class="comm-title" data-i18n="attr-title" style="margin-bottom:32px;display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);padding:20px 32px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);border:2px solid #3b82f6;">';
@@ -7554,38 +9697,99 @@ const calibStyle = document.createElement('style');
         <button id="factory-reset-btn" data-i18n="factory-reset" style="background: linear-gradient(90deg,#e74c3c 0%,#c0392b 100%); color: #fff; border: none; border-radius: 8px; padding: 10px 32px; font-size: 1.08em; font-weight: bold; cursor: pointer; width: 160px;">恢复出厂设置!</button>
         <button id="exit-fw-update-btn" data-i18n="exit-fw-update" style="background: linear-gradient(90deg,#3498db 0%,#2980b9 100%); color: #fff; border: none; border-radius: 8px; padding: 10px 32px; font-size: 1.08em; font-weight: bold; cursor: pointer; width: 160px;">退出固件更新</button>
       </div>`;
-      // 顺序：单击(6), 双击(2), 三态(4), 双态(1)
-      const keymodeOptions = [
-        [6, 3, 2, 0], // SA
-        [0, 0, 4, 1], // SB
-        [0, 0, 4, 1], // SC
-        [6, 3, 2, 0], // SD
-        [0, 0, 0, 1], // SE
-      ];
-      const keyNames = ['SA', 'SB', 'SC', 'SD', 'SE'];
-      const keymodeLabels = {
-        6: { text: '触发', i18n: 'keymode-trigger' },
-        3: { text: '单击', i18n: 'keymode-single' },
-        2: { text: '双击', i18n: 'keymode-double' },
-        4: { text: '三态', i18n: 'keymode-triple' },
-        1: { text: '双态', i18n: 'keymode-doubleStatus' }
-      };
-      html += `
-        <div style="margin-top:32px;width:100%;">
-          <div data-i18n="keymode-title" style="color:#3358e0;font-weight:bold;font-size:1.13em;margin-bottom:10px;">按键模式设置</div>
-          <div id="keymode-selectors" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:12px;">
-          ${keyNames.map((k, i) => `
-            <div style="display:flex;flex-direction:column;align-items:center;">
-              <span style="margin-bottom:6px;">${k}</span>
-              <select id="keymode-${k}" class="keymode-select">
-                ${keymodeOptions[i].map(type =>
-                  type ? `<option value="${type}" data-i18n="${keymodeLabels[type].i18n}">${keymodeLabels[type].text}</option>` : ''
-                ).join('')}
-              </select>
+
+
+
+      if (!dev) {
+        attrPage.innerHTML = html; 
+        const exitFwUpdateBtn = document.getElementById('exit-fw-update-btn');
+        if (exitFwUpdateBtn) {
+            exitFwUpdateBtn.onclick = function() {
+              if (typeof writer !== 'undefined' && writer) {
+                writer.write(new Uint8Array([0x34]));
+                alert(LANGS[currentLang]['exit-fw-update']);
+                console.log('[ATTR] 已发送退出固件更新指令');
+              }
+            };
+        }
+        return;
+      }
+      if(dev.devName=="RadioMaster M8L")
+      {
+        // 顺序：单击(6), 双击(2), 三态(4), 双态(1)
+        const keymodeOptions = [
+          [6, 3, 2, 0], // k1
+          [6, 3, 2, 0], // k2
+          [6, 3, 2, 0], // k3
+          [6, 3, 2, 0], // k4
+        ];
+        const keyNames = ['K1', 'K2', 'K3', 'K4'];
+        const keymodeLabels = {
+          6: { text: '触发', i18n: 'keymode-trigger' },
+          3: { text: '单击', i18n: 'keymode-single' },
+          2: { text: '双击', i18n: 'keymode-double' },
+          4: { text: '三态', i18n: 'keymode-triple' },
+          1: { text: '双态', i18n: 'keymode-doubleStatus' }
+        };
+        html += `
+          <div style="margin-top:32px;width:100%;">
+            <div data-i18n="keymode-title" style="color:#3358e0;font-weight:bold;font-size:1.13em;margin-bottom:10px;">按键模式设置</div>
+            <div id="keymode-selectors" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:12px;">
+            ${keyNames.map((k, i) => `
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <span style="margin-bottom:6px;">${k}</span>
+                <select id="keymode-${k}" class="keymode-select">
+                  ${keymodeOptions[i].map(type =>
+                    type ? `<option value="${type}" data-i18n="${keymodeLabels[type].i18n}">${keymodeLabels[type].text}</option>` : ''
+                  ).join('')}
+                </select>
+              </div>
+            `).join('')}
             </div>
-          `).join('')}
-          </div>
-      </div>`;
+        </div>`;
+        console.log('M8L设备');
+      }
+      else if(dev.devName=="RadioMaster T8L")
+      {
+        // 顺序：单击(6), 双击(2), 三态(4), 双态(1)
+        const keymodeOptions = [
+          [6, 3, 2, 0], // SA
+          [0, 0, 4, 1], // SB
+          [0, 0, 4, 1], // SC
+          [6, 3, 2, 0], // SD
+          [0, 0, 0, 1], // SE
+        ];
+        const keyNames = ['SA', 'SB', 'SC', 'SD', 'SE'];
+        const keymodeLabels = {
+          6: { text: '触发', i18n: 'keymode-trigger' },
+          3: { text: '单击', i18n: 'keymode-single' },
+          2: { text: '双击', i18n: 'keymode-double' },
+          4: { text: '三态', i18n: 'keymode-triple' },
+          1: { text: '双态', i18n: 'keymode-doubleStatus' }
+        };
+        html += `
+          <div style="margin-top:32px;width:100%;">
+            <div data-i18n="keymode-title" style="color:#3358e0;font-weight:bold;font-size:1.13em;margin-bottom:10px;">按键模式设置</div>
+            <div id="keymode-selectors" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:12px;">
+            ${keyNames.map((k, i) => `
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <span style="margin-bottom:6px;">${k}</span>
+                <select id="keymode-${k}" class="keymode-select">
+                  ${keymodeOptions[i].map(type =>
+                    type ? `<option value="${type}" data-i18n="${keymodeLabels[type].i18n}">${keymodeLabels[type].text}</option>` : ''
+                  ).join('')}
+                </select>
+              </div>
+            `).join('')}
+            </div>
+        </div>`;
+        console.log('T8L设备');
+      }
+      else
+      {
+        console.log('其他设备或者传感器设备,不显示按键模式设置');
+      }
+
       // 查询按钮
       html += '<button id="query-device-attr-btn" class="connect-btn" data-i18n="query-device-attr" style="margin-bottom:18px;">查询设备属性</button>';
       if (!dev) {
@@ -7618,6 +9822,11 @@ const calibStyle = document.createElement('style');
         }
         return;
       }
+      document.getElementById('dev-attr').style.display = 'block';
+      document.getElementById('dev-conf').style.display = 'block';
+      document.getElementById('dev-net').style.display = 'block';
+      document.getElementById('dev-cail').style.display = 'block'; 
+
       // 序列号连续数字显示
       let serialNumStr = '';
       if (dev.serialNumber) {
@@ -7634,14 +9843,72 @@ const calibStyle = document.createElement('style');
             <span id="volume-value" class="setting-value">${dev.devVolume*4}</span>
           </div>
         </div>
-        <div class="setting-row">
-          <span class="setting-label" data-i18n="slide_mid">旋钮中点提示</span>
+
+
+        <div id="s1-mid-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_mid">S1旋钮中点提示</span>
           <input id="slide_mid-range"  min="1000" max="8000" value="${dev.slideMidData}" type="range" ...>
           <div class="setting-right">
             <span id="slide_mid-value" class="setting-value">${dev.slideMidData}</span>
             <input type="checkbox" id="slide_mid" value="${dev.slideMid}">
           </div>
         </div>
+
+        <div id="th-trim-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_Th_Trim_mid">油门微调旋钮中点提示</span>
+          <input id="slide_mid-range-1"  min="1000" max="8000" value="${dev.slideM8LMidData[0]}" type="range" ...>
+          <div class="setting-right">
+            <span id="slide_mid-value-1" class="setting-value">${dev.slideM8LMidData[0]}</span>
+            <input type="checkbox" id="slide_mid-1" ${dev.slideM8LMid[0] == 1 ? 'checked' : ''}>
+          </div>
+        </div>
+
+        <div id="th-sub-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_Th_Sub_mid">油门中立点旋钮中点提示</span>
+          <input id="slide_mid-range-2"  min="1000" max="8000" value="${dev.slideM8LMidData[1]}" type="range" ...>
+          <div class="setting-right">
+            <span id="slide_mid-value-2" class="setting-value">${dev.slideM8LMidData[1]}</span>
+            <input type="checkbox" id="slide_mid-2" ${dev.slideM8LMid[1] == 1 ? 'checked' : ''}>
+          </div>
+        </div>  
+
+        <div id="dir-trim-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_Dir_Trim_mid">方向微调旋钮中点提示</span>
+          <input id="slide_mid-range-3"  min="1000" max="8000" value="${dev.slideM8LMidData[2]}" type="range" ...>
+          <div class="setting-right">
+            <span id="slide_mid-value-3" class="setting-value">${dev.slideM8LMidData[2]}</span>
+            <input type="checkbox" id="slide_mid-3" ${dev.slideM8LMid[2] == 1 ? 'checked' : ''}>
+          </div>
+        </div>  
+
+        <div id="dir-sub-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_Dir_Sub_mid">方向中立点旋钮中点提示</span>
+          <input id="slide_mid-range-4"  min="1000" max="8000" value="${dev.slideM8LMidData[3]}" type="range" ...>
+          <div class="setting-right">
+            <span id="slide_mid-value-4" class="setting-value">${dev.slideM8LMidData[3]}</span>
+            <input type="checkbox" id="slide_mid-4" ${dev.slideM8LMid[3] == 1 ? 'checked' : ''}>
+          </div>
+        </div>
+
+        <div id="p1-mid-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_P1_mid">P1旋钮中点提示</span>
+          <input id="slide_mid-range-5"  min="1000" max="8000" value="${dev.slideM8LMidData[4]}" type="range" ...>
+          <div class="setting-right">
+            <span id="slide_mid-value-5" class="setting-value">${dev.slideM8LMidData[4]}</span>
+            <input type="checkbox" id="slide_mid-5" ${dev.slideM8LMid[4] == 1 ? 'checked' : ''}>
+          </div>
+        </div>  
+
+        <div id="p2-mid-group" class="setting-row">
+          <span class="setting-label" data-i18n="slide_P2_mid">P2旋钮中点提示</span>
+          <input id="slide_mid-range-6"  min="1000" max="8000" value="${dev.slideM8LMidData[5]}" type="range" ...>
+          <div class="setting-right">
+            <span id="slide_mid-value-6" class="setting-value">${dev.slideM8LMidData[5]}</span>
+            <input type="checkbox" id="slide_mid-6" ${dev.slideM8LMid[5] == 1 ? 'checked' : ''}>
+          </div>
+        </div>  
+
+        
         <div style="display:flex;align-items:center;gap:18px;justify-content:space-between;background:#eaf1ff;border-radius:12px;padding:12px 18px;">
           <span style="color:#3358e0;font-weight:500;min-width:90px;" data-i18n="serial-warning-test">关闭接收机即将丢失警告</span>
           <input type="checkbox" id="check_warning" value="${dev.RxWarning}">
@@ -7650,14 +9917,20 @@ const calibStyle = document.createElement('style');
           <span style="color:#3358e0;font-weight:500;min-width:90px;" data-i18n="lowpower-warning-test">电量过低警告</span>
           <input type="checkbox" id="check_lowpower" value="${dev.LowPowerWarning}">
         </div>
-        <div style="display:flex;align-items:center;gap:18px;justify-content:space-between;background:#eaf1ff;border-radius:12px;padding:12px 18px;">
+
+
+
+        <div id="trim-reset_lf-group" style="display:flex;align-items:center;gap:18px;justify-content:space-between;background:#eaf1ff;border-radius:12px;padding:12px 18px;">
           <span style="color:#3358e0;font-weight:500;min-width:90px;" data-i18n="trim-left-reset-test">左Trim复位功能</span>
           <input type="checkbox" id="check_left_trim_reset" value="${dev.LeftTrimReset}">
         </div>
-        <div style="display:flex;align-items:center;gap:18px;justify-content:space-between;background:#eaf1ff;border-radius:12px;padding:12px 18px;">
+        <div id="trim-reset_rg-group" style="display:flex;align-items:center;gap:18px;justify-content:space-between;background:#eaf1ff;border-radius:12px;padding:12px 18px;">
           <span style="color:#3358e0;font-weight:500;min-width:90px;" data-i18n="trim-right-reset-test">右边Trim复位功能</span>
           <input type="checkbox" id="check_right_trim_reset" value="${dev.RightTrimReset}">
         </div>
+
+
+
         <div style="display:flex;align-items:center;gap:18px;justify-content:space-between;background:#eaf1ff;border-radius:12px;padding:12px 18px;">
           <span style="color:#3358e0;font-weight:500;min-width:90px;" data-i18n="serial-number">序列号</span>
           <span style="font-family:'Roboto',monospace;font-size:1.08em;letter-spacing:2px;">${serialNumStr}</span>
@@ -7716,8 +9989,30 @@ const calibStyle = document.createElement('style');
     //       </div>
     //     </div>
     //   </div>
- 
-    attrPage.innerHTML = html;
+
+    attrPage.innerHTML = html; 
+    
+    if(dev.devName=="RadioMaster M8L")
+    {
+      document.getElementById('trim-reset_lf-group').style.display="none";
+      document.getElementById('trim-reset_rg-group').style.display="none";
+      document.getElementById('s1-mid-group').style.display="none";   
+    }
+    else if(dev.devName=="RadioMaster T8L")
+    {
+      document.getElementById('th-trim-group').style.display="none";
+      document.getElementById('th-sub-group').style.display="none";
+      //document.getElementById('s1-mid-group').style.display="none";        
+      document.getElementById('dir-trim-group').style.display="none";
+      document.getElementById('dir-sub-group').style.display="none";
+      document.getElementById('p1-mid-group').style.display="none";
+      document.getElementById('p2-mid-group').style.display="none";  
+
+      //document.getElementById('trim-reset_lf-group')?.style.display ='block';
+      //document.getElementById('trim-reset_rg-group')?.style.display ='block';
+    }
+    
+
     const  SildeRange = document.getElementById('slide_mid-range');
     const SildeValue = document.getElementById('slide_mid-value');
     SildeRange.addEventListener('input', function() {
@@ -7763,6 +10058,103 @@ const calibStyle = document.createElement('style');
           console.log('sendData',sendData);
         }
       });
+
+
+      const slideMid = document.getElementById('slide_mid');
+      slideMid.checked = dev.slideMid === 1;
+      if (slideMid) {
+        slideMid.onchange = function() {
+        let cmdData = [];
+        if(window._deviceInfo.slideMid)
+        {
+          cmdData[0] = 0x00;
+          window._deviceInfo.slideMid = 0;
+          //console.log("0:",window._deviceInfo.slideMid);
+        }
+        else
+        {
+          cmdData[0] = 0x01;
+          window._deviceInfo.slideMid = 1;
+          //console.log("1",window._deviceInfo.slideMid);
+        }
+        let value = parseInt(SildeRange.value) || 0;
+        cmdData[1] = (value >> 8) & 0xFF;
+        cmdData[2] = value & 0xFF;
+
+        console.log('SildeRange.value:',SildeRange.value);
+        const sendData = new Uint8Array([0xA5, 0x55, 0x24,cmdData[0],cmdData[2],cmdData[1],0x0D,0x0A]);
+        setTimeout(() => {
+            writer.write(sendData);    
+              }, 500);
+        setTimeout(() => {
+            writer.write(sendData);    
+              }, 500);
+        }
+      }
+
+
+
+
+      for (let i = 1; i <= 6; i++) {
+        const SildeRange = document.getElementById(`slide_mid-range-${i}`);
+        const SildeValue = document.getElementById(`slide_mid-value-${i}`);
+        const SildeCheckboxValue = document.getElementById(`slide_mid-${i}`);
+
+        if (!SildeRange || !SildeValue || !SildeCheckboxValue) continue;
+
+        // 数组索引修正（i=1 → 0，i=6→5）
+        const arrIndex = i - 1;
+
+        // ===================== 开关切换 =====================
+        SildeCheckboxValue.onchange = function () {
+          // 取反：当前是1→变0，当前是0→变1
+          const newState = window._deviceInfo.slideM8LMid[arrIndex] ? 0 : 1;
+          window._deviceInfo.slideM8LMid[arrIndex] = newState;
+
+          let value = parseInt(SildeRange.value) || 0;
+          value = Math.max(1000, Math.min(8000, value));
+
+          const cmdData = [];
+          cmdData[0] = newState;
+          cmdData[1] = (value >> 8) & 0xFF;
+          cmdData[2] = value & 0xFF;
+
+          const sendData = new Uint8Array([0xA5, 0x55, 0x24, i, cmdData[0], cmdData[2], cmdData[1], 0x0D, 0x0A]);
+          setTimeout(() => writer.write(sendData), 100);
+          setTimeout(() => writer.write(sendData), 300);
+        };
+
+        // ===================== 滑块实时显示 =====================
+        SildeRange.addEventListener('input', function () {
+          let v = parseInt(SildeRange.value) || 0;
+          v = Math.max(1000, Math.min(8000, v));
+          SildeValue.textContent = v;
+
+          // 直接更新数组，不用旧变量
+          window._deviceInfo.slideM8LMidData[arrIndex] = v;
+        });
+
+        // ===================== 滑块松开发送 =====================
+        SildeRange.addEventListener('change', function () {
+          let v = parseInt(SildeRange.value) || 0;
+          v = Math.max(1000, Math.min(8000, v));
+
+          // 直接从数组取开关状态
+          const state = window._deviceInfo.slideM8LMid[arrIndex] ? 1 : 0;
+
+          const cmdData = [];
+          cmdData[0] = state;
+          cmdData[1] = (v >> 8) & 0xFF;
+          cmdData[2] = v & 0xFF;
+
+          const sendData = new Uint8Array([0xA5, 0x55, 0x24, i, cmdData[0], cmdData[2], cmdData[1], 0x0D, 0x0A]);
+          if (writer) {
+            setTimeout(() => writer.write(sendData), 100);
+            setTimeout(() => writer.write(sendData), 300);
+          }
+        });
+      }
+
 
 
       // 新增：音量进度条事件绑定
@@ -7851,12 +10243,13 @@ const calibStyle = document.createElement('style');
           }
         };
       }
-      const keyModeArr = dev.keyModel;// && [0xFF,0xFF,0xFF,0xFF,0xFF]; // 默认单击
+
+      const keyT8LModeArr = dev.keyModel;// && [0xFF,0xFF,0xFF,0xFF,0xFF]; // 默认单击
       //console.log('[ATTR] 按键模式设置:', dev.keyModel[0]);
       ['SA','SB','SC','SD','SE'].forEach((k, i) => {
         const sel = document.getElementById(`keymode-${k}`);
         if (sel) {
-          sel.value = parseInt(keyModeArr[i] || 6).toString();
+          sel.value = parseInt(keyT8LModeArr[i] || 6).toString();
           sel.onchange = function() {
             // 获取5个下拉的当前值
             const vals = ['SA','SB','SC','SD','SE'].map((kk, idx) => {
@@ -7883,6 +10276,41 @@ const calibStyle = document.createElement('style');
           };
         }
       });
+      
+
+      const keyM8LModeArr = dev.keyModel;// && [0xFF,0xFF,0xFF,0xFF,0xFF]; // 默认单击
+      //console.log('[ATTR] 按键模式设置:', dev.keyModel[0]);
+      ['K1','K2','K3','K4'].forEach((k, i) => {
+        const sel = document.getElementById(`keymode-${k}`);
+        if (sel) {
+          sel.value = parseInt(keyM8LModeArr[i] || 4).toString();
+          sel.onchange = function() {
+            // 获取5个下拉的当前值
+            const vals = ['K1','K2','k3','k4'].map((kk, idx) => {
+              const s = document.getElementById(`keymode-${kk}`);
+              return s ? parseInt(s.value) : 6;
+            });
+            // 组装指令
+            const cmd = new Uint8Array([0xA5, 0x55, 0x21, ...vals, 7, 0x0D, 0x0A]);
+            if (typeof writer !== 'undefined' && writer) {
+              window._deviceInfo.keyModel = [...vals, 7];
+              // console.log([...vals, 7]);
+              console.log("cmd:",cmd);
+              setTimeout(() => {      //防止失败,担心usb交互卡顿,所以,放弃了交互
+                 writer.write(cmd);
+              }, 500);
+              setTimeout(() => {
+                 writer.write(cmd);
+              }, 500);
+              setTimeout(() => {
+                 writer.write(cmd);
+              }, 500);
+              //alert('已发送按键模式设置指令: ' + vals.join(','));
+            }
+          };
+        }
+      });
+
 
       //警告开关机
       const RxWarning = document.getElementById('check_warning');
@@ -8000,43 +10428,6 @@ const calibStyle = document.createElement('style');
       }
 
 
-
-
-      const slideMid = document.getElementById('slide_mid');
-      const slideMidData = document.getElementById('slide_midData');
-      slideMid.checked = dev.slideMid === 1;
-      if (slideMid) {
-        slideMid.onchange = function() {
-        let cmdData = [];
-        if(window._deviceInfo.slideMid)
-        {
-          cmdData[0] = 0x00;
-          window._deviceInfo.slideMid = 0;
-          //console.log("0:",window._deviceInfo.slideMid);
-        }
-        else
-        {
-          cmdData[0] = 0x01;
-          window._deviceInfo.slideMid = 1;
-          //console.log("1",window._deviceInfo.slideMid);
-        }
-        let value = parseInt(SildeRange.value) || 0;
-        cmdData[1] = (value >> 8) & 0xFF;
-        cmdData[2] = value & 0xFF;
-
-        console.log('SildeRange.value:',SildeRange.value);
-        const sendData = new Uint8Array([0xA5, 0x55, 0x24,cmdData[0],cmdData[2],cmdData[1],0x0D,0x0A]);
-        setTimeout(() => {
-            writer.write(sendData);    
-              }, 500);
-        setTimeout(() => {
-            writer.write(sendData);    
-              }, 500);
-      }
-    }
-
-
-
       updateAllLangText();
       }
 
@@ -8104,7 +10495,7 @@ const calibStyle = document.createElement('style');
       fwProgressText.textContent = '0%';
       fwUpdateBtn.disabled = true;
       try {
-        await ymodemSend(fwFileData, fwFileInput.files[0].name, (sent, total) => {
+        await ymodemSend(fwFileData, fwFileNameForUpload || fwFileInput.files[0].name, (sent, total) => {
           const percent = Math.floor(sent / total * 100);
           fwProgressBar.style.width = percent + '%';
           fwProgressText.textContent = percent + '%';
@@ -8113,7 +10504,7 @@ const calibStyle = document.createElement('style');
         fwUpdateBtn.disabled = false;
         upDataFlag = 0;
         updateFwUI();
-        window.alert(LANGS[currentLang]['update-over']);
+		window.alert(LANGS[currentLang]['update-over']);
       } catch (e) {
         fwStatus.textContent = '传输失败：' + e.message;
       }
@@ -8268,7 +10659,7 @@ const calibStyle = document.createElement('style');
           console.log('[ADC校准异常] 为',i,'的值为0',buf);
         }
 
-        if((window._adcMax[i]-recvMidAdc[i]>800) && (recvMidAdc[i]-window._adcMin[i]>800))
+        if((window._adcMax[i]-recvMidAdc[i]>400) && (recvMidAdc[i]-window._adcMin[i]>400))
         {
           isCalib++;
         }
@@ -8323,6 +10714,210 @@ const calibStyle = document.createElement('style');
         }
         return true;
     }
+
+
+    function tryParseDRChannelPacket(buf) {
+      if (!buf || buf.length < 5) return false; // 至少需要5字节: 0x89 + len(7) + 7字节数据 + CRC
+      if (buf[0] !== 0x9A) return false;
+      const len = buf[1];
+      if (!buf ||  buf.length < len + 2) return false; // 数据长度应该是7字节
+      const crc = buf[len+1]; // buf[8]
+      const calcCrc = crc8tab_js(buf.slice(2, 2+len-1), len-1); // 计算buf[2]到buf[7]的CRC
+      if (crc !== calcCrc) {
+        //console.warn('[DR包] CRC校验失败:', '期望', calcCrc, '实际', crc);
+        return false;
+      }
+      
+
+
+      let OrgValue = buf[5] + buf[6]*256 ;
+      let ChangeValue = buf[3]  + buf[4]*256;
+
+
+      const channelSelect = document.getElementById('expo-channel-select');
+      if (!channelSelect) return null;
+      
+      channelSelect.index = buf[2]-1;
+      const selectedChannel = buf[2]-1; // 0-3 (AIL/ELE/THR/RUD)
+      
+
+      // 根据map找到对应的输入通道
+      const channelMapSend = (window.channelMap && window.channelMap.channelMapSend) 
+        ? window.channelMap.channelMapSend 
+        : Array.from({length:10}, (_,i)=>i+1);
+      
+      // selectedChannel是0-3，对应AIL/ELE/THR/RUD
+      // 需要找到channelMapSend中值为selectedChannel+1的位置
+      let inputChannelIdx = -1;
+      for (let i = 0; i < channelMapSend.length; i++) {
+        if (channelMapSend[i] === selectedChannel + 1) {
+          inputChannelIdx = i;
+          break;
+        }
+      }
+      
+      if (inputChannelIdx < 0 || inputChannelIdx >= window.origChannelData.length) {
+        return null;
+      }
+      
+      // 获取原始通道值并转换
+     window.origChannelData[inputChannelIdx] = OrgValue;
+     changeChannelData[inputChannelIdx] = ChangeValue;
+
+
+      // 解析数据包
+      // buf[0] = 0x9A (包类型)
+      // buf[1] = 6 (数据长度)
+      // buf[2] = channel (当前通道，从1开始: 1,2,3,4)
+      // buf[3-4] = cCrsfChannels[channel-1][0] (控制位低字节)
+      // buf[5-6] = cCrsfOriginalChannels 
+      // buf[7] = CRC
+      
+      // function uint8ToInt8(uint8Value) {
+      //     // 核心转换逻辑：超过127则减256
+      //     return uint8Value > 127 ? uint8Value - 256 : uint8Value;
+      // }
+
+
+
+      return true;
+
+
+    }
+
+    function tryParseDRPacket(buf) {
+      if (!buf || buf.length < 5) return false; // 至少需要5字节: 0x89 + len(7) + 7字节数据 + CRC
+      if (buf[0] !== 0x89) return false;
+      const len = buf[1];
+      if (!buf ||  buf.length < len + 2) return false; // 数据长度应该是7字节
+      const crc = buf[len+1]; // buf[8]
+      const calcCrc = crc8tab_js(buf.slice(2, 2+len-1), len-1); // 计算buf[2]到buf[7]的CRC
+      if (crc !== calcCrc) {
+        //console.warn('[DR包] CRC校验失败:', '期望', calcCrc, '实际', crc);
+        return false;
+      }
+      
+      // 解析数据包
+      // buf[0] = 0x89 (包类型)
+      // buf[1] = 7 (数据长度)
+      // buf[2] = channel (当前通道，从1开始: 1,2,3,4)
+      // buf[3] = channelCtl[channel-1][0] (控制位低字节)
+      // buf[4] = channelCtl[channel-1][1] (控制位高字节)
+      // buf[5] = channelDR[channel-1][0] (DR低字节)
+      // buf[6] = channelDR[channel-1][1] (DR高字节)
+      // buf[7] = channelEXPO[channel-1][0] (EXPO低字节)
+      // buf[8] = channelEXPO[channel-1][1] (EXPO高字节)
+      // buf[9] = CRC
+      
+      function uint8ToInt8(uint8Value) {
+          // 核心转换逻辑：超过127则减256
+          return uint8Value > 127 ? uint8Value - 256 : uint8Value;
+      }
+
+      const channel = uint8ToInt8(buf[2]); // 通道号 (1-4)
+      const channelCtl = uint8ToInt8(buf[3]) | (uint8ToInt8(buf[4]) << 8); // 控制位 (16位)
+      const channelDR = uint8ToInt8(buf[5]) | (uint8ToInt8(buf[6]) << 8); // DR值 (16位)
+      const channelEXPO = uint8ToInt8(buf[7]) | (uint8ToInt8(buf[8]) << 8); // EXPO值 (16位)
+      
+      console.log('[DR包] 解析成功:', {
+        channel: channel,
+        channelCtl: channelCtl,
+        channelDR: channelDR,
+        channelEXPO: channelEXPO,
+        raw: Array.from(buf).map(x => '0x' + x.toString(16).padStart(2, '0').toUpperCase()).join(' ')
+      });
+      
+      // 更新大小舵页面的参数
+      // channelCtl可能包含开关选择和正反方向信息
+      // channelDR可能是左右两侧的Rate值组合
+      // channelEXPO可能是左右两侧的Expo值组合
+      
+      // 假设数据格式：
+      // channelCtl: 低8位可能是开关选择(0-5)，高8位可能是正反方向(0或1)
+      // channelDR: 低8位是左侧Rate值(-100到100映射到0-200)，高8位是右侧Rate值
+      // channelEXPO: 低8位是左侧Expo值(-100到100映射到0-200)，高8位是右侧Expo值
+      
+      const switchChannel = channelCtl & 0xFF; // 开关选择 (0-5)
+      const reverse = (channelCtl >> 8) & 0xFF; // 正反方向 (0=NOR, 1=REV)
+      
+      // 将0-200映射回-100到100
+      const drLeft = ((channelDR & 0xFF)); // 左侧Rate值
+      const drRight = ((channelDR >> 8)); // 右侧Rate值
+      const expoLeft = ((channelEXPO & 0xFF)); // 左侧Expo值
+      const expoRight = ((channelEXPO >> 8) ); // 右侧Expo值
+      
+      // 更新页面控件 (通道索引从0开始，所以channel-1)
+      const channelIndex = channel - 1;
+      if (channelIndex >= 0 && channelIndex < 4) {
+        // 更新通道选择
+        const channelSelect = document.getElementById('expo-channel-select');
+        if (channelSelect) {
+          channelSelect.value = channelIndex;
+        }
+        
+        // 更新开关选择
+        const switchChannelSelect = document.getElementById('expo-switch-channel-select');
+        if (switchChannelSelect && switchChannel >= 0 && switchChannel <= 15) {
+          switchChannelSelect.value = switchChannel;
+        }
+        
+        // 更新正反方向按钮
+        const reverseBtn = document.getElementById('expo-reverse-btn');
+        if (reverseBtn) {
+          reverseBtn.textContent = reverse ? 'REV' : 'NOR';
+        }
+        
+        // 更新左侧Rate值
+        const kSliderLeft = document.getElementById('k-slider-left');
+        const kInputLeft = document.getElementById('k-input-left');
+        if (kSliderLeft && kInputLeft) {
+          kSliderLeft.value = drLeft;
+          kInputLeft.value = Math.round(drLeft);
+        }
+        
+        // 更新左侧Expo值
+        const expoSliderLeft = document.getElementById('expo-slider-left');
+        const expoInputLeft = document.getElementById('expo-input-left');
+        if (expoSliderLeft && expoInputLeft) {
+          expoSliderLeft.value = expoLeft;
+          expoInputLeft.value = Math.round(expoLeft);
+        }
+        
+        // 更新右侧Rate值
+        const kSliderRight = document.getElementById('k-slider-right');
+        const kInputRight = document.getElementById('k-input-right');
+        if (kSliderRight && kInputRight) {
+          kSliderRight.value = drRight;
+          kInputRight.value = Math.round(drRight);
+        }
+        
+        // 更新右侧Expo值
+        const expoSliderRight = document.getElementById('expo-slider-right');
+        const expoInputRight = document.getElementById('expo-input-right');
+        if (expoSliderRight && expoInputRight) {
+          expoSliderRight.value = expoRight;
+          expoInputRight.value = Math.round(expoRight);
+        }
+        
+        // 重新绘制图表
+        if (typeof drawExpoGraph === 'function') {
+          drawExpoGraph();
+        }
+        
+        console.log('[DR包] 页面参数已更新:', {
+          channel: channel,
+          switchChannel: switchChannel,
+          reverse: reverse ? 'REV' : 'NOR',
+          drLeft: drLeft,
+          drRight: drRight,
+          expoLeft: expoLeft,
+          expoRight: expoRight
+        });
+      }
+      
+      return true;
+    }
+
 
     function linkStats(buf) {
         // 只在校准页面可见时刷新控件
@@ -8877,6 +11472,10 @@ const calibStyle = document.createElement('style');
         'fw-remote': '遥控器',
         'fw-transmitter': '高频头',
         'fw-sensor': '传感器',
+        'fw-load-local-bin': '加载本地bin文件夹',
+        'fw-loading': '加载中...',
+        'fw-no-bin-files': '未找到.bin文件',
+        'fw-load-error': '加载失败',
         'factory-reset': '恢复出厂设置!',
         'exit-fw-update': '退出固件更新',
         'keymode-title': '按键模式设置',
@@ -8917,12 +11516,18 @@ const calibStyle = document.createElement('style');
         'comm-uart': '串口通信',
         'attr-dev': '设备概况',
         'config-channel': '通道配置',
+        'flight-mode': '飞行模式',
+        'flight-mode-title': '飞行模式',
+        'flight-vtail': 'V尾混控',
+        'flight-delta': '三角翼混控',
         'net-config': '无线配置',
         'dev-cailation': '设备校准',
         'frieware-updata': '固件更新',
         'channel-monitor': '通道监视器',
         'channel-attr': '通道属性',
         'channel-map': '通道映射',
+        'channel-data-source-raw': '原始数据',
+        'channel-data-source-output': '输出数据',
         'trim-center': '微调和中立点',
         'mode': '摇杆模式',
         'channel-map-relation': '通道映射关系',
@@ -9002,7 +11607,15 @@ const calibStyle = document.createElement('style');
         'channel-map-default-output': '默认输出',
         'channel-map-channel-input': '默认输入',
         'Sub-trim-title': '舵机中立点',
-        'slide_mid':'旋钮中点提示',
+        'slide_mid':'S1旋钮中点提示',
+        'slide_Th_Trim_mid': '油门微调中点提示',
+        'slide_Th_Sub_mid': '油门中立点中点提示',
+        'slide_Dir_Trim_mid': '方向微调中点提示',
+        'slide_Dir_Sub_mid': '方向中立点中点提示',
+        'slide_P1_mid': 'P1 中点提示',
+        'slide_P2_mid': 'P2 中点提示',  
+        'update-over': '更新完毕',
+
         'elrs-missing-alert': '未检测到ELRS固件，请检查设备或重启',
         'jump-to-elrs-website': '跳转到ELRS官网网页进行固件更新',
         'update-esp-firmware': '使用本地App更新ESP固件',
@@ -9018,14 +11631,12 @@ const calibStyle = document.createElement('style');
         'send-success':'已发送',
         'trim-left-reset-test':'左Trim复位功能',
         'trim-right-reset-test':'右Trim复位功能',
-        "baud-btn": "手动选择波特率",
-        "baud-enter-btn": "确认",
-        'bauding':"切换中",
+        'dual-rate-title':'大小舵',
+        'dual-rate-title-text':'大小舵',
         'enter-passthrough': '进入透传模式',
         'exit-passthrough': '退出透传模式',
         'open-wifi': '开启WiFi模式',
         'close-wifi': '关闭WiFi模式',
-        'update-over' : '升级成功',
         // ... 你可以继续补充 ...
       },
       en: {
@@ -9049,6 +11660,10 @@ const calibStyle = document.createElement('style');
         'fw-remote': 'T8L Controller',
         'fw-transmitter': 'Internal ELRS Module',
         'fw-sensor': 'Sensor',
+        'fw-load-local-bin': 'Load Local bin Folder',
+        'fw-loading': 'Loading...',
+        'fw-no-bin-files': 'No .bin files found',
+        'fw-load-error': 'Load failed',
         'factory-reset': 'Factory Reset',
         'exit-fw-update': 'Exit Firmware Update',
         'keymode-title': 'Key Mode Setting',
@@ -9087,11 +11702,17 @@ const calibStyle = document.createElement('style');
         'comm-uart': 'UART',
         'attr-dev': 'Device',
         'config-channel': 'Channels',
+        'flight-mode': 'Flight Mode',
+        'flight-mode-title': 'Flight Mode',
+        'flight-vtail': 'V-Tail Mix',
+        'flight-delta': 'Delta Wing Mix',
         'net-config': 'RF Settings',
         'dev-cailation': 'Calibration',
         'frieware-updata': 'Firmware Update',
         'channel-monitor': 'Channel Monitor',
         'channel-attr': 'Channel Settings',
+        'channel-data-source-raw': 'Raw Data',
+        'channel-data-source-output': 'Output Data',
         'channel-map': 'Channel Mapping',
         'trim-center': 'Trim and Sub Trim',
         'mode': 'Mode',
@@ -9177,6 +11798,15 @@ const calibStyle = document.createElement('style');
         'Sub-trim-title':'Sub Trim',
         'factory-reset-success':"The factory reset instruction has been sent",
         'slide_mid':'S1 Mid tone',
+        'slide_Th_Trim_mid': 'Th Tirm Mid tone',
+        'slide_Th_Sub_mid': 'Th Sub Mid tone',
+        'slide_Dir_Trim_mid': 'Dir Trim Mid tone',
+        'slide_Dir_Sub_mid': 'Dir Sub Mid tone',
+        'slide_P1_mid': 'P1 Mid tone',
+        'slide_P2_mid': 'P2 Mid tone',
+        'update-over': 'update over',
+
+
         'elrs-missing-alert': 'ELRS firmware not detected. Please check the device or restart.',
         'jump-to-elrs-website': 'Jump to ELRS website for firmware update',
         'update-esp-firmware': 'Update ESP firmware with local App',
@@ -9195,14 +11825,12 @@ const calibStyle = document.createElement('style');
         'serial-not-found': 'No available serial port device found. If the device is just inserted, please wait a few seconds and try again.',
         'serial-access-failed': 'Serial port access failed: ',
         'serial-permission-denied': 'User has denied serial port access permission, or the browser environment does not support serial port access.',
-        "baud-btn": "Manual Baud Rate",
-        "baud-enter-btn": "Confirm",
-        'bauding':"Switching...",
+        'dual-rate-title': 'Dual Rate',
+        'dual-rate-title-text': 'Dual Rate',
         'enter-passthrough': 'Enter Passthrough',
         'exit-passthrough': 'Exit Passthrough',
         'open-wifi': 'Open WiFi',
         'close-wifi': 'Close WiFi',
-        'update-over' : 'Update complete',
         // ... 你可以继续补充 ...        
         // ... you can continue ...
       }
@@ -9255,7 +11883,18 @@ const calibStyle = document.createElement('style');
         const key = el.getAttribute('data-i18n');
         //console.log('[ATTR] 更新语言:', key, lang, LANGS[lang][key]);
         if (LANGS[lang] && LANGS[lang][key]) {
-          el.textContent = LANGS[lang][key];
+          // 特殊处理：数据源切换按钮需要根据状态动态设置文本
+          if (key === 'channel-data-source-raw' && el.id === 'channel-data-source-toggle-btn') {
+            if (typeof window._channelDataSourceRaw !== 'undefined') {
+              el.textContent = window._channelDataSourceRaw 
+                ? (LANGS[lang]['channel-data-source-raw'] || '原始数据')
+                : (LANGS[lang]['channel-data-source-output'] || '输出数据');
+            } else {
+              el.textContent = LANGS[lang][key];
+            }
+          } else {
+            el.textContent = LANGS[lang][key];
+          }
         }
       });
     }
@@ -9455,6 +12094,6 @@ window.addEventListener('load', function() {
 });
 
   </script>
-  <div id="app-version" style="position:fixed; bottom:10px; right:14px; color:#6b7a99; font-size:12px; z-index:1000; pointer-events:none;">Version 1.7.2</div>
+  <div id="app-version" style="position:fixed; bottom:10px; right:14px; color:#6b7a99; font-size:12px; z-index:1000; pointer-events:none;">Version 1.7.7</div>
 </body>
 </html> 
