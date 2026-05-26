@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AX12 Repair</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+button {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        button.connect-btn {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        button.connect-btn:hover:not(:disabled) {
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        button.repair-btn {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+        }
+
+        button.repair-btn:hover:not(:disabled) {
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.4);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.info {
+            background: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+
+        .hex-display {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #495057;
+            font-size: 13px;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AX12 Repair</h1>
+        
+        <div class="form-group">
+            <label for="portSelect">Serial Port</label>
+            <select id="portSelect">
+                <option value="">No port selected</option>
+            </select>
+        </div>
+
+        <button id="connectBtn" class="connect-btn">Connect</button>
+        <button id="repairBtn" class="repair-btn" disabled>Repair</button>
+
+        
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        let selectedPort = null;
+        let isConnected = false;
+
+        const portSelect = document.getElementById('portSelect');
+        const connectBtn = document.getElementById('connectBtn');
+        const repairBtn = document.getElementById('repairBtn');
+        const messageDiv = document.getElementById('message');
+
+        // 检查 API 支持
+        function checkApiSupport() {
+            if (!navigator.serial) {
+                showMessage('Web Serial API not supported. Please use Chrome or Edge.', 'error');
+                connectBtn.disabled = true;
+                repairBtn.disabled = true;
+                return false;
+            }
+            return true;
+        }
+
+        // 显示消息
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + type;
+            messageDiv.style.display = 'block';
+        }
+
+        // 连接按钮 - 选择串口
+        async function connectPort() {
+            if (!checkApiSupport()) return;
+
+            try {
+                // 请求选择串口
+                const port = await navigator.serial.requestPort();
+                selectedPort = port;
+
+                // 获取端口信息
+                const info = port.getInfo();
+                let portName = 'Selected Port';
+                if (info.usbVendorId && info.usbProductId) {
+                    portName = `USB Device (VID:${info.usbVendorId.toString(16).toUpperCase()} PID:${info.usbProductId.toString(16).toUpperCase()})`;
+                }
+
+                portSelect.innerHTML = `<option value="0">${portName}</option>`;
+                
+                isConnected = true;
+                connectBtn.textContent = 'Connected';
+                connectBtn.disabled = true;
+                repairBtn.disabled = false;
+
+                showMessage('Port connected successfully!', 'success');
+
+            } catch (error) {
+                if (error.name !== 'NotFoundError') {
+                    showMessage('Error: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // 修复按钮 - 发送数据
+        async function sendRepair() {
+            if (!selectedPort || !isConnected) {
+                showMessage('Please connect to a port first', 'error');
+                return;
+            }
+
+            try {
+                // 打开串口
+                await selectedPort.open({ 
+                    baudRate: 1000000,
+                    dataBits: 8,
+                    stopBits: 1,
+                    parity: 'none'
+                });
+
+                // 等待串口准备好
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // 获取写入流
+                const writable = selectedPort.writable;
+                const writer = writable.getWriter();
+
+                // 发送修复指令: 0xa6 0x08 0x10 0x04 0x02 0x80 0x01 0xed
+                const data = new Uint8Array([0xa6, 0x08, 0x10, 0x04, 0x02, 0x80, 0x01, 0xed]);
+                await writer.write(data);
+
+                // 释放锁
+                writer.releaseLock();
+
+                // 关闭串口
+                await selectedPort.close();
+
+showMessage('Repair Successful!', 'success');
+                repairBtn.textContent = 'Done';
+                repairBtn.disabled = true;
+
+            } catch (error) {
+                showMessage('Repair failed: ' + error.message, 'error');
+            }
+        }
+
+        // 事件监听
+        connectBtn.addEventListener('click', connectPort);
+        repairBtn.addEventListener('click', sendRepair);
+
+        // 初始化检查
+        checkApiSupport();
+    </script>
+</body>
+</html>
