@@ -1,19 +1,43 @@
 { 
-  "remote": [ 
-    "T8L-V1_7updata.bin" 
+  "devices": { 
+    "RadioMaster MT8": { 
+      "type": "ctl", 
+      "model": "MT8", 
+      "files": [ 
+        "MT8_V2_7.bin" 
+      ] 
+    } 
 , 
-    "T8L-V1_8updata.bin" 
+    "RadioMaster T8L": { 
+      "type": "ctl", 
+      "model": "T8L", 
+      "files": [ 
+        "T8L-V1_7updata.bin" 
 , 
-    "T8L_V1_5updata.bin" 
+        "T8L-V1_8updata.bin" 
 , 
-    "T8L_V1_6updata.bin" 
-  ] 
+        "T8L_V1_5updata.bin" 
 , 
-  "transmitter": [ 
-    "firmware3.6.0.bin" 
-  ] 
+        "T8L_V1_6updata.bin" 
+      ] 
+    } 
 , 
-  "sensor": [ 
-    "RM_ERS_Sensor-v1.3-updata-2026.03.04.bin" 
-  ] 
+    "RM ERS Sensor": { 
+      "type": "sensor", 
+      "model": "ERS", 
+      "files": [ 
+        "RM_ERS_Sensor-v1_3-updata-2026_03_04.bin" 
+, 
+        "RM_ERS_Sensor-v2_0-updata-2026_10_14.bin" 
+      ] 
+    } 
+, 
+    "Radio": { 
+      "type": "radio", 
+      "model": "", 
+      "files": [ 
+        "firmware3.6.0.bin" 
+      ] 
+    } 
+  } 
 } 

@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: RadioMaster · ESP
+    - generic [ref=e4]:
+      - button "🌐 EN" [ref=e5] [cursor=pointer]
+      - text: "|"
+      - link "返回配置工具" [ref=e6] [cursor=pointer]:
+        - /url: Connection.html
+  - generic [ref=e8]:
+    - generic [ref=e9]: ESP 固件烧录
+    - generic [ref=e10]: ESP8285 · 请选择固件后连接设备并烧录
+    - generic [ref=e11]:
+      - text: 烧录地址固定为
+      - strong [ref=e12]: "0x0"
+      - text: ，波特率
+      - strong [ref=e13]: "921600"
+      - text: ，Flash 参数保持芯片原样。请使用 Chrome / Edge。
+    - generic [ref=e14]:
+      - generic [ref=e15]: 云端固件 (bin/radio)
+      - combobox "云端固件 (bin/radio)" [ref=e16]:
+        - option "正在加载固件列表…" [selected]
+    - generic [ref=e17]: 或
+    - generic [ref=e18]:
+      - generic [ref=e19]: 本地固件
+      - generic [ref=e20] [cursor=pointer]:
+        - generic [ref=e21]: 拖拽 .bin 文件到此处
+        - generic [ref=e22]: 或点击选择本地文件
+    - button "连接并烧录" [disabled] [ref=e24]

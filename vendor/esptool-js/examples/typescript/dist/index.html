@@ -1,0 +1,126 @@
+<!DOCTYPE html><html><head><script type="importmap">{"imports":{"016jq":"./stub_flasher_32c6.6fe2b2c0.js","13UX4":"./esp32s3.a207cbdf.js","2hW6C":"./stub_flasher_32c3.1f9ebd4a.js","2qjbS":"./stub_flasher_32h2.37275d7d.js","3FCxL":"./esp32s2.a524ff4d.js","3GAYU":"./esp32p4.bf5b5067.js","4yJbe":"./esp32c3.a5fb3e7a.js","6h0ub":"./stub_flasher_32c5.fd4c700c.js","6nCzm":"./esp32.1164b997.js","78mlP":"./stub_flasher_8266.6d789f92.js","8zstr":"./stub_flasher_32p4.ecd50cd4.js","AojFg":"./stub_flasher_32p4rc1.957d7f9c.js","a9A1F":"./stub_flasher_32s3.bab226b5.js","cKRKg":"./stub_flasher_32.251e1078.js","d6Jtx":"./stub_flasher_32c2.9b2239b1.js","dhqtk":"./stub_flasher_32c61.ceae2b6a.js","gmJ2M":"./esp32c2.a6cdfd42.js","hkp1M":"./esp32c61.2ae2f02e.js","iqeWE":"./esp32c5.7bae5ec2.js","ko1DP":"./stub_flasher_32s2.90f0db55.js","lbu3X":"./esp32c6.f1f7a6bf.js","loMUD":"./esp32h2.1d33d432.js"}}</script>
+        <meta charset="utf-8">
+        <title>ESP Tool</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.19.0/css/xterm.css">
+        <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+        <link rel="icon" href="https://www.espressif.com/favicon.ico">
+         <script src="https://cdn.jsdelivr.net/npm/xterm@4.19.0/lib/xterm.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <h1 align="center">ESP Tool</h1>
+        <h4 align="center">A Serial Flasher utility for Espressif chips</h4>
+        <div id="safariErr" style="display: none"><p align="center" style="color: red">This tool is not supported on Safari browser!</p>
+        </div>
+        <div align="center">
+            <a class="btn btn-info" href="https://espressif.github.io/esptool-js/docs/" target="_blank" rel="noopener">View the API Documentation</a>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="debugLogging" value="">
+                <label class="form-check-label" for="debugLogging">Show Debug log</label>
+            </div>
+          </div>
+        <div class="container" id="main">
+            <hr>
+            <div id="program">
+                <h3> Program </h3>
+                <label for="baudrates" id="lblBaudrate">Baudrate:</label>
+                <label style="display: none" id="lblConnTo">Connected to device: </label>
+                <select name="baudrates" id="baudrates">
+                    <option value="921600">921600</option>
+                    <option value="460800">460800</option>
+                    <option value="230400">230400</option>
+                    <option value="115200">115200</option>
+                </select>
+
+                <br><br>
+
+                <input class="btn btn-info btn-sm" type="button" id="connectButton" value="Connect">
+                <input class="btn btn-info btn-sm" type="button" id="copyTraceButton" value="Copy Trace">
+                <input class="btn btn-warning btn-sm" type="button" id="disconnectButton" value="Disconnect">
+                <input class="btn btn-danger btn-sm" type="button" id="eraseButton" value="Erase Flash">
+                <br>
+
+                <div class="alert alert-danger alert-dismissible" id="alertDiv" style="margin-top: 10px; display: none">
+                    <a href="#" class="close" aria-label="close" onclick="$('.alert').hide()">×</a>
+                    <span id="alertmsg"></span>
+                </div>
+
+                <div id="files">
+                    <table class="table table-striped" id="fileTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Flash Address</th>
+                                <th>File</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                    <input class="btn btn-info btn-sm" type="button" id="addFile" value="Add File">
+                    <br><br>
+                    <label for="flashMode" id="lblFlashMode">Flash Mode:</label>
+                    <select name="flashMode" id="flashMode">
+                        <option value="keep" selected="">keep</option>
+                        <option value="dio">dio</option>
+                        <option value="qio">qio</option>
+                        <option value="dout">dout</option>
+                        <option value="qout">qout</option>
+                    </select>
+                    <br><br>
+                    <label for="flashFreq" id="lblFlashFreq">Flash Frequency:</label>
+                    <select name="flashFreq" id="flashFreq">
+                        <option value="keep">keep</option>
+                    </select>
+                    <br><br>
+                    <label for="flashSize" id="lblFlashSize">Flash Size:</label>
+                    <select name="flashSize" id="flashSize">
+                        <option value="detect">detect</option>
+                        <option value="keep">keep</option>
+                    </select>
+                    <br><br>
+                    <input class="btn btn-info btn-sm" type="button" id="programButton" value="Program">
+                </div>
+                <output id="list"></output>
+                <hr>
+            </div>
+            <div id="console">
+                <h3>Console </h3>
+                <label style="display: none" id="lblConsoleFor">Connected to device: </label>
+                <label for="consoleBaudrates" id="lblConsoleBaudrate">Baudrate:</label>
+                <select name="consoleBaudrates" id="consoleBaudrates">
+                    <option value="115200">115200</option>
+                    <option value="74880">74880</option>
+                </select>
+                <label for="reconnectDelay" id="lblReconnectDelay">Reconnect Delay (ms):</label>
+                <input type="number" id="reconnectDelay" name="reconnectDelay" value="1000" min="100" max="10000" step="100">
+                <label for="maxRetries" id="lblMaxRetries">Max Retries:</label>
+                <input type="number" id="maxRetries" name="maxRetries" value="5" min="1" max="20" step="1">
+
+                <br><br>
+
+                <input class="btn btn-info" type="button" id="consoleStartButton" value="Start">
+                <input class="btn btn-info" type="button" id="consoleStopButton" value="Stop">
+                <input class="btn btn-info" type="button" id="resetButton" value="Reset">
+                <hr>
+            </div>
+            <div id="terminal"></div>
+        </div>
+        <script src="typescript.48dc11fc.js" type="module"></script>
+        <script>// Safari 3.0+ "[object HTMLElementConstructor]"
+var isSafari = /constructor/i.test(window.HTMLElement) || function(p) {
+    return p.toString() === "[object SafariRemoteNotification]";
+}(!window['safari'] || typeof safari !== 'undefined' && window['safari'].pushNotification);
+if (isSafari) {
+    document.getElementById("safariErr").style.display = "inline";
+    document.getElementById("main").style.display = "none";
+}
+
+</script>
+    
+
+</body></html>

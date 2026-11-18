@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>纸飞机 3D</title>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+    }
+    #viewer {
+      position: fixed;
+      inset: 0;
+    }
+    #viewer canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      touch-action: none;
+    }
+    .panel {
+      position: fixed;
+      left: 14px;
+      bottom: 14px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-width: 240px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+      font-family: system-ui, sans-serif;
+    }
+    .panel h2 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1a3a52;
+      margin-bottom: 10px;
+    }
+    .ctrl { margin-bottom: 10px; }
+    .ctrl label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #3d5a73;
+      margin-bottom: 4px;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ctrl-row input[type="range"] { flex: 1; accent-color: #ff9f1c; }
+    .ctrl-row input[type="number"] {
+      width: 52px;
+      padding: 4px 6px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .panel .hint {
+      font-size: 0.72rem;
+      color: #6a8498;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+    .panel.hidden { display: none; }
+    #err {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #c0392b;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font: 13px system-ui, sans-serif;
+      display: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <div id="err"></div>
+
+  <div id="panel" class="panel hidden">
+    <h2>升降舵控制</h2>
+    <div class="ctrl">
+      <label>左升降舵</label>
+      <div class="ctrl-row">
+        <input type="range" id="left-range" min="0" max="100" value="50" />
+        <input type="number" id="left-num" min="0" max="100" value="50" /><span>%</span>
+      </div>
+    </div>
+    <div class="ctrl">
+      <label>右升降舵</label>
+      <div class="ctrl-row">
+        <input type="range" id="right-range" min="0" max="100" value="50" />
+        <input type="number" id="right-num" min="0" max="100" value="50" /><span>%</span>
+      </div>
+    </div>
+    <p class="hint">50% 中位 · 0% 下偏 · 100% 上偏<br>红 = 机头 · 蓝 = 机尾 · 橙 = 舵面</p>
+  </div>
+
+  <!-- 用普通 script + r128（仍提供 examples/js），避免 file:// ES Module / OrbitControls 404 -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    (function () {
+      const errEl = document.getElementById('err');
+      function showErr(msg) {
+        errEl.style.display = 'block';
+        errEl.textContent = msg;
+      }
+
+      if (typeof THREE === 'undefined') {
+        showErr('Three.js 加载失败，请检查网络后刷新');
+        return;
+      }
+      if (!THREE.OrbitControls) {
+        showErr('OrbitControls 加载失败，请检查网络后刷新');
+        return;
+      }
+
+      const MAX_DEFLECT = THREE.MathUtils.degToRad(32);
+      const isEmbedded = new URLSearchParams(location.search).get('embed') === '1'
+        || (window.parent && window.parent !== window);
+
+      const viewer = document.getElementById('viewer');
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 100);
+      camera.position.set(3.2, 2.6, 4.2);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setClearColor(0x000000, 0);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      viewer.appendChild(renderer.domElement);
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.target.set(0, 0, 0);
+
+      // 提高对比度，白底上也看得见
+      const COL = {
+        paperTop:   0xffe8cc,
+        paperWing:  0xffd7a8,
+        paperSide:  0xf0c090,
+        paperUnder: 0xd9b080,
+        keel:       0xc49460,
+        crease:     0x8b6914,
+        edge:       0x5c4033,
+        nose:       0xe74c3c,
+        tipL:       0xff5252,
+        tipR:       0x42a5f5,
+        stripe:     0x2196f3,
+        elevon:     0xff9800,
+        elevonEdge: 0xe65100,
+      };
+
+      const pivot = new THREE.Group();
+      scene.add(pivot);
+
+      function tri(parent, verts, color) {
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+        geo.computeVertexNormals();
+        const mesh = new THREE.Mesh(
+          geo,
+          new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide })
+        );
+        parent.add(mesh);
+        return mesh;
+      }
+
+      function line(parent, points, color, opacity) {
+        color = color === undefined ? COL.edge : color;
+        opacity = opacity === undefined ? 0.75 : opacity;
+        parent.add(new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(points.map(function (p) {
+            return new THREE.Vector3(p[0], p[1], p[2]);
+          })),
+          new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: opacity })
+        ));
+      }
+
+      // 标准达特纸飞机：机头 -Z，机尾 +Z
+      var NOSE = [0, 0.06, -1.15];
+      var SPINE_M = [0, 0.04, -0.25];
+      var SPINE_B = [0, 0.02, 0.55];
+
+      var L1 = [-0.55, 0.02, -0.35];
+      var L2 = [-0.95, 0.0, 0.25];
+      var L3 = [-0.78, 0.0, 0.72];
+      var L4 = [-1.05, 0.0, 0.72];
+
+      var R1 = [0.55, 0.02, -0.35];
+      var R2 = [0.95, 0.0, 0.25];
+      var R3 = [0.78, 0.0, 0.72];
+      var R4 = [1.05, 0.0, 0.72];
+
+      var KEEL_F = [0, -0.18, -0.6];
+      var KEEL_M = [0, -0.22, 0.1];
+      var KEEL_B = [0, -0.14, 0.65];
+
+      function concat3(a, b, c) {
+        return a.concat(b, c);
+      }
+
+      // 上表面
+      tri(pivot, concat3(NOSE, L1, SPINE_M), COL.paperTop);
+      tri(pivot, concat3(NOSE, SPINE_M, R1), COL.paperTop);
+      tri(pivot, concat3(L1, L2, SPINE_M), COL.paperWing);
+      tri(pivot, concat3(R1, SPINE_M, R2), COL.paperWing);
+      tri(pivot, concat3(L2, L4, L3), COL.paperWing);
+      tri(pivot, concat3(R2, R3, R4), COL.paperWing);
+      tri(pivot, concat3(L2, L3, SPINE_B), COL.paperWing);
+      tri(pivot, concat3(R2, SPINE_B, R3), COL.paperWing);
+      tri(pivot, concat3(SPINE_M, L2, SPINE_B), COL.paperSide);
+      tri(pivot, concat3(SPINE_M, SPINE_B, R2), COL.paperSide);
+
+      // 底面
+      tri(pivot, concat3(NOSE, KEEL_F, L1), COL.paperUnder);
+      tri(pivot, concat3(NOSE, R1, KEEL_F), COL.paperUnder);
+      tri(pivot, concat3(L1, KEEL_F, KEEL_M), COL.paperUnder);
+      tri(pivot, concat3(R1, KEEL_M, KEEL_F), COL.paperUnder);
+      tri(pivot, concat3(L1, KEEL_M, L2), COL.keel);
+      tri(pivot, concat3(R1, R2, KEEL_M), COL.keel);
+      tri(pivot, concat3(L2, KEEL_M, KEEL_B), COL.paperUnder);
+      tri(pivot, concat3(R2, KEEL_B, KEEL_M), COL.paperUnder);
+      tri(pivot, concat3(L2, KEEL_B, L3), COL.keel);
+      tri(pivot, concat3(R2, R3, KEEL_B), COL.keel);
+
+      // 折痕
+      line(pivot, [NOSE, SPINE_M, SPINE_B], COL.crease, 0.95);
+      line(pivot, [NOSE, KEEL_F, KEEL_M, KEEL_B], COL.crease, 0.9);
+      line(pivot, [NOSE, L1, L2, L4], COL.edge, 0.7);
+      line(pivot, [NOSE, R1, R2, R4], COL.edge, 0.7);
+      line(pivot, [L4, L3, SPINE_B, R3, R4], COL.edge, 0.65);
+      line(pivot, [L1, R1], COL.crease, 0.4);
+      line(pivot, [L2, R2], COL.crease, 0.35);
+
+      // 机头红
+      tri(pivot, concat3(NOSE, [-0.12, 0.04, -0.92], [0.12, 0.04, -0.92]), COL.nose);
+
+      // 机尾蓝
+      tri(pivot, concat3([-0.35, 0.01, 0.55], [0.35, 0.01, 0.55], [0, 0.01, 0.72]), COL.stripe);
+
+      // 翼尖色
+      tri(pivot, concat3(L2, L4, [-1.0, 0.01, 0.48]), COL.tipL);
+      tri(pivot, concat3(R2, [1.0, 0.01, 0.48], R4), COL.tipR);
+
+      line(pivot, [[-0.3, 0.03, -0.5], [-0.7, 0.01, 0.4]], COL.stripe, 0.6);
+      line(pivot, [[0.3, 0.03, -0.5], [0.7, 0.01, 0.4]], COL.stripe, 0.6);
+
+      // 升降舵：铰在后缘，向后伸出，不与主面重合
+      function createElevon(side) {
+        var group = new THREE.Group();
+        var hingeX = side === 'left' ? -0.915 : 0.915;
+        group.position.set(hingeX, 0.008, 0.72);
+
+        var s = side === 'left' ? -1 : 1;
+        var x0 = -0.42 * s;
+        var x1 =  0.42 * s;
+        var x2 =  0.36 * s;
+        var x3 = -0.30 * s;
+        var z1 = 0.36;
+
+        var geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.Float32BufferAttribute([
+          x0, 0, 0,  x1, 0, 0,  x2, 0, z1,
+          x0, 0, 0,  x2, 0, z1,  x3, 0, z1 * 0.95
+        ], 3));
+        geo.computeVertexNormals();
+
+        group.add(new THREE.Mesh(
+          geo,
+          new THREE.MeshBasicMaterial({ color: COL.elevon, side: THREE.DoubleSide })
+        ));
+
+        line(group, [
+          [x0, 0, 0], [x1, 0, 0], [x2, 0, z1], [x3, 0, z1 * 0.95], [x0, 0, 0]
+        ], COL.elevonEdge, 0.9);
+
+        pivot.add(group);
+        return group;
+      }
+
+      var elevonL = createElevon('left');
+      var elevonR = createElevon('right');
+
+      pivot.rotation.x = -0.08;
+
+      function getMeshBounds(root) {
+        var box = new THREE.Box3();
+        root.updateMatrixWorld(true);
+        root.traverse(function (obj) {
+          if (obj.isMesh && obj.geometry) {
+            if (!obj.geometry.boundingBox) obj.geometry.computeBoundingBox();
+            var b = obj.geometry.boundingBox.clone();
+            b.applyMatrix4(obj.matrixWorld);
+            box.union(b);
+          }
+        });
+        return box;
+      }
+
+      var bounds = getMeshBounds(pivot);
+      if (bounds.isEmpty()) {
+        showErr('模型包围盒为空，几何体构建失败');
+        return;
+      }
+      var center = bounds.getCenter(new THREE.Vector3());
+      pivot.position.set(-center.x, -center.y, -center.z);
+
+      var size = bounds.getSize(new THREE.Vector3());
+      var fitScale = Math.max(size.x, size.y, size.z) * 0.58;
+      if (!isFinite(fitScale) || fitScale <= 0) fitScale = 1.2;
+
+      camera.lookAt(0, 0, 0);
+      controls.update();
+
+      function clamp(v) {
+        var n = Number(v);
+        return isNaN(n) ? 50 : Math.min(100, Math.max(0, Math.round(n)));
+      }
+
+      function setElevon(side, percent) {
+        var p = clamp(percent);
+        var rad = ((p - 50) / 50) * MAX_DEFLECT;
+        // 左右同号：同百分比 = 同向偏转（俯仰）；数值相反才左右差动（横滚）
+        if (side === 'left') elevonL.rotation.x = rad;
+        if (side === 'right') elevonR.rotation.x = rad;
+        return p;
+      }
+
+      if (!isEmbedded) {
+        document.getElementById('panel').classList.remove('hidden');
+        function bind(side) {
+          var range = document.getElementById(side + '-range');
+          var num = document.getElementById(side + '-num');
+          function sync(from) {
+            var p = setElevon(side, from === 'range' ? range.value : num.value);
+            range.value = num.value = p;
+          }
+          range.addEventListener('input', function () { sync('range'); });
+          num.addEventListener('input', function () { sync('num'); });
+          num.addEventListener('change', function () { sync('num'); });
+        }
+        bind('left');
+        bind('right');
+      }
+
+      window.addEventListener('message', function (e) {
+        var d = e.data;
+        if (!d || d.type !== 'plane-control') return;
+        var result = {};
+        if (d.left !== undefined) result.left = setElevon('left', d.left);
+        if (d.right !== undefined) result.right = setElevon('right', d.right);
+        if (e.source) e.source.postMessage(Object.assign({ type: 'plane-state' }, result), '*');
+      });
+
+      if (isEmbedded) {
+        window.parent.postMessage({ type: 'plane-ready' }, '*');
+      }
+
+      function fitView() {
+        var w = viewer.clientWidth;
+        var h = viewer.clientHeight;
+        if (w < 2 || h < 2) {
+          requestAnimationFrame(fitView);
+          return;
+        }
+        var aspect = w / h;
+        var half = fitScale * 1.25;
+        camera.left = -half * aspect;
+        camera.right = half * aspect;
+        camera.top = half;
+        camera.bottom = -half;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+      }
+
+      fitView();
+      if (window.ResizeObserver) {
+        new ResizeObserver(fitView).observe(viewer);
+      }
+      window.addEventListener('resize', fitView);
+
+      (function loop() {
+        requestAnimationFrame(loop);
+        controls.update();
+        renderer.render(scene, camera);
+      })();
+
+      window.planeControl = {
+        setElevon: setElevon,
+        setBoth: function (left, right) {
+          return { left: setElevon('left', left), right: setElevon('right', right) };
+        }
+      };
+    })();
+  </script>
+</body>
+</html>

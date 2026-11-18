@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>纸飞机对比演示</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(160deg, #f0f4f8 0%, #e2eaf2 100%);
+      color: #1e3a52;
+      padding: 28px 18px;
+    }
+
+    .page { max-width: 1100px; margin: 0 auto; }
+
+    header { margin-bottom: 22px; }
+    header h1 { font-size: 1.45rem; font-weight: 700; margin-bottom: 6px; }
+    header p { font-size: 0.9rem; color: #5a7a92; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr 260px;
+      gap: 0;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(30, 80, 120, 0.08);
+      box-shadow: 0 8px 28px rgba(30, 60, 90, 0.08);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .compare { grid-template-columns: 1fr; }
+    }
+
+    .plane-col {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(30, 80, 120, 0.08);
+    }
+
+    @media (max-width: 900px) {
+      .plane-col { border-right: none; border-bottom: 1px solid rgba(30, 80, 120, 0.08); }
+    }
+
+    .plane-col h2 {
+      padding: 12px 16px 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .plane-col .sub {
+      padding: 4px 16px 8px;
+      font-size: 0.78rem;
+      color: #7a96ab;
+    }
+
+    .plane-slot {
+      position: relative;
+      flex: 1;
+      min-height: 340px;
+      background:
+        linear-gradient(45deg, #f6f8fa 25%, transparent 25%),
+        linear-gradient(-45deg, #f6f8fa 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f6f8fa 75%),
+        linear-gradient(-45deg, transparent 75%, #f6f8fa 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+      background-color: #eef2f6;
+    }
+
+    .plane-slot iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      border: none;
+      background: transparent;
+    }
+
+    .control-panel {
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .control-panel h2 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .legend {
+      font-size: 0.78rem;
+      color: #6a8498;
+      line-height: 1.6;
+      padding: 8px 10px;
+      background: #f4f8fb;
+      border-radius: 8px;
+    }
+
+    .legend span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .legend .front { background: #e74c3c; }
+    .legend .back  { background: #2196f3; }
+    .legend .flap  { background: #ff9800; }
+
+    .ctrl label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #3d5a73;
+    }
+
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ctrl-row input[type="range"] { flex: 1; accent-color: #ff9800; }
+
+    .ctrl-row input[type="number"] {
+      width: 56px;
+      padding: 5px 6px;
+      border: 1px solid #b8d4e8;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .hint {
+      font-size: 0.76rem;
+      color: #7a96ab;
+      line-height: 1.55;
+    }
+
+    footer {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: #8aa0b2;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>纸飞机对比</h1>
+      <p>左侧：后缘升降舵 · 右侧：V尾舵面 · 右侧面板同步控制两架</p>
+    </header>
+
+    <div class="compare">
+      <div class="plane-col">
+        <h2>后缘舵纸飞机</h2>
+        <p class="sub">舵面在主翼后缘</p>
+        <div class="plane-slot">
+          <iframe
+            class="sync-plane"
+            src="rc-plane-elevons.html?embed=1"
+            title="后缘舵纸飞机"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="plane-col">
+        <h2>V尾纸飞机</h2>
+        <p class="sub">舵面在 V 尾后缘</p>
+        <div class="plane-slot">
+          <iframe
+            class="sync-plane"
+            src="paper-plane-vtail.html?embed=1"
+            title="V尾纸飞机"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <h2>舵面控制</h2>
+        <div class="legend">
+          <span class="front"></span>红 = 机头<br>
+          <span class="back"></span>蓝 = 装饰 / 翼尖<br>
+          <span class="flap"></span>橙 = 舵面<br>
+          拖动数值会同步两架飞机
+        </div>
+        <div class="ctrl">
+          <label for="left-range">左舵面</label>
+          <div class="ctrl-row">
+            <input type="range" id="left-range" min="0" max="100" value="50" step="1" />
+            <input type="number" id="left-num" min="0" max="100" value="50" step="1" />
+            <span>%</span>
+          </div>
+        </div>
+        <div class="ctrl">
+          <label for="right-range">右舵面</label>
+          <div class="ctrl-row">
+            <input type="range" id="right-range" min="0" max="100" value="50" step="1" />
+            <input type="number" id="right-num" min="0" max="100" value="50" step="1" />
+            <span>%</span>
+          </div>
+        </div>
+        <p class="hint">50% 中位 · 0% 下偏 · 100% 上偏<br>各自区域可拖动旋转 · 滚轮缩放</p>
+      </div>
+    </div>
+
+    <footer>
+      组件：rc-plane-elevons.html &nbsp;|&nbsp; paper-plane-vtail.html
+    </footer>
+  </div>
+
+  <script>
+    function iframes() {
+      return document.querySelectorAll('iframe.sync-plane');
+    }
+
+    function sendControl(data) {
+      iframes().forEach(function (f) {
+        try {
+          f.contentWindow.postMessage(Object.assign({ type: 'plane-control' }, data), '*');
+        } catch (e) {}
+      });
+    }
+
+    function bindControl(side) {
+      var range = document.getElementById(side + '-range');
+      var num = document.getElementById(side + '-num');
+
+      function sync(from) {
+        var raw = from === 'range' ? range.value : num.value;
+        var n = Number(raw);
+        if (isNaN(n)) n = 50;
+        var v = Math.min(100, Math.max(0, Math.round(n)));
+        range.value = num.value = v;
+        var payload = {};
+        payload[side] = v;
+        sendControl(payload);
+      }
+
+      range.addEventListener('input', function () { sync('range'); });
+      num.addEventListener('input', function () { sync('num'); });
+      num.addEventListener('change', function () { sync('num'); });
+    }
+
+    bindControl('left');
+    bindControl('right');
+
+    window.addEventListener('message', function (e) {
+      if (e.data && e.data.type === 'plane-ready') {
+        sendControl({ left: 50, right: 50 });
+      }
+    });
+  </script>
+</body>
+</html>

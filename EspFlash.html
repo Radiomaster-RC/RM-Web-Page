@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP 固件烧录 · RadioMaster</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f4f6fb 100%);
+      color: #222;
+      min-height: 100vh;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(51, 88, 224, 0.08);
+    }
+    .top-bar .brand {
+      font-weight: 700;
+      color: #3358e0;
+      font-size: 1.05em;
+    }
+    .top-bar a, .top-bar button {
+      color: #3358e0;
+      text-decoration: none;
+      font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .page-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 32px 16px 48px;
+      min-height: calc(100vh - 56px);
+    }
+    .card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 36px rgba(79, 140, 255, 0.15);
+      padding: 40px 48px 36px;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .comm-title {
+      font-size: 1.35em;
+      font-weight: 700;
+      color: #3358e0;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 0.95em;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .field {
+      margin-bottom: 18px;
+    }
+    .field label {
+      display: block;
+      color: #3358e0;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 0.98em;
+    }
+    .field select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #4f8cff;
+      font-size: 1em;
+      color: #3358e0;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .fw-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 6px 0 18px;
+      color: #8899bb;
+      font-size: 0.88em;
+    }
+    .fw-divider::before,
+    .fw-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #dbe4ff;
+    }
+    #fw-drop-area {
+      border: 2px dashed #4f8cff;
+      border-radius: 12px;
+      padding: 22px 16px;
+      text-align: center;
+      background: #f4f8ff;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #fw-drop-area.drag-over {
+      border-color: #3358e0;
+      background: #e8efff;
+    }
+    #fw-drop-title {
+      color: #3358e0;
+      font-weight: 500;
+      font-size: 0.98em;
+      margin-bottom: 4px;
+    }
+    #fw-drop-hint {
+      color: #8899bb;
+      font-size: 0.85em;
+    }
+    #fw-file-name {
+      margin-top: 10px;
+      text-align: center;
+      color: #3358e0;
+      font-weight: 500;
+      font-size: 0.92em;
+      min-height: 1.2em;
+      word-break: break-all;
+    }
+    .info-pill {
+      background: #f4f8ff;
+      border: 1px solid #e0e7ff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.9em;
+      color: #5a6f9e;
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+    .info-pill strong { color: #3358e0; }
+    .connect-btn {
+      width: 100%;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, #4f8cff 0%, #3358e0 100%);
+      box-shadow: 0 2px 8px rgba(51, 88, 224, 0.3);
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .connect-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .connect-btn:not(:disabled):active {
+      transform: scale(0.98);
+    }
+    .btn-secondary {
+      margin-top: 10px;
+      background: #e0e7ff;
+      color: #3358e0;
+      box-shadow: none;
+    }
+    #progress-wrap {
+      display: none;
+      margin: 18px 0 8px;
+    }
+    #progress-bar-wrap {
+      width: 100%;
+      height: 22px;
+      background: #e0e7ff;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #4f8cff 0%, #3358e0 100%);
+      transition: width 0.2s;
+    }
+    #progress-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+      color: #3358e0;
+      font-size: 0.95em;
+    }
+    #status {
+      min-height: 28px;
+      text-align: center;
+      font-weight: 600;
+      margin-top: 12px;
+      color: #3358e0;
+      font-size: 0.95em;
+    }
+    #status.error { color: #e74c3c; }
+    #status.ok { color: #27ae60; }
+    #chip-info {
+      text-align: center;
+      color: #888;
+      font-size: 0.9em;
+      margin-top: 4px;
+    }
+    #log-panel {
+      display: none;
+      margin-top: 16px;
+      max-height: 120px;
+      overflow-y: auto;
+      background: #1e1e1e;
+      color: #ccc;
+      font-family: monospace;
+      font-size: 11px;
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <span class="brand">RadioMaster · ESP</span>
+    <div>
+      <button type="button" id="lang-switcher">🌐 中文</button>
+      &nbsp;|&nbsp;
+      <a href="Connection.html" id="back-link">返回配置工具</a>
+    </div>
+  </div>
+  <div class="page-wrap">
+    <div class="card">
+      <div class="comm-title" data-i18n="title">ESP 固件烧录</div>
+      <div class="subtitle" data-i18n="subtitle">ESP8285 · 请选择固件后连接设备并烧录</div>
+
+      <div class="info-pill" data-i18n="hint">
+        烧录地址固定为 <strong>0x0</strong>，波特率 <strong>921600</strong>，Flash 参数保持芯片原样。请使用 Chrome / Edge。
+      </div>
+
+      <div class="field">
+        <label for="fw-select" data-i18n="fw-label">云端固件 (bin/radio)</label>
+        <select id="fw-select">
+          <option value="" data-i18n="fw-loading">正在加载固件列表…</option>
+        </select>
+      </div>
+
+      <div class="fw-divider" data-i18n="fw-or">或</div>
+
+      <div class="field">
+        <label data-i18n="fw-local-label">本地固件</label>
+        <div id="fw-drop-area">
+          <div id="fw-drop-title" data-i18n="drag-fw-file">拖拽 .bin 文件到此处</div>
+          <div id="fw-drop-hint" data-i18n="drag-fw-hint">或点击选择本地文件</div>
+        </div>
+        <input type="file" id="fw-file" accept=".bin,.hex" hidden>
+        <div id="fw-file-name"></div>
+      </div>
+
+      <button type="button" class="connect-btn" id="flash-btn" data-i18n="flash-btn" disabled>连接并烧录</button>
+      <button type="button" class="connect-btn btn-secondary" id="disconnect-btn" data-i18n="disconnect-btn" style="display:none;">断开连接</button>
+
+      <div id="progress-wrap">
+        <div id="progress-bar-wrap">
+          <div id="progress-bar"></div>
+          <span id="progress-text">0%</span>
+        </div>
+      </div>
+      <div id="status"></div>
+      <div id="chip-info"></div>
+      <pre id="log-panel"></pre>
+    </div>
+  </div>
+  <script type="importmap">
+  {
+    "imports": {
+      "pako": "./vendor/pako/pako.esm.mjs"
+    }
+  }
+  </script>
+  <script type="module" src="esp-flash.js?v=2"></script>
+</body>
+</html>
