@@ -1552,7 +1552,13 @@ update over<body style="margin:0;">
 
     // web版本打印
     //console.log('RadioMasterWeb_V1.6.2');
-    
+
+    // 生产环境日志开关：false 时静默所有 console.log 调试输出，仅保留 warn / error；排查问题时改为 true 即可恢复
+    const DEBUG_LOG = false;
+    if (!DEBUG_LOG) {
+      console.log = function() {};
+    }
+
     // 添加初始化完成标记
     window._appInitialized = false;
     
