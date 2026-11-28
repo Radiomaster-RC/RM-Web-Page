@@ -1320,7 +1320,7 @@ update over<body style="margin:0;">
   <!-- 统一顶部栏 -->
   <div id="device-info-bar">
     <div class="logo-section">
-      <img id="logo-img" src="./RadioMasterLogo.png" alt="logo" onerror="this.onerror=null; this.src='RadioMasterLogo.png';"/>    </div>
+      <img id="logo-img" src="./bin/RadioMasterLogo.png" alt="logo" onerror="this.onerror=null; this.src='RadioMasterLogo.png';"/>    </div>
     <div class="menu-section">
       <div class="menu-bar">
         <!-- 
@@ -1488,7 +1488,7 @@ update over<body style="margin:0;">
           <div class="comm-container" style="display:flex;justify-content:center;align-items:center;min-height:calc(100vh - 64px);background:linear-gradient(135deg,#e0e7ff 0%,#f4f6fb 100%);">
             <div id="fw-card" style="background:#fff;border-radius:22px;box-shadow:0 8px 36px rgba(79,140,255,0.15);padding:48px 60px 40px 60px;min-width:380px;max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;">
               <div class="comm-title" style="margin-bottom:32px;" data-i18n="fw-change-title">选择固件更新</div>
-              <div style="margin-bottom:18px;width:100%;display:flex;align-items:center;justify-content:flex-start;gap:12px;">
+              <div id="fw-device-type-row" style="margin-bottom:18px;width:100%;display:flex;align-items:center;justify-content:flex-start;gap:12px;">
                 <label for="fw-device-type" style="color:#3358e0;font-weight:500;" data-i18n="fw-device-type">设备类型：</label>
                 <select id="fw-device-type" style="padding:4px 12px;border-radius:8px;border:1.5px solid #4f8cff;font-size:1.08em;">
                   <option value="remote" selected data-i18n="fw-remote">遥控器</option>
@@ -1497,23 +1497,21 @@ update over<body style="margin:0;">
                 </select>
               </div>
               <!-- 从服务器加载云端固件 -->
-              <div style="margin-bottom:18px;width:100%;display:flex;flex-direction:column;gap:12px;">
+              <div id="fw-source-buttons" style="margin-bottom:18px;width:100%;display:flex;flex-direction:column;gap:12px;">
                 <button id="fw-load-local-bin-btn" style="padding:8px 20px;background:linear-gradient(135deg,#4f8cff 0%,#3358e0 100%);color:#fff;border:none;border-radius:8px;font-size:1em;font-weight:500;cursor:pointer;box-shadow:0 2px 8px rgba(51,88,224,0.3);transition:all 0.3s;" data-i18n="fw-load-local-bin">从服务器加载固件</button>
                 <div id="fw-bin-file-list" style="display:none;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;padding:8px;background:#f4f8ff;border-radius:8px;border:1px solid #e0e7ff;">
                   <!-- bin文件列表将在这里动态生成 -->
                 </div>
               </div>
-              <!-- 分隔线 -->
-              <div style="margin:18px 0;width:100%;height:1px;background:#e0e7ff;"></div>
-              <div style="text-align:center;color:#888;font-size:0.95em;margin-bottom:12px;" data-i18n="or">或</div>
-              <!-- 文件拖拽上传区 -->
-              <div id="fw-drop-area" style="border:2.5px dashed #4f8cff;border-radius:14px;padding:32px 18px;margin-bottom:22px;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:border-color 0.2s;position:relative;background:#f4f8ff;">
-                <div data-i18n="drag-fw-file" style="font-size:1.13em;color:#3358e0;font-weight:500;margin-bottom:10px;">拖拽固件文件到此处</div>
-                <div data-i18n="or" style="color:#888;font-size:0.98em;margin-bottom:12px;">或</div>
+              <!-- 隐藏容器：本地按钮/拖拽入口已移除；fw-file input 仅用于承载在线加载到的固件 blob -->
+              <div id="fw-divider" style="display:none;"></div>
+              <div id="fw-or-label" style="display:none;" data-i18n="or">或</div>
+              <div id="fw-drop-area" style="display:none;">
                 <input type="file" id="fw-file" accept=".bin,.hex" data-i18n="fw-file-input" style="display:none;">
-                <div id="fw-file-name" data-i18n="fw-file-name" style="margin-top:14px;color:#3358e0;font-weight:500;font-size:1.08em;"></div>
+                <div id="fw-file-name" data-i18n="fw-file-name"></div>
               </div>
-              <!-- 进度条美化 -->
+              <button id="fw-update-btn" class="connect-btn" style="width:100%;margin-top:8px;margin-bottom:8px;font-size:1.15em;" data-i18n="fw-update-btn">确认更新</button>
+              <!-- 进度条：置于按钮下方 -->
               <div style="margin-bottom:22px;width:100%;display:flex;flex-direction:column;align-items:flex-start;">
                 <label id="fw-progress-label" data-i18n="update-progress" style="font-weight:bold;color:#3358e0;margin-bottom:8px;display:none;" data-i18n="update-progress">更新进度</label>
                 <div id="fw-progress-bar-wrap" style="width:100%;height:22px;background:#e0e7ff;border-radius:12px;overflow:hidden;position:relative;display:none;">
@@ -1521,7 +1519,6 @@ update over<body style="margin:0;">
                   <span id="fw-progress-text" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:bold;color:#3358e0;font-size:1.08em;">0%</span>
                 </div>
               </div>
-              <button id="fw-update-btn" class="connect-btn" style="width:100%;margin-top:8px;margin-bottom:8px;font-size:1.15em;" data-i18n="fw-update-btn">确认更新</button>
               <div id="fw-status" style="margin-top:10px;color:#e74c3c;font-weight:bold;min-height:28px;text-align:center;width:100%;"></div>
               <div id="fw-status-text" style="margin-top:10px;color:#e74c3c;font-weight:bold;min-height:28px;text-align:center;width:100%;"></div>
             </div>
@@ -1555,7 +1552,13 @@ update over<body style="margin:0;">
 
     // web版本打印
     //console.log('RadioMasterWeb_V1.6.2');
-    
+
+    // 生产环境日志开关：false 时静默所有 console.log 调试输出，仅保留 warn / error；排查问题时改为 true 即可恢复
+    const DEBUG_LOG = false;
+    if (!DEBUG_LOG) {
+      console.log = function() {};
+    }
+
     // 添加初始化完成标记
     window._appInitialized = false;
     
@@ -1734,6 +1737,11 @@ update over<body style="margin:0;">
       isSerialConnected = false;
       isReading = false;
 
+      // 是否处于固件更新等待阶段（设备复位进 bootloader 的预期断口，不应弹回连接页）
+      // _fwSessionActive 在点击开始时立即置位，早于断口回调，避免 upDataFlag 尚未赋值时误判为正常断开
+      const inFwWaiting = (_fwSessionActive || (typeof upDataFlag !== 'undefined' && upDataFlag === 1)) &&
+        (window._currentPage === 'fw' || window.fwReadyCheckActive || _fwSessionActive);
+
       if (typeof stopGlobalChannelTimer === 'function') stopGlobalChannelTimer();
       if (typeof clearAllTimers === 'function') clearAllTimers();
       stopExitFwUpdateContinuousSend(reason || 'serial disconnect');
@@ -1750,7 +1758,7 @@ update over<body style="margin:0;">
         clearInterval(window.flightModeUpdateInterval);
         window.flightModeUpdateInterval = null;
       }
-      if (typeof window.stopFwReadyCheck === 'function') {
+      if (!inFwWaiting && typeof window.stopFwReadyCheck === 'function') {
         window.stopFwReadyCheck('serial disconnect');
       }
 
@@ -1792,6 +1800,7 @@ update over<body style="margin:0;">
           console.error('[FW] 固件更新期间设备断开，更新失败');
 
           upDataFlag = 0;
+          _fwSessionActive = false;
           localStorage.removeItem('upDataFlag');
           window._isYmodemBusy = false;
           window._fwYmodemBytesSent = 0;
@@ -1816,6 +1825,9 @@ update over<body style="margin:0;">
               statusBox.style.color = '#e74c3c';
             }
           }, 50);
+        } else if (inFwWaiting) {
+          // 固件更新等待阶段：设备复位进 bootloader 属预期断口，留在 fw 页等待自动重连与 YMODEM 握手，不弹回连接页
+          console.log('[FW] 等待固件就绪阶段串口断开（预期内，设备进入 bootloader），保留流程等待重连');
         } else {
           // 正常断开连接
           if (typeof showConnectPage === 'function') showConnectPage();
@@ -1961,6 +1973,8 @@ update over<body style="margin:0;">
     let recvMidAdc = [];
     // 从localStorage恢复upDataFlag状态，以便页面刷新后能继续固件更新流程
     let upDataFlag = parseInt(localStorage.getItem('upDataFlag')) || 0;
+    // 升级会话进行中标志：点击开始即置位，早于设备复位断口，避免断口回调误判为正常断开而弹回连接页
+    let _fwSessionActive = false;
     if (upDataFlag !== 0) {
       console.log('[FW] 从localStorage恢复upDataFlag:', upDataFlag);
     }
@@ -1982,6 +1996,7 @@ update over<body style="margin:0;">
     function handleFwUpdateDeviceReboot(reason) {
       window._fwUpdateRebootExpected = true;
       upDataFlag = 0;
+      _fwSessionActive = false;
       localStorage.removeItem('upDataFlag');
       console.log('[FW] 已清除localStorage中的upDataFlag');
       window._isYmodemBusy = false;
@@ -2251,6 +2266,11 @@ update over<body style="margin:0;">
     }
     // 断开连接后返回连接页面
     function showConnectPage() {
+      // 升级会话进行中的预期断口/重连，不切回连接页，避免界面闪一下；仅烧录完成后设备重启才允许返回
+      if (_fwSessionActive && !window._fwUpdateRebootExpected) {
+        console.log('[FW] 升级会话进行中，跳过返回连接页（避免闪烁）');
+        return;
+      }
       connectPage.style.display = '';
       mainApp.style.display = 'none';
       statusBox.textContent = '未连接';
@@ -2413,7 +2433,9 @@ update over<body style="margin:0;">
         statusBox.textContent = portInfo;
         updateDeviceInfoBar();
 
-        showMainPage('attr');
+        // 固件更新等待阶段重连成功后，保留在 fw 页继续 YMODEM 握手；其余情况回到 attr 页
+        const resumeFwPage = _fwSessionActive || (typeof upDataFlag !== 'undefined' && upDataFlag === 1 && window._currentPage === 'fw');
+        showMainPage(resumeFwPage ? 'fw' : 'attr');
         mainApp.style.display = '';
         connectPage.style.display = 'none';
 
@@ -2921,6 +2943,7 @@ update over<body style="margin:0;">
     async function readLoop() {
       if (isReading) return; // 防止多重循环
       isReading = true;
+      console.log('[FW-RX] readLoop 启动 | connected=' + isSerialConnected + ' reader=' + !!reader + ' writer=' + !!writer + ' port=' + !!port);
       const decoder = new TextDecoder();
       const commOutputBox = document.getElementById('output');
       let abnormalCount = 0;
@@ -2953,8 +2976,12 @@ update over<body style="margin:0;">
         try {
           const { value, done } = await reader.read();
           if (done) break;
-          if (value) 
+          if (value)
           {
+            if (window.fwReadyCheckActive) {
+              const _head = Array.from(value.slice(0, 8)).map(b => '0x' + b.toString(16).padStart(2, '0')).join(' ');
+              console.log(`[FW-RX-RAW] 收到 ${value.length}B | 前8: ${_head}`);
+            }
             // === 始终推入serialBuffer，无论YMODEM是否在进行 ===
             if(window._currentPage === 'net')   //无线配置单独缓冲区咯      但是会有进度条过来,所以,还要新增进度条的判断
             {
@@ -3108,6 +3135,10 @@ update over<body style="margin:0;">
             {
               if (window.fwReadyCheckActive && typeof window.feedFwYmodemReadyBytes === 'function') {
                 console.log('[FW-DEBUG] 检测到串口数据，准备调用feedFwYmodemReadyBytes，数据长度:', value.length, '前8字节:', Array.from(value.slice(0, 8)).map(b => '0x' + b.toString(16).padStart(2, '0')).join(' '));
+                try {
+                  const _rxText = new TextDecoder('utf-8').decode(value).replace(/\0/g, '');
+                  if (_rxText.trim()) console.log('[FW-RX]', JSON.stringify(_rxText));
+                } catch (e) { /* 忽略非文本帧 */ }
                 window.feedFwYmodemReadyBytes(value);
               } else {
                 if (!window.fwReadyCheckActive) {
@@ -3188,6 +3219,7 @@ update over<body style="margin:0;">
             error.name === 'NetworkError' ||
             (error.message && String(error.message).includes('device has been lost'))
           );
+          console.error('[FW-RX] readLoop 读取异常 | name=' + (error && error.name) + ' msg=' + (error && error.message) + ' lost=' + lost + ' connected=' + isSerialConnected + ' reader=' + !!reader + ' writer=' + !!writer + ' port=' + !!port + ' fwActive=' + window.fwReadyCheckActive);
           if (lost) {
             await handleSerialDisconnect(error.message);
           } else {
@@ -5358,6 +5390,7 @@ const calibStyle = document.createElement('style');
     const fwStatus = document.getElementById('fw-status');
     let fwFileData = null;
     let fwFileNameForUpload = null;
+    let _fwUploading = false; // 烧录防重入标志：就绪自动上传与手动确认共用
 
     // 本地bin文件夹加载功能
     const fwLoadLocalBinBtn = document.getElementById('fw-load-local-bin-btn');
@@ -5649,17 +5682,7 @@ const calibStyle = document.createElement('style');
       fwBinFileList.style.display = 'none';
       fwBinFileList.innerHTML = '';
     };
-    //fwFileBtn.onclick = () => fwFileInput.click();
-    fwDropArea.ondragover = e => { e.preventDefault(); fwDropArea.style.borderColor = '#3358e0'; };
-    fwDropArea.ondragleave = e => { e.preventDefault(); fwDropArea.style.borderColor = '#4f8cff'; };
-    fwDropArea.ondrop = e => {
-      e.preventDefault();
-      fwDropArea.style.borderColor = '#4f8cff';
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        fwFileInput.files = e.dataTransfer.files;
-        fwFileInput.dispatchEvent(new Event('change'));
-      }
-    };
+    // 仅保留在线服务器加载：本地文件按钮与拖拽入口已移除；fwFileInput 仅用于承载在线固件 blob
     fwFileInput.onchange = function() {
       const file = fwFileInput.files[0];
       if (!file) { fwFileData = null; fwFileName.textContent = ''; return; }
@@ -5695,7 +5718,25 @@ const calibStyle = document.createElement('style');
       try {
         if(upDataDev=="remote")
         {
-          await writer.write(new Uint8Array([0xA5, 0x66, 0x01, 0x0D, 0x0A]));
+          // 立即标记升级会话进行中：设备可能在命令发出后很快复位断口，断口回调必须据此保留在 fw 页
+          _fwSessionActive = true;
+          upDataFlag = 1;
+          localStorage.setItem('upDataFlag', '1');
+          fwStatus.textContent = LANGS[currentLang]['fw-loading-firmware'];
+          const _sleep = (ms) => new Promise(r => setTimeout(r, ms));
+          // 先等写队列排空，避免升级命令与上一帧残留通道请求合并到同一 USB 包（固件按包整段匹配，拼包即失败）
+          await _sleep(120);
+          const upCmd = new Uint8Array([0xA5, 0x66, 0x01, 0x0D, 0x0A]);
+          // 命令幂等：未复位前重复写升级标志无害；连续发 3 次，提高至少一次单独成包被 app 接受的概率
+          for (let i = 1; i <= 3; i++) {
+            try {
+              await writer.write(upCmd);
+              console.log(`[FW] 发送主控升级命令 第${i}/3次`);
+            } catch (e) {
+              console.warn('[FW] 升级命令发送失败:', e);
+            }
+            if (i < 3) await _sleep(150);
+          }
           startFwReadyCheck();
         }
         if(upDataDev=="sensor")
@@ -5713,6 +5754,7 @@ const calibStyle = document.createElement('style');
           localStorage.setItem('upDataFlag', '1');
           console.log('[FW] 已保存upDataFlag=1到localStorage');
           updateFwUI();
+          fwStatus.textContent = LANGS[currentLang]['fw-loading-firmware'];
           setTimeout(async () => {
             startFwReadyCheck();
           }, 1000);
@@ -5744,7 +5786,6 @@ const calibStyle = document.createElement('style');
     let fwReadyCheckTimer = null;
     let fwSend31Timer = null;
     let fwSend31Count = 0;
-    const FW_SEND31_MAX = 6;
     const FW_SEND31_INTERVAL_MS = 500;
     let fwLastSerialLen = 0;
     let fwBaudRateDetectionTimer = null; // 波特率检测定时器
@@ -5772,7 +5813,7 @@ const calibStyle = document.createElement('style');
       if (fwReadyCheckTimer) clearInterval(fwReadyCheckTimer);
       if (fwBaudRateDetectionTimer) clearInterval(fwBaudRateDetectionTimer);
       if (fwSensorDetectionTimer) clearInterval(fwSensorDetectionTimer);
-      if (fwSend31Timer) clearInterval(fwSend31Timer);
+      if (fwSend31Timer) clearTimeout(fwSend31Timer);
       fwReadyCheckTimer = null;
       fwBaudRateDetectionTimer = null;
       fwSensorDetectionTimer = null;
@@ -5789,14 +5830,25 @@ const calibStyle = document.createElement('style');
       const streak = fwCStreak;
       const windowC = fwCRecentWindow.filter(b => b === 0x43).length;
       stopFwReadyCheck(null);
-      if (fwUpdateBtn) {
-        fwUpdateBtn.disabled = false;
-        console.log(`[FW] YMODEM 就绪(${reason})，解锁确认更新按钮 (波特率: ${currentBaudRate}, streak=${streak}, windowC=${windowC})`);
-      }
       fwStatus.textContent = LANGS[currentLang]['fw-ready-update'];
       upDataFlag = 2;
       updateFwUI();
       serialBuffer = serialBuffer.filter(b => b !== 0x43);
+
+      // remote（MT8 主控）：握手就绪且已选固件、串口在线，直接自动开始烧录，无需再点“确认更新”；
+      // sensor / transmitter 维持原逻辑：只解锁按钮（或走独立弹窗），由用户手动确认。
+      const autoUpload = (upDataDev === 'remote') && fwFileData && writer && !_fwUploading;
+      if (autoUpload) {
+        console.log(`[FW] remote 就绪(${reason})，自动开始烧录 (波特率: ${currentBaudRate}, streak=${streak}, windowC=${windowC})`);
+        setTimeout(() => {
+          if (!_fwUploading) beginFwUpload();
+        }, 200);
+      } else {
+        if (fwUpdateBtn) {
+          fwUpdateBtn.disabled = false;
+          console.log(`[FW] YMODEM 就绪(${reason})，解锁确认更新按钮 (波特率: ${currentBaudRate}, streak=${streak}, windowC=${windowC})`);
+        }
+      }
     }
 
     /** 串口收到数据时实时检测 0x43，不依赖 serialBuffer 轮询 */
@@ -5862,14 +5914,47 @@ const calibStyle = document.createElement('style');
         }
       }
       
+      // remote：设备复位进 bootloader 菜单后，周期发送选项键 '1'(0x31) 进入下载等待态，直到收到 C
+      if (upDataDev === 'remote') startMenuKeyLoop();
+
       // 兜底：定期检查是否就绪，检测主要由 feedFwYmodemReadyBytes 实时完成
+      let fwHbeatCount = 0;
       fwReadyCheckTimer = setInterval(() => {
         if (!fwReadyCheckActive) return;
+        // 每秒打印一次接收链路存活状态：判断 reader 循环是否还活着、端口对象是否仍在
+        if ((fwHbeatCount++ % 5) === 0) {
+          console.log('[FW-DEAD] 存活心跳 | connected=' + isSerialConnected + ' reader=' + !!reader + ' writer=' + !!writer + ' port=' + !!port + ' isReading=' + isReading + ' bufferLen=' + serialBuffer.length);
+        }
         // 不要在这里强制禁用按钮，按钮状态应该只由 completeFwReadyCheck 控制
         if (isFwYmodemReady()) {
           completeFwReadyCheck('定时器兜底');
         }
       }, 200);
+    }
+
+    // remote 菜单选键循环：菜单选项 1 = 下载内部 Flash（0x31），进下载等待态后设备会每秒回 C
+    function startMenuKeyLoop() {
+      if (fwSend31Timer) clearTimeout(fwSend31Timer);
+      fwSend31Count = 0;
+      const tick = async () => {
+        if (!fwReadyCheckActive) return;
+        if (writer) {
+          try {
+            await writer.write(new Uint8Array([0x31]));
+            fwSend31Count++;
+            console.log(`[FW] TX 菜单键 31('1') 第${fwSend31Count}次 | baud=${currentBaudRate} connected=${isSerialConnected} writer=${!!writer}`);
+          } catch (e) {
+            console.log('[FW] 发送菜单选择键 0x31 失败:', e);
+          }
+        } else {
+          console.log('[FW] writer 为空，本次跳过菜单键（等待重连）');
+        }
+        // writer 短暂掉线（复位重连）时也继续排下一次，重连后自动补发
+        if (fwReadyCheckActive) {
+          fwSend31Timer = setTimeout(tick, FW_SEND31_INTERVAL_MS);
+        }
+      };
+      tick();
     }
     
     // 波特率检测专用切换函数（用于sensor更新模式）
@@ -6113,7 +6198,7 @@ const calibStyle = document.createElement('style');
         const PACKET_SIZE = 1024;
         const PACKET_SIZE_128 = 128;
         const MAX_RETRY = 7;
-        const TIMEOUT = 5000; // ms
+        const TIMEOUT = 8000; // ms，与抓包工具一致，容忍 Flash 擦写偶发慢响应
         // 工具函数
         function crc16(buf) {
           let crc = 0;
@@ -6184,6 +6269,7 @@ const calibStyle = document.createElement('style');
         // 头包重发
         retry = 0;
         while (retry++ < MAX_RETRY) {
+          serialBuffer = [];
           console.log('[YMODEM][SEND] 头包:', Array.from(header).map(b=>b.toString(16).padStart(2,'0')).join(' '));
           await writer.write(header);
           let gotAck = false;
@@ -6243,13 +6329,16 @@ const calibStyle = document.createElement('style');
           pkt[PACKET_SIZE + 4] = crc & 0xFF;
           retry = 0;
           while (retry++ < MAX_RETRY) {
+            // 清掉上一轮迟到的旧 ACK/NAK 及菜单残留，只认本包等待窗口内到达的响应
+            serialBuffer = [];
             console.log(`[YMODEM][SEND] 数据包#${pktNum}:`, Array.from(pkt).map(b=>b.toString(16).padStart(2,'0')).join(' '));
             await writer.write(pkt);
             try {
               let ack = await ymodemWaitAckFromSerialBuffer([ACK, NAK], TIMEOUT);
               if (ack === ACK) { console.log(`[YMODEM][RECV] 数据包#${pktNum} 收到ACK`); break; }
-              if (ack === NAK) { console.warn(`[YMODEM][RECV] 数据包#${pktNum} 收到NAK，重发`); }
+              if (ack === NAK) { console.warn(`[YMODEM][RECV] 数据包#${pktNum} 收到NAK，重发(第${retry}次)`); }
             } catch (e) {
+              console.warn(`[YMODEM][RECV] 数据包#${pktNum} 等待响应超时(第${retry}次)`);
               if (retry >= MAX_RETRY) throw new Error('数据包未被ACK');
             }
           }
@@ -6260,11 +6349,13 @@ const calibStyle = document.createElement('style');
         // 4. 发送EOT
         retry = 0;
         while (retry++ < MAX_RETRY) {
+          serialBuffer = [];
           console.log('[YMODEM][SEND] EOT (0x04)');
           await writer.write(new Uint8Array([EOT]));
           try {
-            let ack = await ymodemWaitAckFromSerialBuffer([ACK], TIMEOUT);
+            let ack = await ymodemWaitAckFromSerialBuffer([ACK, NAK], TIMEOUT);
             if (ack === ACK) { console.log('[YMODEM][RECV] EOT收到ACK'); break; }
+            if (ack === NAK) { console.warn('[YMODEM][RECV] EOT收到NAK，按协议重发EOT'); }
           } catch (e) {
             if (retry >= MAX_RETRY) throw new Error('EOT未被ACK');
           }
@@ -6280,11 +6371,13 @@ const calibStyle = document.createElement('style');
         endPkt[PACKET_SIZE_128 + 4] = endCrc & 0xFF;
         retry = 0;
         while (retry++ < MAX_RETRY) {
+          serialBuffer = [];
           console.log('[YMODEM][SEND] 结束包:', Array.from(endPkt).map(b=>b.toString(16).padStart(2,'0')).join(' '));
           await writer.write(endPkt);
           try {
-            let ack = await ymodemWaitAckFromSerialBuffer([ACK], TIMEOUT);
+            let ack = await ymodemWaitAckFromSerialBuffer([ACK, NAK], TIMEOUT);
             if (ack === ACK) { console.log('[YMODEM][RECV] 结束包收到ACK'); break; }
+            if (ack === NAK) { console.warn('[YMODEM][RECV] 结束包收到NAK，重发结束包'); }
           } catch (e) {
             if (retry >= MAX_RETRY) throw new Error('结束包未被ACK');
           }
@@ -11457,9 +11550,23 @@ const calibStyle = document.createElement('style');
     //const _orig_initFwPage = typeof initFwPage === 'function' ? initFwPage : null;
     function initFwPage() {
       console.log('[FW-DEBUG] initFwPage被调用，window._currentPage:', window._currentPage, 'upDataFlag:', upDataFlag);
+      setFwTransmittingView(false);
+      // 非上传/会话进行中进入页面时，复位上次中途退出残留的升级标志，保证初始界面 Start 按钮可见
+      if (!_fwUploading && !_fwSessionActive) {
+        upDataFlag = 0;
+        localStorage.removeItem('upDataFlag');
+      }
       serialBuffer= [];
       window._globalChannelTask = null;
       stopGlobalChannelTimer();
+      // 固件按 USB 包整段覆盖命令缓冲并做整帧精确匹配，任何残留通道帧与升级命令拼包都会导致匹配失败；
+      // 这里把两套全局定时器(通道/指令)和页面重试链全部停掉，保证升级命令单独成包发出。
+      if (typeof clearAllTimers === 'function') clearAllTimers();
+      if (window._globalCommandTimer) { clearInterval(window._globalCommandTimer); window._globalCommandTimer = null; }
+      if (typeof window.stopExpoQueryBurst === 'function') window.stopExpoQueryBurst();
+      if (typeof window.stopFlightModeQueryBurst === 'function') window.stopFlightModeQueryBurst();
+      if (_autoDevAttrTimer) { clearTimeout(_autoDevAttrTimer); _autoDevAttrTimer = null; }
+      if (typeof _channelMapTimer !== 'undefined' && _channelMapTimer) { clearTimeout(_channelMapTimer); _channelMapTimer = null; }
 
       // 重置进度条为0%（解决第二次进入时进度条还是100%的问题）
       if (fwProgressBar) fwProgressBar.style.width = '0%';
@@ -11483,65 +11590,10 @@ const calibStyle = document.createElement('style');
         console.log('[FW] 进入固件更新页面，禁用确认更新按钮');
       }
       setTimeout(() => { if (fwUpdateBtn) fwUpdateBtn.disabled = true; }, 0); // 再加一层保险
-      // 进入页面时每 0.5s 发送一次探测，共 6 次
-      // if (fwSend31Timer) clearInterval(fwSend31Timer);
-      // fwSend31Count = 0;
-      // fwSend31Timer = setInterval(async () => {
-      //   if (writer && fwSend31Count < FW_SEND31_MAX) {
-      //     try {
-      //       await writer.write(new Uint8Array([0x33]));
-      //       fwSend31Count++;
-      //       console.log(`[FW] 定时器已发送0x31，第${fwSend31Count}/${FW_SEND31_MAX}次`);
-      //       if (fwSend31Count >= FW_SEND31_MAX) {
-      //         clearInterval(fwSend31Timer);
-      //         fwSend31Timer = null;
-      //         console.log(`[FW] 已发送${FW_SEND31_MAX}次0x31，停止定时器`);
-      //       }
-      //     } catch (e) {
-      //       fwStatus.textContent = '发送0x31失败：' + e.message;
-      //       console.log('[FW] 发送0x31失败：' + e.message);
-      //       clearInterval(fwSend31Timer);
-      //       fwSend31Timer = null;
-      //     }
-      //   } else if (!writer) {
-      //     fwStatus.textContent = '请先连接串口！';
-      //     console.log('[FW] 未连接串口，无法发送0x31');
-      //     clearInterval(fwSend31Timer);
-      //     fwSend31Timer = null;
-      //   }
-      // }, FW_SEND31_INTERVAL_MS);
-      if (fwSend31Timer) clearInterval(fwSend31Timer);
+      // 菜单选择键(0x31)由 startFwReadyCheck -> startMenuKeyLoop 在等待握手期间周期发送，这里不再一次性连发
+      if (fwSend31Timer) clearTimeout(fwSend31Timer);
       fwSend31Count = 0;
-      fwSend31Timer  = null;
-      async function sendLoop() {
-        if (!writer) {
-          fwStatus.textContent = '请先连接串口！';
-          console.log('[FW] 未连接串口，无法发送0x31');
-          return;
-        }
-        if (fwSend31Count >= FW_SEND31_MAX) {
-          console.log(`[FW] 已发送${FW_SEND31_MAX}次0x31，停止发送`);
-          document.getElementById('fw-update-btn').disabled = false;
-          return;
-        }
-
-        try {
-          // 注意：你实际发送 [0x33]，日志文案记得同步修改！
-          await writer.write(new Uint8Array([0x33]));
-          fwSend31Count++;
-          console.log(`[FW] 已发送0x33，第${fwSend31Count}/${FW_SEND31_MAX}次`);
-        } catch (e) {
-          fwStatus.textContent = '发送0x33失败：' + e.message;
-          console.log('[FW] 发送0x33失败：', e);
-          return;
-        }
-
-        // 间隔一段时间再发下一条
-        fwSend31Timer = setTimeout(sendLoop, FW_SEND31_INTERVAL_MS);
-      }
-
-      // 启动发送
-      sendLoop();
+      fwSend31Timer = null;
 
       startFwReadyCheck();
       updateFwUI();
@@ -11649,6 +11701,7 @@ const calibStyle = document.createElement('style');
         };
 
         upDataFlag = 0;
+        _fwSessionActive = false;
         localStorage.removeItem('upDataFlag');
         console.log('[FW] 退出固件更新，已清除localStorage中的upDataFlag');
 
@@ -12866,7 +12919,7 @@ const calibStyle = document.createElement('style');
       const fwProgressBarWrap = document.getElementById('fw-progress-bar-wrap');
 
       if (upDataFlag === 0) {
-        //fwEnterUpdateBtn.style.display = '';
+        fwEnterUpdateBtn.style.display = '';
         fwDropArea.style.display = 'none';
         //fwFileBtn.style.display = 'none';
         fwFileInput.style.display = 'none';
@@ -12878,7 +12931,7 @@ const calibStyle = document.createElement('style');
         fwStatusText.textContent = '';
         //document.getElementById('fw-device-type').disabled = false;
       } else if (upDataFlag === 1) {
-        //fwEnterUpdateBtn.style.display = 'none';
+        fwEnterUpdateBtn.style.display = '';
         fwDropArea.style.display = 'none';
         //fwFileBtn.style.display = 'none';
         fwFileInput.style.display = 'none';
@@ -12889,12 +12942,13 @@ const calibStyle = document.createElement('style');
         fwStatus.textContent =LANGS[currentLang]['fw-wait-ready'];
         //document.getElementById('fw-device-type').disabled = true;
       } else if (upDataFlag === 2) {
-        //fwEnterUpdateBtn.style.display = 'none';
-        fwDropArea.style.display = '';
-        //fwFileBtn.style.display = '';
-        fwFileInput.style.display = '';
-        fwFileName.style.display = '';
-        fwUpdateBtn.style.display = '';
+        fwEnterUpdateBtn.style.display = 'none';
+        fwDropArea.style.display = 'none';
+        //fwFileBtn.style.display = 'none';
+        fwFileInput.style.display = 'none';
+        fwFileName.style.display = 'none';
+        // remote 主控为握手就绪后自动上传，无需“确认更新”按钮；仅 sensor 等手动流程保留
+        fwUpdateBtn.style.display = (upDataDev === 'remote') ? 'none' : '';
         fwProgressLabel.style.display = '';
         fwProgressBarWrap.style.display = '';
         //document.getElementById('fw-device-type').disabled = true;
@@ -12904,11 +12958,27 @@ const calibStyle = document.createElement('style');
       updateAllLangText();
     }
 
+    // 传输进行中：隐藏 Start / Confirm 按钮，仅在下方显示进度条；不切换页面、不重排上方选择区
+    function setFwTransmittingView(on) {
+      const label = document.getElementById('fw-progress-label');
+      const wrap = document.getElementById('fw-progress-bar-wrap');
+      const enterBtn = document.getElementById('fw-enter-update-btn');
+      const updateBtn = document.getElementById('fw-update-btn');
+      if (on) {
+        if (label) label.style.display = '';
+        if (wrap) wrap.style.display = '';
+        if (enterBtn) enterBtn.style.display = 'none';
+        if (updateBtn) updateBtn.style.display = 'none';
+      }
+    }
+
     // 覆盖页面初始化注册表
     if (typeof pageInits === 'object') pageInits.fw = initFwPage;
-    fwUpdateBtn.onclick = async function() {
+    async function beginFwUpload() {
+      if (_fwUploading) return; // 防重入：就绪自动上传与手动确认可能同时触发
       if (!fwFileData) { fwStatus.textContent =LANGS[currentLang]['fw-file-input']; return; }
       if (!writer) { fwStatus.textContent =LANGS[currentLang]['fw-connect-port']; return; }
+      _fwUploading = true;
       fwStatus.textContent =LANGS[currentLang]['fw-transmitting'];
       fwProgressBar.style.width = '0%';
       fwProgressText.textContent = '0%';
@@ -12916,6 +12986,10 @@ const calibStyle = document.createElement('style');
 
       // 停止固件就绪检查和所有相关定时器（包括0x33发送定时器）
       stopFwReadyCheck('开始固件上传');
+      // 清空握手阶段残留的 C(0x43)、菜单文本等字节，避免被 YMODEM 状态机误判成控制字节
+      serialBuffer = [];
+      // 原地进入简洁进度条视图，不再显示选文件/确认按钮
+      setFwTransmittingView(true);
 
       window._fwUpdateRebootExpected = false;
       window._fwYmodemBytesTotal = fwFileData.length;
@@ -12930,26 +13004,38 @@ const calibStyle = document.createElement('style');
           fwProgressBar.style.width = percent + '%';
           fwProgressText.textContent = percent + '%';
         });
-        if (window._fwUpdateRebootExpected) return;
+        if (window._fwUpdateRebootExpected) {
+          _fwUploading = false;
+          return;
+        }
         fwStatus.textContent = '固件传输完成！';
         //fwUpdateBtn.disabled = false;
         upDataFlag = 0;
+        _fwSessionActive = false;
         localStorage.removeItem('upDataFlag');
         console.log('[FW] 固件传输完成，已清除localStorage中的upDataFlag');
         window._fwYmodemBytesSent = 0;
         window._fwYmodemBytesTotal = 0;
         window._fwYmodemProgress = 0;
+        setFwTransmittingView(false);
         updateFwUI();
+        _fwUploading = false;
         window.alert(LANGS[currentLang]['update-over']);
       } catch (e) {
         if (window._fwUpdateRebootExpected) {
           window._fwUpdateRebootExpected = false;
+          _fwUploading = false;
           return;
         }
         fwStatus.textContent = '传输失败：' + e.message;
         fwUpdateBtn.disabled = false;
+        setFwTransmittingView(false);
+        updateFwUI();
+        _fwUploading = false;
+        _fwSessionActive = false;
       }
     };
+    fwUpdateBtn.onclick = beginFwUpload;
 
     // ========== 全局唯一定时器+函数指针式任务注册 ==========
     window._globalChannelTimer = null;
@@ -14079,9 +14165,10 @@ const calibStyle = document.createElement('style');
         'calib-step-label-center-point': '请将摇杆置于中心点处,然后点击"选择中心点"按键',
         'calib-done': '校准完成',
         'calib-step-label-done': '听到"滴"一声之后,将摇杆和旋钮移动到最大最小处,角落处请多停留一段时间,然后校准完毕之后,点击"校准完成"按键',
-        'fw-change-title': '选择固件更新',
+        'fw-change-title': '选择本地的bin文件',
         'fw-device-type': '设备类型：',
         'fw-file-input': '请选择固件文件！',
+        'fw-select-local-file': '选择本地文件',
         'fw-file-name': '固件文件名:',
         'fw-transmitting': '正在传输中,请等待...',
         'fw-select-file': '请选择固件文件！',
@@ -14089,6 +14176,10 @@ const calibStyle = document.createElement('style');
         'fw-ready-update': '设备已就绪，可以开始固件更新',
         'fw-ready-update-text': '想要退出更新,请重新上电,刷新网页在首页点击"退出固件更新"按钮',
         'fw-wait-ready': '请等待设备就绪...',
+        'fw-loading-firmware': '正在加载固件，请稍候...',
+        'fw-wait-update-cmd': '正在等待设备进入升级模式...',
+        'fw-send-update-cmd': '升级命令已发送...',
+        'fw-send-update-cmd-failed': '发送升级命令失败：',
         'fw-update-btn': '确认更新',
         'fw-update-progress': '更新进度',
         'connecting': '正在连接...',
@@ -14362,9 +14453,10 @@ const calibStyle = document.createElement('style');
         'calib-step-label-center-point': 'Please place the joystick at the center point, then click the "Select Center Point" button',
         'calib-done': 'Calibration Done',
         'calib-step-label-done': 'After hearing a "beep", move the joystick and knob to their extreme positions (maximum and minimum). Please stay at the corner positions for at least 0.5 to 1 second. Once calibration is completed, click the "Calibration Complete" button.',
-        'fw-change-title': 'Select Firmware Update',
+        'fw-change-title': 'Select local bin file',
         'fw-device-type': 'Device Type:',
         'fw-file-input': 'Please select firmware file!',
+        'fw-select-local-file': 'Select local file',
         'fw-file-name': 'Firmware File Name:',
         'fw-transmitting': 'Transmitting, please wait...',
         'fw-select-file': 'Please select firmware file!',
@@ -14372,6 +14464,10 @@ const calibStyle = document.createElement('style');
         'fw-ready-update': 'Device is ready, you can start firmware update',
         'fw-ready-update-text': 'To exit the update, please power off and then power on again, refresh the webpage and click the "Exit Firmware Update" button on the home page.',
         'fw-wait-ready': 'Please wait for the device to be ready...',
+        'fw-loading-firmware': 'Loading firmware, please wait...',
+        'fw-wait-update-cmd': 'Waiting for the device to enter update mode...',
+        'fw-send-update-cmd': 'Update command sent...',
+        'fw-send-update-cmd-failed': 'Failed to send update command: ',
         'fw-update-btn': 'Confirm Update',
         'fw-update-progress': 'Update Progress',
         'connecting': 'Connecting...',
